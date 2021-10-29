@@ -41,7 +41,23 @@ public class HotelServiceImpl implements HotelService {
             Hotel  sanpi = new Hotel("Sanpi", 4, BigDecimal.valueOf(182), BigDecimal.valueOf(148), townService.findByName("Milano"));
             Hotel  grandhotelsanmarino = new Hotel("Grand Hotel San Marino", 4, BigDecimal.valueOf(136), BigDecimal.valueOf(122), townService.findByName("San Marino"));
             Hotel  rosa = new Hotel("Rosa San Marino", 5, BigDecimal.valueOf(155), BigDecimal.valueOf(133), townService.findByName("San Marino"));
-            Hotel  ibisstyle = new Hotel("Ibis Styles Budapest", 5, BigDecimal.valueOf(155), BigDecimal.valueOf(133), townService.findByName("San Marino"));
+            Hotel  ibisstyle = new Hotel("Ibis Styles Budapest", 5, BigDecimal.valueOf(190), BigDecimal.valueOf(171), townService.findByName("Budapest"));
+            Hotel  ferihegy = new Hotel("Ferihegy", 3, BigDecimal.valueOf(78), BigDecimal.valueOf(62), townService.findByName("Budapest"));
+            Hotel  hhplus = new Hotel("H+ Hotel", 5, BigDecimal.valueOf(200), BigDecimal.valueOf(178), townService.findByName("Vienna"));
+            Hotel  meinnger = new Hotel("Meinnger", 4, BigDecimal.valueOf(173), BigDecimal.valueOf(152), townService.findByName("Vienna"));
+            Hotel  amedia = new Hotel("Amedia", 4, BigDecimal.valueOf(168), BigDecimal.valueOf(147), townService.findByName("Vienna"));
+            Hotel  alphotel = new Hotel("Alp Hotel", 4, BigDecimal.valueOf(152), BigDecimal.valueOf(137), townService.findByName("Innsbruck"));
+            Hotel  munchencitysud = new Hotel("Munchen City Sud", 3, BigDecimal.valueOf(58), BigDecimal.valueOf(40), townService.findByName("Munich"));
+            Hotel  arabellapark = new Hotel("Arabellapark Munchen", 5, BigDecimal.valueOf(198), BigDecimal.valueOf(190), townService.findByName("Munich"));
+            Hotel  laimer = new Hotel("Laimer hotel", 4, BigDecimal.valueOf(128), BigDecimal.valueOf(117), townService.findByName("Munich"));
+            Hotel leonardo = new Hotel("Leonardo Royal hotel", 4, BigDecimal.valueOf(135), BigDecimal.valueOf(127), townService.findByName("Frankfurt"));
+            Hotel hansa = new Hotel("Hansa hotel", 3, BigDecimal.valueOf(78), BigDecimal.valueOf(69), townService.findByName("Stuttgard"));
+            Hotel feuerbackhotel = new Hotel("Feuerbach hotel", 5, BigDecimal.valueOf(145), BigDecimal.valueOf(132), townService.findByName("Stuttgard"));
+            Hotel dionis = new Hotel("Dionis", 4, BigDecimal.valueOf(131), BigDecimal.valueOf(120), townService.findByName("Rust"));
+            Hotel pullman = new Hotel("Pullman", 4, BigDecimal.valueOf(250), BigDecimal.valueOf(238), townService.findByName("Paris"));
+            Hotel raphael = new Hotel("Raphael", 5, BigDecimal.valueOf(312), BigDecimal.valueOf(300), townService.findByName("Paris"));
+            Hotel generator = new Hotel("Generator", 4, BigDecimal.valueOf(230), BigDecimal.valueOf(221), townService.findByName("Paris"));
+            Hotel ibis = new Hotel("Ibis Strasbourg", 3, BigDecimal.valueOf(112), BigDecimal.valueOf(99), townService.findByName("Strasbourg"));
 
         }
     }
