@@ -10,7 +10,15 @@ public class Town extends BaseEntity{
     private Country country;
     private Set<Hotel> hotels;
     private Set<Landmark> landmarks;
-@Column(nullable = false)
+
+    public Town() {
+    }
+
+    public Town(String name) {
+        this.name = name;
+    }
+
+    @Column(nullable = false)
     public String getName() {
         return name;
     }

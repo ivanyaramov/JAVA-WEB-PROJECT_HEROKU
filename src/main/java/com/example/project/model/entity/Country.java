@@ -11,7 +11,15 @@ import java.util.Set;
 public class Country extends BaseEntity{
     private String name;
     private Set<Town> towns;
-@Column(nullable = false)
+
+    public Country() {
+    }
+
+    public Country(String name) {
+        this.name = name;
+    }
+
+    @Column(nullable = false)
     public String getName() {
         return name;
     }

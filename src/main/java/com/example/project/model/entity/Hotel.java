@@ -10,10 +10,23 @@ import java.math.BigDecimal;
 @Table(name = "hotels")
 public class Hotel extends BaseEntity {
     private String name;
+    private int stars;
     private BigDecimal pricePerNightAdult;
     private BigDecimal pricePerNightChild;
     private Town town;
-@ManyToOne
+
+    public Hotel() {
+    }
+
+    public Hotel(String name, int stars, BigDecimal pricePerNightAdult, BigDecimal pricePerNightChild, Town town) {
+        this.name = name;
+        this.stars = stars;
+        this.pricePerNightAdult = pricePerNightAdult;
+        this.pricePerNightChild = pricePerNightChild;
+        this.town = town;
+    }
+
+    @ManyToOne
     public Town getTown() {
         return town;
     }
@@ -48,5 +61,13 @@ public class Hotel extends BaseEntity {
 
     public void setPricePerNightChild(BigDecimal pricePerNightChild) {
         this.pricePerNightChild = pricePerNightChild;
+    }
+@Column(nullable = false)
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
     }
 }
