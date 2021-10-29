@@ -1,0 +1,102 @@
+.bg-nav{
+    background-color: #30BDC6;
+}
+
+.bg-footer{
+    background-color: #30BDC6;
+}
+.my-index-div{
+    min-height:56.6vh ;
+    max-height: 100%;
+}
+.my-register-div{
+    min-height:85.5vh ;
+    max-height: 100%;
+}
+/*footer {*/
+/*    */
+/*    position:absolute;*/
+/*    width:100%;*/
+/*}*/
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 10%;
+    width: 100%;
+    background-color: #30BDC6;
+    color: white;
+    text-align: center;
+}
+.bg-blur {
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.6); /* Black w/opacity/see-through */
+    color: black;
+    font-weight: bold;
+    z-index: 2;
+    width: 100%;
+}
+body {
+    background-image: url(/img/background.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+}
+
+.my-main {
+    min-height:90.2vh;
+}
+
+.navbar-nav > li {
+    padding-left:30px;
+    padding-right:30px;
+    font-size: large;
+
+}
+
+.centered{
+    text-align: center;
+}
+
+.bodyoflogin {
+    margin: 0;
+    padding: 0;
+    background-color: #17a2b8;
+    height: 100vh;
+}
+#login .container #login-row #login-column #login-box {
+    margin-top: 120px;
+    max-width: 600px;
+    height: 320px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+#login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -85px;
+}
+
+#register .container #register-row #register-column #register-box {
+    margin-top: 25px;
+    max-width: 600px;
+    height: 740px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+#register .container #register-row #register-column #register-box #register-form {
+    padding: 20px;
+}
+#register .container #register-row #register-column #register-box #register-form #register-link {
+    margin-top: -85px;
+}
+
+.bodyofregister {
+    margin: 0;
+    padding: 0;
+    background-color: #17a2b8;
+    height: 100vh;
+}
