@@ -101,10 +101,54 @@ body {
     height: 100vh;
 }
 
-#addhotel .container #addhotel-row #addhotel-column #addhotel-box {
-    margin-top: 25px;
+
+
+#landmark .container #landmark-row #landmark-column #landmark-box {
+    margin-top: 120px;
     max-width: 600px;
-    height: 520px;
+    height: 560px;
     border: 1px solid #9C9C9C;
     background-color: #EAEAEA;
+}
+#landmark .container #landmark-row #landmark-column #landmark-box #landmark-form {
+    padding: 20px;
+}
+#landmark .container #landmark-row #landmark-column #landmark-box #landmark-form #landmark-link {
+    margin-top: -85px;
+}
+
+.wideInput{
+    text-align: left;
+    padding: 0.4em 0.4em 0.4em 0;
+    width: 400px;
+    height: 200px;
+
+}
+
+#hotel .container #hotel-row #hotel-column #hotel-box {
+    margin-top: 120px;
+    max-width: 600px;
+    height: 560px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+#hotel .container #hotel-row #hotel-column #hotel-box #hotel-form {
+    padding: 20px;
+}
+#hotel .container #hotel-row #hotel-column #hotel-box #hotel-form #hotel-link {
+    margin-top: -85px;
+}
+
+#town .container #town-row #town-column #town-box {
+    margin-top: 120px;
+    max-width: 600px;
+    height: 320px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+#town .container #town-row #town-column #town-box #town-form {
+    padding: 20px;
+}
+#town .container #town-row #town-column #town-box #town-form #town-link {
+    margin-top: -85px;
 }

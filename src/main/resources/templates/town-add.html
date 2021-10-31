@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">>
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+    <div id="town">
+        <div class="container">
+            <div id="town-row" class="row justify-content-center align-items-center">
+                <div id="town-column" class="col-md-6">
+                    <div id="town-box" class="col-md-12">
+                        <form id="town-form" class="form" action="" method="post">
+                            <h3 class="text-center text-info">Add Town</h3>
+                            <div class="form-group">
+                                <label for="name" class="text-info">Name:</label><br>
+                                <input type="text" name="name" id="name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="country" class="text-info">Country:</label><br>
+                                <input type="text" name="country" id="country" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

@@ -152,6 +152,17 @@ public class LandMarkServiceImpl implements LandmarkService {
             Landmark mercedesmuseum = new Landmark("Mercedes-Benz Museum", "https://res.cloudinary.com/ivoto22/image/upload/v1635696186/images_24_ajvigp.jpg", stuttgart);
             mercedesmuseum.setDescription("The Mercedes-Benz Museum is an automobile museum in Stuttgart, Germany. It covers the history of the Mercedes-Benz brand and the brands associated with it. Stuttgart is home to the Mercedes-Benz brand and the international headquarters of Daimler AG.");
             landmarkRepository.save(mercedesmuseum);
+            Landmark proschemuseum = new Landmark("Porsche Museum", "https://res.cloudinary.com/ivoto22/image/upload/v1635701834/images_25_xewoyq.jpg", stuttgart);
+            proschemuseum.setDescription("The Porsche Museum is an automobile museum in the Zuffenhausen district of Stuttgart, Germany on the site of carmaker Porsche.");
+            landmarkRepository.save(proschemuseum);
+            Town rust = townService.findByName("Rust");
+            Landmark europapark = new Landmark("Europa Park", "https://res.cloudinary.com/ivoto22/image/upload/v1635701972/panorama_europa-park_onaqtz.jpg", rust);
+            europapark.setDescription("Europa-Park is the largest theme park in Germany, and the second most popular theme park in Europe, after Disneyland Paris.[1] Europa-Park is located in Rust, south-western Germany, between Freiburg im Breisgau and Strasbourg (in neighbouring France).[2]" +
+                    "The park is home to 13 roller coasters, the oldest, which opened in 1984, is the Alpenexpress Enzian, which is a powered coaster that speeds through a diamond mine. Europa-Park has very high capacity roller coasters and attractions, meaning the park can accommodate approximately 60,000 guests per day.[3] The park counted 5.75 million visitors in 2019.[4] It is also the location of the Euro Dance Festival." +
+                    "The resort (park, parking lot, hotels and back stages) occupies roughly 95 hectares. It hosts six hotels, one campground, and one movie theater." +
+                    "In November 2019, Europa-Park's \"Rulantica\" water park opened, along with the Museum-Themed Hotel, \"Krønasår\".");
+            landmarkRepository.save(europapark);
+
 
 
 
