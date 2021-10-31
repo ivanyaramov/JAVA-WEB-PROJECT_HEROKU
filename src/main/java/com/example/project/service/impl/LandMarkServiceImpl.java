@@ -162,6 +162,10 @@ public class LandMarkServiceImpl implements LandmarkService {
                     "The resort (park, parking lot, hotels and back stages) occupies roughly 95 hectares. It hosts six hotels, one campground, and one movie theater." +
                     "In November 2019, Europa-Park's \"Rulantica\" water park opened, along with the Museum-Themed Hotel, \"Krønasår\".");
             landmarkRepository.save(europapark);
+            Town paris = townService.findByName("Paris");
+            Landmark eiffeltower = new Landmark("Eiffel Tower", "https://res.cloudinary.com/ivoto22/image/upload/v1635706609/licensed-image_9_mw6qp8.jpg", paris);
+            eiffeltower.setDescription("The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. It is named after the engineer Gustave Eiffel, whose company designed and built the tower. Locally nicknamed \"La dame de fer\", it was constructed from 1887 to 1889 as the entrance to the 1889 World's Fair and was initially criticised by some of France's leading artists and intellectuals for its design, but it has become a global cultural icon of France and one of the most recognisable structures in the world. The Eiffel Tower is the most visited monument with an entrance fee in the world; 6.91 million people ascended it in 2015. The tower is 324 metres tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres on each side. During its construction, the Eiffel Tower surpassed the Washington Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure in the world to surpass both the 200-metre and 300-metre mark in height.");
+            landmarkRepository.save(eiffeltower);
 
 
 

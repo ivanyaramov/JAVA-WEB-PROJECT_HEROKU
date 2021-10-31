@@ -20,8 +20,13 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        init();
+    }
+
+    void init(){
         countryService.initaliseCountries();
         townService.initialiseTowns();
         hotelService.initialiseHotels();
+
     }
 }

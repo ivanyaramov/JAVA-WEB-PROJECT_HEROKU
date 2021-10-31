@@ -12,6 +12,14 @@ public class Guide extends BaseEntity{
     private String description;
     private Excursion excursion;
 
+    public Guide() {
+    }
+
+    public Guide(String fullName, int age) {
+        this.fullName = fullName;
+        this.age = age;
+    }
+
     @Column(nullable = false)
     public String getFullName() {
         return fullName;
