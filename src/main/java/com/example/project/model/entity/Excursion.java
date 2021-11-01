@@ -21,7 +21,7 @@ public class Excursion  extends BaseEntity{
     public void setName(String name) {
         this.name = name;
     }
-@OneToMany
+@ManyToMany
     public Set<Country> getCountries() {
         return countries;
     }
@@ -29,7 +29,7 @@ public class Excursion  extends BaseEntity{
     public void setCountries(Set<Country> countries) {
         this.countries = countries;
     }
-@OneToMany
+    @ManyToMany
     public Set<Town> getTowns() {
         return towns;
     }
@@ -37,7 +37,7 @@ public class Excursion  extends BaseEntity{
     public void setTowns(Set<Town> towns) {
         this.towns = towns;
     }
-@OneToMany
+    @ManyToMany
     public Set<Hotel> getHotels() {
         return hotels;
     }

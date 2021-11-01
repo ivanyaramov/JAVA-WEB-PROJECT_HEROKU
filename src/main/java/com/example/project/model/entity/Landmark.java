@@ -12,7 +12,17 @@ public class Landmark extends BaseEntity{
     private String description;
     private String pictureURL;
     private Town town;
-@Column(nullable = false)
+
+    public Landmark() {
+    }
+
+    public Landmark(String name, String pictureURL, Town town) {
+        this.name = name;
+        this.pictureURL = pictureURL;
+        this.town = town;
+    }
+
+    @Column(nullable = false)
     public String getName() {
         return name;
     }

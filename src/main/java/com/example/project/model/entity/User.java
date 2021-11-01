@@ -2,6 +2,8 @@ package com.example.project.model.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +13,7 @@ public class User extends BaseEntity{
     private int age;
     private String password;
     private String email;
-    private RoleEnum roleEnum;
+    private Set<UserRoleEntity> roles = new HashSet<>();
 @Column
     public int getAge() {
         return age;
@@ -54,15 +56,13 @@ public class User extends BaseEntity{
     public void setEmail(String email) {
         this.email = email;
     }
-
-@Enumerated(EnumType.STRING)
-@Column(nullable = false)
-    public RoleEnum getRoleEnum() {
-        return roleEnum;
+@ManyToMany
+    public Set<UserRoleEntity> getRoles() {
+        return roles;
     }
 
-    public void setRoleEnum(RoleEnum roleEnum) {
-        this.roleEnum = roleEnum;
+    public void setRoles(Set<UserRoleEntity> roles) {
+        this.roles = roles;
     }
 }
 
