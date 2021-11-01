@@ -9,15 +9,25 @@ import java.util.Set;
 public class Guide extends BaseEntity{
     private String fullName;
     private int age;
+    private String pictureUrl;
     private String description;
     private Excursion excursion;
 
     public Guide() {
     }
 
-    public Guide(String fullName, int age) {
+    public Guide(String fullName, int age, String pictureUrl) {
         this.fullName = fullName;
         this.age = age;
+        this.pictureUrl = pictureUrl;
+    }
+@Column(nullable = false)
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     @Column(nullable = false)
