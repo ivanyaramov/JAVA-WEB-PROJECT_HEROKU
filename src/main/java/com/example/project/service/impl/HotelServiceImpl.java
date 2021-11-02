@@ -60,7 +60,7 @@ public class HotelServiceImpl implements HotelService {
             Hotel ibis = new Hotel("Ibis Strasbourg", 3, BigDecimal.valueOf(112), BigDecimal.valueOf(99), townService.findByName("Strasbourg"));
             Hotel carlton = new Hotel("Carlton Lyon", 5, BigDecimal.valueOf(365), BigDecimal.valueOf(320), townService.findByName("Lyon"));
             Hotel radisson = new Hotel("Radisson", 4, BigDecimal.valueOf(270), BigDecimal.valueOf(248), townService.findByName("Lyon"));
-            Hotel princessa = new Hotel("Hotel Spa Princessa", 4, BigDecimal.valueOf(270), BigDecimal.valueOf(248), townService.findByName("Andorra"));
+            Hotel princessa = new Hotel("Hotel Spa Princessa", 4, BigDecimal.valueOf(270), BigDecimal.valueOf(248), townService.findByName("Andorra la Vella"));
             Hotel vitium = new Hotel("Vitium", 4, BigDecimal.valueOf(220), BigDecimal.valueOf(210), townService.findByName("Madrid"));
             Hotel artisticbed = new Hotel("Artistic Bed", 4, BigDecimal.valueOf(221), BigDecimal.valueOf(208), townService.findByName("Madrid"));
             Hotel stcrhistopher = new Hotel("St Crhistopher", 4, BigDecimal.valueOf(245), BigDecimal.valueOf(213), townService.findByName("Barcelona"));

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">>
+      xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/commons::head">
 
 </head>
@@ -9,6 +9,14 @@
 
 </header>
 <main class="p-5 align-content-center bg-blur my-main">
+    <div class="searchbox centered">
+        <input id="searchbar" list="townsandcountries" placeholder="Where would you want to go?" type="search">
+            <button id="buttonlistener">Click me</button>
+        <datalist id="townsandcountries">
+            <option value="" selected></option>
+        </datalist>
+
+    </div>
     <h1 class="text-light centered align-content-center pl-2">Welcome to</h1>
     <h1 class="text-light centered pl-2">My travel agency application!</h1>
     <div class="d-flex justify-content-center">

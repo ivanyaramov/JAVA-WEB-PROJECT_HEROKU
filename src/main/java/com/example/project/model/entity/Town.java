@@ -7,6 +7,8 @@ import java.util.Set;
 @Table(name = "towns")
 public class Town extends BaseEntity{
     private String name;
+    private String description;
+    private String pictureUrl;
     private Country country;
     private Set<Hotel> hotels;
     private Set<Landmark> landmarks;
@@ -14,8 +16,10 @@ public class Town extends BaseEntity{
     public Town() {
     }
 
-    public Town(String name) {
+    public Town(String name, String description, String pictureUrl) {
         this.name = name;
+        this.description = description;
+        this.pictureUrl = pictureUrl;
     }
 
     @Column(nullable = false)
@@ -49,5 +53,21 @@ public class Town extends BaseEntity{
 
     public void setLandmarks(Set<Landmark> landmarks) {
         this.landmarks = landmarks;
+    }
+@Column(columnDefinition = "TEXT")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+@Column
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

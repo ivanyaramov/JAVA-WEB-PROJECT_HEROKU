@@ -3,6 +3,7 @@ package com.example.project.model.view;
 import java.util.Set;
 
 public class CountryViewModel {
+    private Long id;
     private String name;
     private Set<TownViewModel> towns;
 
@@ -20,5 +21,13 @@ public class CountryViewModel {
 
     public void setTowns(Set<TownViewModel> towns) {
         this.towns = towns;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

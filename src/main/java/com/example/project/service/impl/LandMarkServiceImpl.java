@@ -186,7 +186,7 @@ public class LandMarkServiceImpl implements LandmarkService {
             Landmark palacedebour = new Landmark("Place Bellecour", "https://res.cloudinary.com/ivoto22/image/upload/v1635760665/licensed-image_11_guxel6.jpg", lyon);
             palacedebour.setDescription("La Place Bellecour is a large square in the centre of Lyon, France, to the north of the Ainay district. Measuring 312 m by 200 m, it is one of the largest open squares in Europe, and the third biggest square in France, behind the Place des Quinconces in Bordeaux and the Place de la Concorde in Paris. It is also the largest pedestrian square in Europe: vehicles are allowed in Places de la Concorde and des Quinconces. In the middle is an equestrian statue of king Louis XIV by François-Frédéric Lemot. Another statue, representing the Petit Prince and Antoine de Saint-Exupéry, is at the west end of the square. The square also has two pavilions, housing the tourist information office of Lyon and an art gallery. The square is part of a UNESCO World Heritage Site.");
             landmarkRepository.save(palacedebour);
-            Town andorra = townService.findByName("Andorra");
+            Town andorra = townService.findByName("Andorra la Vella");
             Landmark andorramountain = new Landmark("Grandvalira","https://res.cloudinary.com/ivoto22/image/upload/v1635760879/licensed-image_12_lvocvz.jpg", andorra);
             andorramountain.setDescription("Mountain resort for skiing & zip lining");
             landmarkRepository.save(andorramountain);

@@ -154,7 +154,29 @@ body {
 }
 
 .townbgcolor{
-    background-color: #1e7e34;
+    /*background-color: #EABC82;    */
+    background-color: #72CA96;
     height: 60px;
     text-align: center;
+}
+
+.example {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    height: 30vh;
+}
+
+img {
+    width: 80px; /* You can set the dimensions to whatever you want */
+    height: 250px;
+    object-fit: cover;
+}
+.searchbox{
+    margin:auto;
+}
+.searchbox input{
+    width: 18vh;
+    min-width: 300px;
 }

@@ -73,4 +73,11 @@ private final ModelMapper modelMapper;
                 .map(c->modelMapper.map(c,CountryViewModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<String> getALlCountriesAsStrings() {
+        return getAllCountries().stream()
+                .map(c->c.getName()).collect(Collectors.toList());
+
+    }
 }

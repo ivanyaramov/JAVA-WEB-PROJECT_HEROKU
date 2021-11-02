@@ -9,4 +9,5 @@ public interface CountryService {
     void initaliseCountries();
     Country findByName(String name);
     List<CountryViewModel> getAllCountries();
+    List<String> getALlCountriesAsStrings();
 }
