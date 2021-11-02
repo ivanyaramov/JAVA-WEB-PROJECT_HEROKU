@@ -1,9 +1,6 @@
 package com.example.project.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -27,7 +24,7 @@ public class Country extends BaseEntity{
     public void setName(String name) {
         this.name = name;
     }
-@OneToMany(mappedBy = "country")
+@OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
     public Set<Town> getTowns() {
         return towns;
     }

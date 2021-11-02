@@ -152,3 +152,9 @@ body {
 #town .container #town-row #town-column #town-box #town-form #town-link {
     margin-top: -85px;
 }
+
+.townbgcolor{
+    background-color: #1e7e34;
+    height: 60px;
+    text-align: center;
+}

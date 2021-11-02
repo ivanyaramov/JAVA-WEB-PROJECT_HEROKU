@@ -34,7 +34,7 @@ public class Town extends BaseEntity{
     public void setCountry(Country country) {
         this.country = country;
     }
-    @OneToMany(mappedBy = "town")
+    @OneToMany(mappedBy = "town", fetch = FetchType.EAGER)
     public Set<Hotel> getHotels() {
         return hotels;
     }
@@ -42,7 +42,7 @@ public class Town extends BaseEntity{
     public void setHotels(Set<Hotel> hotels) {
         this.hotels = hotels;
     }
-@OneToMany(mappedBy = "town")
+@OneToMany(mappedBy = "town", fetch = FetchType.EAGER)
     public Set<Landmark> getLandmarks() {
         return landmarks;
     }

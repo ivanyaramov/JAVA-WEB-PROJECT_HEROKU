@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">>
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<div  th:each="c : ${countries}" th:object="${c}" class = "mb-4 centered">
+    <div class="townbgcolor">
+   <h2 style="padding-top: 10px" th:text="|----------*{name}----------|"></h2>
+        </div>
+<div class="row">
+<div th:each="t : ${c.towns}" th:object="${t}" class="card col-lg-3" style="width: 18rem;">
+    <div class="pt-2"><b><h4 th:text="*{name}"></h4></b></div>
+    <img class="card-img-top" src="https://res.cloudinary.com/ivoto22/image/upload/v1635777532/15547049-the-big-ben-the-houses-of-parliament-and-westminster-bridge-in-london_g7h8gw.jpg" alt="Card image cap">
+    <div class="card-body">
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+</div>
+</div>
+
+</div>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

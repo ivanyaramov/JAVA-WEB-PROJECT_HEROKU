@@ -1,16 +1,23 @@
 package com.example.project.service.impl;
 
 import com.example.project.model.entity.Country;
+import com.example.project.model.view.CountryViewModel;
 import com.example.project.repository.CountryRepository;
 import com.example.project.service.CountryService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CountryServiceImpl implements CountryService {
 private final CountryRepository countryRepository;
+private final ModelMapper modelMapper;
 
-    public CountryServiceImpl(CountryRepository countryRepository) {
+    public CountryServiceImpl(CountryRepository countryRepository, ModelMapper modelMapper) {
         this.countryRepository = countryRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -58,5 +65,12 @@ private final CountryRepository countryRepository;
     @Override
     public Country findByName(String name) {
         return countryRepository.findByName(name).orElse(null);
+    }
+
+    @Override
+    public List<CountryViewModel> getAllCountries() {
+        return countryRepository.findAll().stream()
+                .map(c->modelMapper.map(c,CountryViewModel.class))
+                .collect(Collectors.toList());
     }
 }
