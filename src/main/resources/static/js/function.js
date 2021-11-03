@@ -29,7 +29,7 @@ $(window).on('load', function() {
     function() {
         console.log($("#searchbar").val());
         var id = $("#searchbar").val();
-        if ($("#searchbar").val() != "") {
+        if ($("#searchbar").val() !== "" && !isNaN(id)) {
             window.location.href = "/towns/info/" + id;
         }
     });

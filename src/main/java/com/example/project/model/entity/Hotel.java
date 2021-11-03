@@ -13,17 +13,19 @@ public class Hotel extends BaseEntity {
     private int stars;
     private BigDecimal pricePerNightAdult;
     private BigDecimal pricePerNightChild;
+    private String imageUrl;
     private Town town;
 
     public Hotel() {
     }
 
-    public Hotel(String name, int stars, BigDecimal pricePerNightAdult, BigDecimal pricePerNightChild, Town town) {
+    public Hotel(String name, int stars, BigDecimal pricePerNightAdult, BigDecimal pricePerNightChild, Town town, String imageUrl) {
         this.name = name;
         this.stars = stars;
         this.pricePerNightAdult = pricePerNightAdult;
         this.pricePerNightChild = pricePerNightChild;
         this.town = town;
+        this.imageUrl = imageUrl;
     }
 
     @ManyToOne
@@ -69,5 +71,13 @@ public class Hotel extends BaseEntity {
 
     public void setStars(int stars) {
         this.stars = stars;
+    }
+@Column(nullable = false)
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.project.web;
 
-import com.example.project.model.entity.Town;
 import com.example.project.model.view.TownViewModel;
 import com.example.project.service.CountryService;
 import com.example.project.service.TownService;
@@ -32,7 +31,7 @@ public class TownController {
     public String infoAboutTown(@PathVariable Long id, Model model){
     TownViewModel town = townService.findById(id);
     model.addAttribute("town", townService.findById(id));
-    return "town-info";
+    return "town-landmarks";
     }
 
 }
