@@ -184,3 +184,10 @@ img {
     text-align: center;
     padding-top: 10px;
 }
+
+.alignleft {
+    float: left;
+}
+.alignright {
+    float: right;
+}

@@ -14,7 +14,18 @@ public class Day extends BaseEntity{
     private LocalDate date;
     private Excursion excursion;
     private Hotel hotel;
-@Column
+
+    public Day() {
+    }
+
+    public Day(Integer numberOfDay, Town town, Excursion excursion, Hotel hotel) {
+        this.numberOfDay = numberOfDay;
+        this.town = town;
+        this.excursion = excursion;
+        this.hotel = hotel;
+    }
+
+    @Column
     public String getDescription() {
         return description;
     }

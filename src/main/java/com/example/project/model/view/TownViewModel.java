@@ -13,6 +13,7 @@ public class TownViewModel {
     private String pictureUrl;
     private CountryViewModel countryViewModel;
     private Set<LandmarkViewModel> landmarks;
+    private Set<HotelViewModel> hotels;
 
     public String getName() {
         return name;
@@ -60,5 +61,13 @@ public class TownViewModel {
 
     public void setCountryViewModel(CountryViewModel countryViewModel) {
         this.countryViewModel = countryViewModel;
+    }
+
+    public Set<HotelViewModel> getHotels() {
+        return hotels;
+    }
+
+    public void setHotels(Set<HotelViewModel> hotels) {
+        this.hotels = hotels;
     }
 }

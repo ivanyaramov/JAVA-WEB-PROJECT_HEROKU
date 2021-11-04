@@ -16,12 +16,13 @@
 <div th:each="t : ${c.towns}" th:object="${t}" class="card col-lg-3" style="width: 18rem;">
     <div class="pt-2"><b><h4 th:text="*{name}"></h4></b></div>
     <img class="card-img-top img" th:src="*{pictureUrl}" alt="Card image cap">
-    <div class="card-body" th:text="*{description}" >
+    <div class="card-body " th:text="*{description}" >
         <p class="card-text"></p>
     </div>
-    <div id="register-link" class="text-right">
-        <br/>
-        <a th:href="@{/towns/info/{id}(id=*{id})}" class="text-info h5">Landmarks & Hotels</a>
+    <div id="landmark-link" class = "card-footer" >
+<!--        <br/>-->
+        <a th:href="@{/towns/hotels/{id}(id=*{id})}" class="text-info h5 alignleft">Hotels</a>
+        <a th:href="@{/towns/landmarks/{id}(id=*{id})}" class="text-info h5 alignright">Landmarks</a>
     </div>
 </div>
 </div>

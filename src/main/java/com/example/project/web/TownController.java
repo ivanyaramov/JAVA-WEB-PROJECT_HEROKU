@@ -27,11 +27,16 @@ public class TownController {
         return "town";
     }
 
-    @GetMapping("/info/{id}")
-    public String infoAboutTown(@PathVariable Long id, Model model){
-    TownViewModel town = townService.findById(id);
+    @GetMapping("/landmarks/{id}")
+    public String landmarksOfTown(@PathVariable Long id, Model model){
     model.addAttribute("town", townService.findById(id));
     return "town-landmarks";
+    }
+
+    @GetMapping("/hotels/{id}")
+    public String hotelsOfTown(@PathVariable Long id, Model model){
+        model.addAttribute("town", townService.findById(id));
+        return "town-hotels";
     }
 
 }

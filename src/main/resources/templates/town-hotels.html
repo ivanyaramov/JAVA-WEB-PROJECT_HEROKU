@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<div class="townbgcolor" th:object="${town}">
+  <h2  style="padding-top: 10px" th:text="|---*{name}---|"></h2>
+</div>
+<div class="row">
+<div th:each="h : ${town.hotels}" th:object="${h}" class="card col-lg-3" style="width: 18rem;">
+  <div class="pt-2 centered"><b><h3 th:text="*{name}"></h3></b></div>
+  <img class="card-img-top" th:src="*{imageUrl}" alt="Card image cap">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" th:text="|Stars: *{stars}|">Cras justo odio</li>
+    <li class="list-group-item" th:text="|Price per night children: *{pricePerNightChild}|">Dapibus ac facilisis in</li>
+    <li class="list-group-item" th:text="|Price per night adults: *{pricePerNightAdult}|">Vestibulum at eros</li>
+  </ul>
+  <div class="card-body centered">
+    <a href="#" class="card-link">Book now!</a>
+  </div>
+</div>
+</div>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>
