@@ -28,9 +28,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 // with this line we allow access to all static resources
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // the next line allows access to the home page, login page and registration for everyone
-                        antMatchers("/", "/users/login", "/users/register", "/towns/all", "/towns/**","/rest/**","/excursions/**").permitAll().
+                        antMatchers("/**").permitAll().
                 // next we forbid all other pages for unauthenticated users.
-                        antMatchers("/**").authenticated().
+//                        antMatchers("/**").authenticated().
                 and().
                 // configure login with login HTML form with two input fileds
                         formLogin().

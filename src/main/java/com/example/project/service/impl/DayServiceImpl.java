@@ -140,4 +140,6 @@ for(Day day: days){
     public Hotel getHotel(Town town) {
         return town.getHotels().iterator().next();
     }
+
+
 }

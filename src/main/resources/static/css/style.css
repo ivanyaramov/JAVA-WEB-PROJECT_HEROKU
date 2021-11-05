@@ -192,6 +192,9 @@ img {
 .alignright {
     float: right;
 }
+.aligncenter {
+text-align: center;
+}
 
 .townbgcolorforexcursion{
     /*background-color: #EABC82;    */
@@ -208,7 +211,7 @@ img {
 
 .daybgcolor{
     /*background-color: #EABC82;    */
-    background-color: #72CA96;
+    background-color: #56DDE4;
     text-align: center;
     padding-top: 20px;
     display: flex;
@@ -219,6 +222,6 @@ img {
 
 .wrapwholeelement{
     border: solid;
-    border-color: red;
+    border-color: #21573A;
 
 }

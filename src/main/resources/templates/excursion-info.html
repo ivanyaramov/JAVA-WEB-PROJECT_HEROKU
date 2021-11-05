@@ -19,7 +19,7 @@
     </div>
   <div class="row col-md-12">
     <div class="col-xs-12 col-sm-6" >
-      <div class="bg-primary centered">
+      <div th:unless= "${d.towns.size()==0}" class="bg-primary centered">
         <h2>Towns</h2>
       </div>
       <div class="row ">
@@ -35,7 +35,7 @@
     </div>
       </div>
     <div class="col-xs-12 col-sm-6" >
-      <div class="bg-primary centered">
+      <div th:if= "${d.hotel}" class="bg-primary centered">
         <h2>Hotel</h2>
       </div>
       <div th:each="h : ${d.hotel}" th:object="${h}"  class="card col-lg-6 alignright" style="width: 18rem;">

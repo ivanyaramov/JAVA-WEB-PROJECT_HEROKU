@@ -41,4 +41,16 @@ public class TownController {
         return "town-hotels";
     }
 
+    @GetMapping("/landmarks/forhelp/{name}")
+    public String helpMethodToRedirect(@PathVariable String name){
+        System.out.println(name);
+        String townAsString = name.split(" ")[0];
+        Town town = townService.findByName(townAsString);
+        System.out.println(town.getName());
+        Long id = town.getId();
+        return "redirect:/towns/landmarks/" + id;
+
+    }
+
+
 }

@@ -15,7 +15,7 @@ $(window).on('load', function() {
             for(var i=0;i<townsandcountries.length;i++){
                 var town = townsandcountries[i].split("id:")[0];
                 var id = townsandcountries[i].split("id:")[1];
-                $option = $('<option value = \'' + id+ '\'>' + town+ '</option>')
+                $option = $('<option value = \'' + town+ '\'></option>')
                 $("#townsandcountries").append( $option ); 
             }
         })
@@ -29,9 +29,12 @@ $(window).on('load', function() {
     function() {
         console.log($("#searchbar").val());
         var id = $("#searchbar").val();
-        if ($("#searchbar").val() !== "" && !isNaN(id)) {
-            window.location.href = "/towns/landmarks/" + id;
-        }
+        // if ($("#searchbar").val() !== "" && !isNaN(id)) {
+        //     window.location.href = "/towns/landmarks/forhelp/" + id;
+        // }
+
+        window.location.href = "/towns/landmarks/forhelp/" + id;
+
     });
 
 
