@@ -99,6 +99,7 @@ body {
     padding: 0;
     background-color: #17a2b8;
     height: 100vh;
+
 }
 
 
@@ -190,4 +191,34 @@ img {
 }
 .alignright {
     float: right;
+}
+
+.townbgcolorforexcursion{
+    /*background-color: #EABC82;    */
+    background-color: #1A4F45;
+    height: 60px;
+    text-align: center;
+    border-color: red;
+    border: solid;
+}
+.descriptionwrap{
+    border-width: medium;
+    border-color: #fff000;
+}
+
+.daybgcolor{
+    /*background-color: #EABC82;    */
+    background-color: #72CA96;
+    text-align: center;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 60px;
+
+}
+
+.wrapwholeelement{
+    border: solid;
+    border-color: red;
+
 }

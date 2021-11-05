@@ -1,32 +1,19 @@
-package com.example.project.model.entity;
+package com.example.project.model.view;
 
-import javax.persistence.*;
+import com.example.project.model.entity.Day;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
-@Entity
-@Table(name = "excursions")
-public class Excursion  extends BaseEntity{
+
+public class ExcursionViewModel {
+    private Long id;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
     private Integer capacity;
     private String pictureUrl;
-    private Set<Day> days;
+    private Set<DayViewModel> days;
 
-    public Excursion() {
-    }
-
-    public Excursion(String name, LocalDate startDate, LocalDate endDate, Integer capacity) {
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.capacity = capacity;
-    }
-
-    @Column(nullable = false, unique = true)
     public String getName() {
         return name;
     }
@@ -34,7 +21,7 @@ public class Excursion  extends BaseEntity{
     public void setName(String name) {
         this.name = name;
     }
-@Column(nullable = false)
+
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -42,7 +29,7 @@ public class Excursion  extends BaseEntity{
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-@Column(nullable = false)
+
     public LocalDate getEndDate() {
         return endDate;
     }
@@ -50,19 +37,7 @@ public class Excursion  extends BaseEntity{
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-    @OneToMany(mappedBy = "excursion", fetch = FetchType.EAGER)
-    public Set<Day> getDays() {
-        return days;
-    }
 
-    public void setDays(Set<Day> days) {
-        this.days = days;
-    }
-
-
-
-
-    @Column(nullable = false)
     public Integer getCapacity() {
         return capacity;
     }
@@ -70,12 +45,28 @@ public class Excursion  extends BaseEntity{
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
-@Column
+
     public String getPictureUrl() {
         return pictureUrl;
     }
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public Set<DayViewModel> getDays() {
+        return days;
+    }
+
+    public void setDays(Set<DayViewModel> days) {
+        this.days = days;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

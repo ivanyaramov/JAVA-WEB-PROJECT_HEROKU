@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+
+    <div class="row">
+        <div th:each="e : ${excursions}" th:object="${e}" class="card col-lg-3" style="width: 18rem;">
+            <div class="pt-2"><b><h4 th:text="*{name}"></h4></b></div>
+            <img class="card-img-top img" th:src="*{pictureUrl}" alt="Card image cap">
+            <div class="card-body "  >
+                <p class="card-text">a</p>
+            </div>
+            <div id="landmark-link" class = "card-footer" >
+                <!--        <br/>-->
+                <a th:href="@{/excursions/info/{id}(id=*{id})}" class="text-info h5 alignleft">More info</a>
+                <a th:href="@{/excursions/book/{id}(id=*{id})}" class="text-info h5 alignright">Book now!</a>
+            </div>
+        </div>
+
+
+</div>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

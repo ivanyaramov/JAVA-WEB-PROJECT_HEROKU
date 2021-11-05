@@ -11,13 +11,17 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private final HotelService hotelService;
     private final LandmarkService landmarkService;
     private final GuideService guideService;
+    private final ExcursionService excursionService;
+    private final DayService dayService;
 
-    public CommandLineRunnerImpl(CountryService countryService, TownService townService, HotelService hotelService, LandmarkService landmarkService, GuideService guideService) {
+    public CommandLineRunnerImpl(CountryService countryService, TownService townService, HotelService hotelService, LandmarkService landmarkService, GuideService guideService, ExcursionService excursionService, DayService dayService) {
         this.countryService = countryService;
         this.townService = townService;
         this.hotelService = hotelService;
         this.landmarkService = landmarkService;
         this.guideService = guideService;
+        this.excursionService = excursionService;
+        this.dayService = dayService;
     }
 
     @Override
@@ -31,6 +35,8 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         hotelService.initialiseHotels();
         guideService.initaliseGuides();
         landmarkService.initialiseLandmarks();
+        excursionService.initaliseExcursions();
+        dayService.createDaysForExcursionInItaly();
 
     }
 }

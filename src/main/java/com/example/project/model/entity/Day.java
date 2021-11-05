@@ -1,31 +1,30 @@
 package com.example.project.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
+
 @Entity
 @Table(name = "days")
 public class Day extends BaseEntity{
     private Integer numberOfDay;
     private String description;
-    private Town town;
-    private LocalDate date;
+    private Set<Town> towns;
+
     private Excursion excursion;
     private Hotel hotel;
 
     public Day() {
     }
 
-    public Day(Integer numberOfDay, Town town, Excursion excursion, Hotel hotel) {
+    public Day(Integer numberOfDay, Set<Town> towns, Excursion excursion, Hotel hotel) {
         this.numberOfDay = numberOfDay;
-        this.town = town;
+        this.towns = towns;
         this.excursion = excursion;
         this.hotel = hotel;
     }
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
@@ -33,15 +32,16 @@ public class Day extends BaseEntity{
     public void setDescription(String description) {
         this.description = description;
     }
-@ManyToOne
-    public Town getTown() {
-        return town;
+@ManyToMany(fetch = FetchType.EAGER)
+    public Set<Town> getTowns() {
+        return towns;
     }
 
-    public void setTown(Town town) {
-        this.town = town;
+    public void setTowns(Set<Town> towns) {
+        this.towns = towns;
     }
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     public Hotel getHotel() {
         return hotel;
     }
@@ -49,14 +49,7 @@ public class Day extends BaseEntity{
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
-@Column
-    public LocalDate getDate() {
-        return date;
-    }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 @ManyToOne
     public Excursion getExcursion() {
         return excursion;

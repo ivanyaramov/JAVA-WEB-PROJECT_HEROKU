@@ -1,5 +1,6 @@
 package com.example.project.web;
 
+import com.example.project.model.entity.Town;
 import com.example.project.model.view.TownViewModel;
 import com.example.project.service.CountryService;
 import com.example.project.service.TownService;
@@ -35,7 +36,8 @@ public class TownController {
 
     @GetMapping("/hotels/{id}")
     public String hotelsOfTown(@PathVariable Long id, Model model){
-        model.addAttribute("town", townService.findById(id));
+        TownViewModel town = townService.findById(id);
+        model.addAttribute("town", town);
         return "town-hotels";
     }
 
