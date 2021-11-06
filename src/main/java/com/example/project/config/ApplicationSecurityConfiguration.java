@@ -1,5 +1,6 @@
 package com.example.project.config;
 
+import com.example.project.model.entity.UserRoleEnum;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,11 +16,12 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public ApplicationSecurityConfiguration(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -28,9 +30,11 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 // with this line we allow access to all static resources
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // the next line allows access to the home page, login page and registration for everyone
-                        antMatchers("/**").permitAll().
+                        antMatchers("/", "/users/login", "/users/register").permitAll().
+                // we permit the page below only for admin users
+                        antMatchers("/statistics").hasRole(UserRoleEnum.ADMIN.name()).
                 // next we forbid all other pages for unauthenticated users.
-//                        antMatchers("/**").authenticated().
+                        antMatchers("/**").authenticated().
                 and().
                 // configure login with login HTML form with two input fileds
                         formLogin().
@@ -43,7 +47,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 // the name of the <input...> HTML filed that keeps the password
                         passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                 // The place where we should land in case that the login is successful
-                        defaultSuccessUrl("/").
+                        defaultSuccessUrl("/", true).
                 // the place where I should land if the login is NOT successful
                         failureForwardUrl("/users/login-error").
                 and().

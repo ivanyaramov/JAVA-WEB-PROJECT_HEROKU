@@ -1,7 +1,5 @@
 package com.example.project.model.entity;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -12,7 +10,7 @@ import javax.persistence.Table;
 public class Rating extends BaseEntity {
     private Double rating;
     private Excursion excursion;
-    private User user;
+    private UserEntity user;
     @Column
     public Double getRating() {
         return rating;
@@ -23,11 +21,11 @@ public class Rating extends BaseEntity {
     }
 
 @ManyToOne
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 @ManyToOne

@@ -7,12 +7,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity{
+public class UserEntity extends BaseEntity{
     private String username;
     private String fullName;
     private int age;
     private String password;
     private String email;
+    private boolean isActive;
     private Set<UserRoleEntity> roles = new HashSet<>();
 @Column
     public int getAge() {
@@ -56,13 +57,21 @@ public class User extends BaseEntity{
     public void setEmail(String email) {
         this.email = email;
     }
-@ManyToMany
+@ManyToMany(fetch = FetchType.EAGER)
     public Set<UserRoleEntity> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
+    }
+@Column
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
 
