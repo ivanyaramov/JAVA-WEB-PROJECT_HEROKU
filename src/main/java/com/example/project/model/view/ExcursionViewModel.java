@@ -13,6 +13,7 @@ public class ExcursionViewModel {
     private Integer capacity;
     private String pictureUrl;
     private Set<DayViewModel> days;
+    private GuideViewModel guide;
 
     public String getName() {
         return name;
@@ -68,5 +69,13 @@ public class ExcursionViewModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public GuideViewModel getGuide() {
+        return guide;
+    }
+
+    public void setGuide(GuideViewModel guide) {
+        this.guide = guide;
     }
 }

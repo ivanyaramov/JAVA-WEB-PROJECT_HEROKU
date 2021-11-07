@@ -13,6 +13,7 @@ public class UserEntity extends BaseEntity{
     private int age;
     private String password;
     private String email;
+    private String telephoneNum;
     private boolean isActive;
     private Set<UserRoleEntity> roles = new HashSet<>();
 @Column
@@ -72,6 +73,14 @@ public class UserEntity extends BaseEntity{
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+@Column
+    public String getTelephoneNum() {
+        return telephoneNum;
+    }
+
+    public void setTelephoneNum(String telephoneNum) {
+        this.telephoneNum = telephoneNum;
     }
 }
 

@@ -1,16 +1,20 @@
 package com.example.project.web;
 
-import com.example.project.model.entity.Excursion;
+import com.example.project.model.binding.BookingExcursionBindingModel;
+import com.example.project.model.service.BookingExcursionServiceModel;
 import com.example.project.model.view.DayViewModel;
 import com.example.project.model.view.ExcursionViewModel;
 import com.example.project.service.DayService;
 import com.example.project.service.ExcursionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -18,24 +22,61 @@ import java.util.List;
 public class ExcursionController {
     private final ExcursionService excursionService;
     private final DayService dayService;
+    private final ModelMapper modelMapper;
 
-    public ExcursionController(ExcursionService excursionService, DayService dayService) {
+    public ExcursionController(ExcursionService excursionService, DayService dayService, ModelMapper modelMapper) {
         this.excursionService = excursionService;
         this.dayService = dayService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/all")
-    public String viewAllTowns(Model model){
-        model.addAttribute("excursions",excursionService.getAll());
+    public String viewAllTowns(Model model) {
+        model.addAttribute("excursions", excursionService.getAll());
+        model.addAttribute("placesleft", 85);
+
         return "excursion";
     }
 
     @GetMapping("/info/{id}")
-    public String excursionInfo(@PathVariable Long id, Model model){
+    public String excursionInfo(@PathVariable Long id, Model model) {
         ExcursionViewModel excursion = excursionService.getExcursionById(id);
         model.addAttribute("excursion", excursion);
         List<DayViewModel> listOfDays = dayService.orderDays(excursion.getDays());
         model.addAttribute("days", listOfDays);
-    return "excursion-info";
+        return "excursion-info";
+    }
+
+    @GetMapping("/guide/{id}")
+    public String guide(@PathVariable Long id, Model model) {
+        ExcursionViewModel excursion = excursionService.getExcursionById(id);
+        model.addAttribute("excursion", excursion);
+        return "excursion-guide";
+    }
+
+    @ModelAttribute
+    public BookingExcursionBindingModel bookingExcursionBindingModel() {
+        return new BookingExcursionBindingModel();
+    }
+
+    @GetMapping("/booking/{id}")
+    public String bookExcursion() {
+        return "excursion-booking";
+    }
+
+    @PostMapping("/booking/{id}")
+    public String bookExcursion(@Valid BookingExcursionBindingModel bookingExcursionBindingModel,
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
+                                @PathVariable Long id,
+                                Principal principal) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("bookingExcursionBindingModel", bookingExcursionBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bookingExcursionBindingModel", bindingResult);
+        }
+        BookingExcursionServiceModel bookingExcursionServiceModel = modelMapper.map(bookingExcursionBindingModel, BookingExcursionServiceModel.class);
+        bookingExcursionServiceModel.setExcursionId(id);
+        bookingExcursionServiceModel.setUsername(principal.getName());
+        return "redirect:/";
     }
 }

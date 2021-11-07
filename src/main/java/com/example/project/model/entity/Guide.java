@@ -54,7 +54,7 @@ public class Guide extends BaseEntity{
     public void setDescription(String description) {
         this.description = description;
     }
-@OneToOne
+@OneToOne(mappedBy = "guide")
     public Excursion getExcursion() {
         return excursion;
     }

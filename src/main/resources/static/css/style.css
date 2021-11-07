@@ -210,6 +210,15 @@ text-align: center;
     border-color: red;
     border: solid;
 }
+
+.booknowbgcolor{
+    /*background-color: #EABC82;    */
+    background-color: orange;
+    height: 60px;
+    text-align: center;
+    border-color: red;
+    border: solid;
+}
 .descriptionwrap{
     border-width: medium;
     border-color: #fff000;
@@ -231,3 +240,31 @@ text-align: center;
     border-color: #21573A;
 
 }
+
+.cardguide {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+}
+
+.cardguide-img-top {
+    width: 80%;
+    height: 70%;
+    object-fit: cover;
+}
+
+.cardguide {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+.titleguide {
+    color: grey;
+    font-size: 18px;
+}
+
+
+
+

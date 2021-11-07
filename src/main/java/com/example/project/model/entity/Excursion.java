@@ -14,7 +14,9 @@ public class Excursion  extends BaseEntity{
     private LocalDate endDate;
     private Integer capacity;
     private String pictureUrl;
+    private Guide guide;
     private Set<Day> days;
+
 
     public Excursion() {
     }
@@ -77,5 +79,13 @@ public class Excursion  extends BaseEntity{
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+@OneToOne
+    public Guide getGuide() {
+        return guide;
+    }
+
+    public void setGuide(Guide guide) {
+        this.guide = guide;
     }
 }

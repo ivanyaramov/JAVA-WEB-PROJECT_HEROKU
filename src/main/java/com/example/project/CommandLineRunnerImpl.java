@@ -49,7 +49,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     }
 
     private void initializeRoles() {
-long count = userRoleRepository.count();
+//long count = userRoleRepository.count();
         if (userRoleRepository.count() == 0) {
             UserRoleEntity adminRole = new UserRoleEntity();
             adminRole.setRole(UserRoleEnum.ADMIN);

@@ -4,22 +4,24 @@ import com.example.project.model.entity.Excursion;
 import com.example.project.model.view.ExcursionViewModel;
 import com.example.project.repository.ExcursionRepository;
 import com.example.project.service.ExcursionService;
+import com.example.project.service.GuideService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ExcursionServiceImpl implements ExcursionService {
     private final ExcursionRepository excursionRepository;
     private final ModelMapper modelMapper;
+    private final GuideService guideService;
 
-    public ExcursionServiceImpl(ExcursionRepository excursionRepository, ModelMapper modelMapper) {
+    public ExcursionServiceImpl(ExcursionRepository excursionRepository, ModelMapper modelMapper, GuideService guideService) {
         this.excursionRepository = excursionRepository;
         this.modelMapper = modelMapper;
+        this.guideService = guideService;
     }
 
     @Override
@@ -31,6 +33,9 @@ public class ExcursionServiceImpl implements ExcursionService {
             inGermany.setPictureUrl("https://res.cloudinary.com/ivoto22/image/upload/v1636110825/Capture_dyetjj.jpg");
             Excursion inSpain = new Excursion("Excursion in Spain", LocalDate.of(2022, 3, 15), LocalDate.of(2022, 3, 24), 85);
            inSpain.setPictureUrl("https://res.cloudinary.com/ivoto22/image/upload/v1636110825/Capture_dyetjj.jpg");
+           inItaly.setGuide(guideService.findByFullName("Anton Biserov"));
+           inGermany.setGuide(guideService.findByFullName("Teodor Vladimirov"));
+           inSpain.setGuide(guideService.findByFullName("Alexa Dimitrova"));
             excursionRepository.save(inItaly);
             excursionRepository.save(inGermany);
             excursionRepository.save(inSpain);

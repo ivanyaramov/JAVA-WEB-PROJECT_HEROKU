@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+  <div id="login">
+    <div class="container">
+      <div id="login-row" class="row justify-content-center align-items-center">
+        <div id="login-column" class="col-md-6">
+          <div id="login-box" class="col-md-12">
+            <form method="post"
+                  th:action="@{/excursion/booking}"  id="login-form" class="form" >
+              <h3 class="text-center text-info">Login</h3>
+              <div class="form-group">
+                <label for="countofadults" class="text-info">Count of adults:</label><br>
+                <input th:value="${username}" th:errorclass="is-invalid" type="number" name="countofadults" id="countofadults" class="form-control"
+                <p class="invalid-feedback">Field must contain a positive number or 0</p>
+              </div>
+
+              <div class="form-group">
+                <label th:errorclass="is-invalid" for="countofchildren" class="text-info">Count of children:</label><br>
+                <input type="number" name="countofchildren" id="countofchildren" class="countofchildren">
+                <p class="invalid-feedback">Field must contain a positive number or 0</p>
+              </div>
+              <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

@@ -41,6 +41,13 @@
                 </p>
               </div>
               <div class="form-group">
+                <label for="telnum" class="text-info">Telephone number:</label><br>
+                <input maxlength="40" th:field="*{telephoneNum}" th:errorclass="is-invalid" type="tel" name="telnum" id="telnum" class="form-control">
+                <p class="invalid-feedback">
+                  Telephone number must be at least 6 and max 10 digits long and should contain only numbers.
+                </p>
+              </div>
+              <div class="form-group">
                 <label for="age" class="text-info">Age:</label><br>
                 <input  th:field="*{age}" th:errorclass="is-invalid" type="number" name="age" id="age" class="form-control">
                 <p class="invalid-feedback">

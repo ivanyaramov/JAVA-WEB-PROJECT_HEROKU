@@ -7,7 +7,7 @@ public class UserRegisterServiceModel {
     private String email;
     private String password;
     private Integer age;
-    private String telephoneNumber;
+    private String telephoneNum;
     private String username;
 
     public String getFullName() {
@@ -42,12 +42,12 @@ public class UserRegisterServiceModel {
         this.age = age;
     }
 
-    public String getTelephoneNumber() {
-        return telephoneNumber;
+    public String getTelephoneNum() {
+        return telephoneNum;
     }
 
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
+    public void setTelephoneNum(String telephoneNum) {
+        this.telephoneNum = telephoneNum;
     }
 
     public String getUsername() {
