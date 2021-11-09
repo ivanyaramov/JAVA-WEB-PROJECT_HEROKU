@@ -10,4 +10,5 @@ public interface ExcursionService {
     Excursion findByName(String name);
     List<ExcursionViewModel> getAll();
     ExcursionViewModel getExcursionById(Long id);
+    Excursion findById(Long id);
 }

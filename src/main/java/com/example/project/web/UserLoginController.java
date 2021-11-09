@@ -2,6 +2,7 @@ package com.example.project.web;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserLoginController {
 
     @GetMapping("/users/login")
-    public String login() {
+    public String login(Model model) {
+        if(!model.containsAttribute("bad_credentials")){
+            model.addAttribute("bad_credentials", false);
+        }
         return "login";
     }
 

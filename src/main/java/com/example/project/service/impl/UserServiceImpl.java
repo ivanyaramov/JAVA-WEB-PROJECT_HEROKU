@@ -66,4 +66,9 @@ public class UserServiceImpl implements UserService {
                 getContext().
                 setAuthentication(authentication);
     }
+
+    @Override
+    public UserEntity findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
 }

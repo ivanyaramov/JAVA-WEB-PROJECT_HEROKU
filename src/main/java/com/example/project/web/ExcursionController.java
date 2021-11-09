@@ -4,6 +4,7 @@ import com.example.project.model.binding.BookingExcursionBindingModel;
 import com.example.project.model.service.BookingExcursionServiceModel;
 import com.example.project.model.view.DayViewModel;
 import com.example.project.model.view.ExcursionViewModel;
+import com.example.project.service.BookingExcursionService;
 import com.example.project.service.DayService;
 import com.example.project.service.ExcursionService;
 import org.modelmapper.ModelMapper;
@@ -23,11 +24,13 @@ public class ExcursionController {
     private final ExcursionService excursionService;
     private final DayService dayService;
     private final ModelMapper modelMapper;
+    private final BookingExcursionService bookingExcursionService;
 
-    public ExcursionController(ExcursionService excursionService, DayService dayService, ModelMapper modelMapper) {
+    public ExcursionController(ExcursionService excursionService, DayService dayService, ModelMapper modelMapper, BookingExcursionService bookingExcursionService) {
         this.excursionService = excursionService;
         this.dayService = dayService;
         this.modelMapper = modelMapper;
+        this.bookingExcursionService = bookingExcursionService;
     }
 
     @GetMapping("/all")
@@ -60,7 +63,8 @@ public class ExcursionController {
     }
 
     @GetMapping("/booking/{id}")
-    public String bookExcursion() {
+    public String bookExcursion(@PathVariable Long id, Model model) {
+        model.addAttribute("id", id);
         return "excursion-booking";
     }
 
@@ -73,10 +77,12 @@ public class ExcursionController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("bookingExcursionBindingModel", bookingExcursionBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bookingExcursionBindingModel", bindingResult);
+        return "excursion-booking";
         }
         BookingExcursionServiceModel bookingExcursionServiceModel = modelMapper.map(bookingExcursionBindingModel, BookingExcursionServiceModel.class);
         bookingExcursionServiceModel.setExcursionId(id);
         bookingExcursionServiceModel.setUsername(principal.getName());
+        bookingExcursionService.createBooking(bookingExcursionServiceModel);
         return "redirect:/";
     }
 }

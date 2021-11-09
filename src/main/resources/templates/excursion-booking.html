@@ -13,19 +13,19 @@
     <div class="container">
       <div id="login-row" class="row justify-content-center align-items-center">
         <div id="login-column" class="col-md-6">
-          <div id="login-box" class="col-md-12">
-            <form method="post"
-                  th:action="@{/excursion/booking}"  id="login-form" class="form" >
-              <h3 class="text-center text-info">Login</h3>
+          <div id="login-box" class="col-md-12" >
+            <form method="post" th:object="${bookingExcursionBindingModel}"
+                  th:action="@{/excursions/booking/{id}(id=${id})}"  id="login-form" class="form" >
+              <h3 class="text-center text-info">Booking for excursion</h3>
               <div class="form-group">
                 <label for="countofadults" class="text-info">Count of adults:</label><br>
-                <input th:value="${username}" th:errorclass="is-invalid" type="number" name="countofadults" id="countofadults" class="form-control"
+                <input th:field="*{countOfAdults}" th:errorclass="is-invalid" type="number" name="countofadults" id="countofadults" class="form-control">
                 <p class="invalid-feedback">Field must contain a positive number or 0</p>
               </div>
 
               <div class="form-group">
-                <label th:errorclass="is-invalid" for="countofchildren" class="text-info">Count of children:</label><br>
-                <input type="number" name="countofchildren" id="countofchildren" class="countofchildren">
+                <label for="countofchildren" class="text-info">Count of children:</label><br>
+                <input th:field="*{countOfChildren}" th:errorclass="is-invalid"  type="number" name="countofchildren" id="countofchildren" class="form-control">
                 <p class="invalid-feedback">Field must contain a positive number or 0</p>
               </div>
               <div class="form-group">

@@ -28,8 +28,11 @@ public class BookingExcursionServiceImpl implements BookingExcursionService {
     @Override
     public void createBooking(BookingExcursionServiceModel bookingExcursionServiceModel) {
         BookingExcursion booking= modelMapper.map(bookingExcursionServiceModel, BookingExcursion.class);
-//        Excursion excursion = excursionService;
-//        UserEntity user = userService
+        Excursion excursion = excursionService.findById(bookingExcursionServiceModel.getExcursionId());
+        UserEntity user = userService.findByUsername(bookingExcursionServiceModel.getUsername());
+        booking.setExcursion(excursion);
+        booking.setUser(user);
+        bookingExcursionRepository.save(booking);
 
     }
 }

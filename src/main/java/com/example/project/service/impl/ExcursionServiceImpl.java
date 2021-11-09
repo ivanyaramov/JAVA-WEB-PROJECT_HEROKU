@@ -62,5 +62,10 @@ public class ExcursionServiceImpl implements ExcursionService {
         return modelMapper.map(excursion, ExcursionViewModel.class);
     }
 
+    @Override
+    public Excursion findById(Long id) {
+        return  excursionRepository.findById(id).orElse(null);
+    }
+
 
 }
