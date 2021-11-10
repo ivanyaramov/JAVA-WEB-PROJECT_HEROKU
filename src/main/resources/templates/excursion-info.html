@@ -12,7 +12,7 @@
   <div class="townbgcolorforexcursion">
     <h2 style="padding-top: 10px" th:text="|---*{name}---|"></h2>
   </div>
-  <div class="booknowbgcolor">
+  <div th:if="*{placesLeft}" class="booknowbgcolor">
     <a th:href="@{/excursions/booking/{id}(id=*{id})}" class=""><h1>Click here to book now!</h1></a>
   </div>
   <div class="wrapwholeelement" style="margin-top: 20px" th:each="d : ${days}" th:object="${d}">

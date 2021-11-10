@@ -15,4 +15,5 @@ public interface DayService {
     void saveDaysToDatabase(List<Day> days);
     List<DayViewModel> orderDays(Set<DayViewModel> set);
     Hotel getHotel(Town town);
+    void initaliseDays();
 }

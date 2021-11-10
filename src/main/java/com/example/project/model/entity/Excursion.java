@@ -16,7 +16,7 @@ public class Excursion  extends BaseEntity{
     private String pictureUrl;
     private Guide guide;
     private Set<Day> days;
-
+    private Set<BookingExcursion> bookingExcursions;
 
     public Excursion() {
     }
@@ -88,4 +88,13 @@ public class Excursion  extends BaseEntity{
     public void setGuide(Guide guide) {
         this.guide = guide;
     }
+@OneToMany(mappedBy = "excursion", fetch = FetchType.EAGER)
+    public Set<BookingExcursion> getBookingExcursions() {
+        return bookingExcursions;
+    }
+
+    public void setBookingExcursions(Set<BookingExcursion> bookingExcursions) {
+        this.bookingExcursions = bookingExcursions;
+    }
 }
+

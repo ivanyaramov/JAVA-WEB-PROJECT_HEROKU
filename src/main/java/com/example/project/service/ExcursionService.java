@@ -11,4 +11,5 @@ public interface ExcursionService {
     List<ExcursionViewModel> getAll();
     ExcursionViewModel getExcursionById(Long id);
     Excursion findById(Long id);
+    Integer determinePlacesLeft(Excursion excursion);
 }

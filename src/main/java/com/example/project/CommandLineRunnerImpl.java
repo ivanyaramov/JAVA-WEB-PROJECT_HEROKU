@@ -43,7 +43,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         guideService.initaliseGuides();
         landmarkService.initialiseLandmarks();
         excursionService.initaliseExcursions();
-        dayService.createDaysForExcursionInItaly();
+        dayService.initaliseDays();
         initializeRoles();
 
     }

@@ -34,12 +34,67 @@ public class DayServiceImpl implements DayService {
     @Override
     public void createDaysForExcursionInGermany() {
         List<Day> list = new ArrayList<>();
+        Town sofia = townService.findByName("Sofia");
+        Town belgrade = townService.findByName("Belgrade");
+        Town budapest = townService.findByName("Budapest");
+        Town vienna = townService.findByName("Vienna");
+        Town innsbruck = townService.findByName("Innsbruck");
+        Town munich = townService.findByName("Munich");
+        Town frankfurt = townService.findByName("Frankfurt");
+        Town stuttgart = townService.findByName("Stuttgart");
+        Town rust = townService.findByName("Rust");
+        Town strasbourg = townService.findByName("Strasbourg");
+        Excursion inGeramny = excursionService.findByName("Excursion in Germany");
+        Day day1 = new Day(1, Set.of(sofia), inGeramny, getHotel(belgrade));
+        day1.setDescription("At the first day we will meet near the University Of Sofia at 8:00 on 15.06.2022. We will have 3 spare hours" +
+                "so we will visit some of Sofia's main landmarks like the Aleksandar Nevski's Cathedral and the palace of culture. At 11 we get onto the bus" +
+                "and we head to Belgrade. We will be there at about 6pm and have dinner and rest.");
+        Day day2 = new Day(2, Set.of(belgrade, budapest), inGeramny, getHotel(budapest));
+        day2.setDescription("On day 2 we will meet at the hotel hall at 8:30. We will go round Belgrade with the bus and do sightseeing with the tour guide talking interesting stories without " +
+                "leaving the bus. At about 10:00 we will leave Belgrade and head towards Budapest. We will be there at about 1:30. You will have the oppurtunity to see the famous Hungarian parliament" +
+                "that is alongside the Danube river and even get inside it. Afterwards we will check out Castle Var andat about 20:00 we will head towards our hotel in budapest.");
 
+        Day day3 = new Day(3, Set.of(vienna), inGeramny, getHotel(innsbruck));
+        day3.setDescription("On day 3 we get up at 6:30 and then get in the bus and head towards Vienna. When we arrive you will have 3 free hours to freeroam it" +
+                "and afterwards we will go round some of the most famous landmarks of the city - Prater and Schonburg palace. At about 19:00 we will head towards" +
+                "Innsbruck where our hotel for the night is.");
+        Day day4 = new Day(4, Set.of(innsbruck, munich), inGeramny, getHotel(munich));
+        day4.setDescription("On day 4 we will get up at 7:00 and the bus will leave us at the Ambras castle and after we are done with it" +
+                " you will have a couple of hours free time in the city. After that we will head towards Munichwhere we will visit the Alianz arena and " +
+                "the BMW museum. We will spend the rest of our day there and head to the hotel.");
+        Day day5 = new Day(5, Set.of(frankfurt, stuttgart), inGeramny, getHotel(stuttgart));
+        day5.setDescription("On day 5 we will get up at 7:00 and our first destination will be the famous Stuttagrt Zoo. " +
+                "Afterwards we will visit the Mercedes museum where a guide will describe the history of the company. " +
+                "You will have 4 hours to spend at the museum (there are many interactial things to do). " +
+                "We will spend the night at a hotel in Stuttgart.");
+        Day day6 = new Day(6, Set.of(rust), inGeramny, getHotel(stuttgart));
+        day6.setDescription("This is the funniest day of the whole excursion. We will visit the Europa park, where we will " +
+                "spend the whole day. It is famous for the highest rollercoaster in Europe. The ones who don't want to " +
+                "visit the park will spend the day in Strasbourg and visit the Notre Dame Cathedral and afterwards you will have some free time in the city. " +
+                "In the evening we will go back to our hotel in Stuttgart.");
+        Day day7 = new Day(7, Set.of(vienna), inGeramny, getHotel(vienna));
+        day7.setDescription("On day 7 we will cover all the way back to Vienna. We will spend the night there.");
+        Day day8 = new Day(8, Set.of(belgrade), inGeramny, getHotel(belgrade));
+        day8.setDescription("We get up at 8:00 and the bus will head towards Belgrade. Due to the long distance we will not have " +
+                "the oppurtunity to do anything else. We will reach Belgrade at 20:00.");
+        Day day9 = new Day(9, null, inGeramny, null);
+        day9.setDescription("The last day of the excursion! We will head towards Sofia after we get up at 8:00. " +
+                "We will arrive at 16:00 at the place where the excursion started. Hopefully you will have had great time!");
+        list.add(day1);
+        list.add(day2);
+        list.add(day3);
+        list.add(day4);
+        list.add(day5);
+        list.add(day6);
+        list.add(day7);
+        list.add(day8);
+        list.add(day9);
+        saveDaysToDatabase(list);
     }
 
     @Override
     public void createDaysForExcursionInItaly() {
-        if (dayRepository.count() == 0) {
+
             List<Day> list = new ArrayList<>();
             Town sofia = townService.findByName("Sofia");
             Town belgrade = townService.findByName("Belgrade");
@@ -113,8 +168,10 @@ public class DayServiceImpl implements DayService {
             list.add(day9);
             list.add(day10);
             saveDaysToDatabase(list);
-        }
+
     }
+
+
 
     @Override
     public void createDaysForExcursionInSpain() {
@@ -139,6 +196,16 @@ for(Day day: days){
     @Override
     public Hotel getHotel(Town town) {
         return town.getHotels().iterator().next();
+    }
+
+    @Override
+    public void initaliseDays() {
+        if(dayRepository.count()==0){
+            createDaysForExcursionInItaly();
+            createDaysForExcursionInGermany();
+            createDaysForExcursionInSpain();
+
+        }
     }
 
 
