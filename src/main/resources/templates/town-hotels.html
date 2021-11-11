@@ -21,7 +21,7 @@
     <li class="list-group-item" th:text="|Price per night adults: *{pricePerNightAdult}|">Vestibulum at eros</li>
   </ul>
   <div class="card-body centered">
-    <a href="#" class="card-link">Book now!</a>
+    <a th:href="@{/towns/hotels/booking/{id}(id=${id})}" class="card-link">Book now!</a>
   </div>
 </div>
 </div>
