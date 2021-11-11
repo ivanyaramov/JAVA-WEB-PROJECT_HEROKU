@@ -86,5 +86,12 @@ public class ExcursionServiceImpl implements ExcursionService {
         return excursion.getCapacity() - sum;
     }
 
+    @Override
+    public boolean hasEnoughPlaces(Long excursionId, Integer bookingSum) {
+        Integer avaliable = determinePlacesLeft(findById(excursionId));
+        return avaliable >= bookingSum;
+
+    }
+
 
 }

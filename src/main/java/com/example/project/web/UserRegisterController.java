@@ -5,6 +5,7 @@ import com.example.project.model.service.UserRegisterServiceModel;
 import com.example.project.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,7 +32,16 @@ public class UserRegisterController {
     }
 
     @GetMapping("/users/register")
-    public String registerUser() {
+    public String registerUser(Model model) {
+        if(!model.containsAttribute("passwordsnotmatching")){
+            model.addAttribute("passwordsnotmatching", false);
+        }
+        if(!model.containsAttribute("usernameExists")){
+            model.addAttribute("usernameExists", false);
+        }
+        if(!model.containsAttribute("emailExists")){
+            model.addAttribute("emailExists", false);
+        }
         return "register";
     }
 
@@ -41,10 +51,18 @@ public class UserRegisterController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasErrors() || !userModel.getPassword().equals(userModel.getConfirmPassword())) {
+        if (bindingResult.hasErrors() || !userModel.getPassword().equals(userModel.getConfirmPassword()) || !userService.isUserNameFree(userModel.getUsername()) || !userService.isEmailFree(userModel.getEmail())) {
             redirectAttributes.addFlashAttribute("userModel", userModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModel", bindingResult);
-
+            if(!userModel.getPassword().equals(userModel.getConfirmPassword())){
+                redirectAttributes.addFlashAttribute("passwordsnotmatching",true);
+            }
+            if(!userService.isUserNameFree(userModel.getUsername())){
+                redirectAttributes.addFlashAttribute("usernameExists", true);
+            }
+            if(!userService.isEmailFree(userModel.getEmail())){
+                redirectAttributes.addFlashAttribute("emailExists", true);
+            }
             return "redirect:/users/register";
         }
 

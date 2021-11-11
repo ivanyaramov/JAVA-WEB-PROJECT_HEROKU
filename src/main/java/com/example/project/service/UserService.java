@@ -8,4 +8,6 @@ public interface UserService {
     boolean isUserNameFree(String username);
     void registerAndLoginUser(UserRegisterServiceModel userRegistrationServiceModel);
     UserEntity findByUsername(String username);
+
+    boolean isEmailFree(String email);
 }

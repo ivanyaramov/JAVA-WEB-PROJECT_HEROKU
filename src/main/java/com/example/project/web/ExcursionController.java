@@ -1,6 +1,7 @@
 package com.example.project.web;
 
 import com.example.project.model.binding.BookingExcursionBindingModel;
+import com.example.project.model.entity.Excursion;
 import com.example.project.model.service.BookingExcursionServiceModel;
 import com.example.project.model.view.DayViewModel;
 import com.example.project.model.view.ExcursionViewModel;
@@ -65,6 +66,13 @@ public class ExcursionController {
     @GetMapping("/booking/{id}")
     public String bookExcursion(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
+        if(!model.containsAttribute("enoughPlaces")) {
+            model.addAttribute("enoughPlaces", true);
+        }
+        if(!model.containsAttribute("zero")){
+            model.addAttribute("zero", false);
+        }
+
         return "excursion-booking";
     }
 
@@ -78,6 +86,16 @@ public class ExcursionController {
             redirectAttributes.addFlashAttribute("bookingExcursionBindingModel", bookingExcursionBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bookingExcursionBindingModel", bindingResult);
         return "excursion-booking";
+        }
+        Integer sum = bookingExcursionBindingModel.getCountOfAdults()+bookingExcursionBindingModel.getCountOfChildren();
+        if(!excursionService.hasEnoughPlaces(id, sum)){
+            redirectAttributes.addFlashAttribute("enoughPlaces", false);
+            redirectAttributes.addFlashAttribute("placesLeft", excursionService.determinePlacesLeft(excursionService.findById(id)));
+            return "redirect:/excursions/booking/" + id;
+        }
+        if(sum == 0){
+            redirectAttributes.addFlashAttribute("zero",true);
+            return "redirect:/excursions/booking/" + id;
         }
         BookingExcursionServiceModel bookingExcursionServiceModel = modelMapper.map(bookingExcursionBindingModel, BookingExcursionServiceModel.class);
         bookingExcursionServiceModel.setExcursionId(id);

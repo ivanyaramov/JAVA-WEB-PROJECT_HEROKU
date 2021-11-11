@@ -12,6 +12,9 @@
   <div class="townbgcolor" th:object="${town}">
     <h2  style="padding-top: 10px" th:text="|---*{name}---|"></h2>
   </div>
+<div  class="booknowbgcolor">
+  <a th:href="@{/towns/hotels/{id}(id=*{id})}" class=""><h1>Click here to book now!</h1></a>
+</div>
   <div class="row">
     <div th:each="l : ${town.landmarks}" th:object="${l}" class="card col-lg-3" style="width: 18rem;">
       <div class="pt-2 centered"><b><h3 th:text="*{name}"></h3></b></div>

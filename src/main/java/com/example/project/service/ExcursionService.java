@@ -12,4 +12,5 @@ public interface ExcursionService {
     ExcursionViewModel getExcursionById(Long id);
     Excursion findById(Long id);
     Integer determinePlacesLeft(Excursion excursion);
+    boolean hasEnoughPlaces(Long excursionId, Integer bookingSum);
 }

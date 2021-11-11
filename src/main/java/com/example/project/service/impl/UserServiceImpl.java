@@ -71,4 +71,9 @@ public class UserServiceImpl implements UserService {
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);
     }
+
+    @Override
+    public boolean isEmailFree(String email) {
+        return  userRepository.getByEmail(email).isEmpty();
+    }
 }
