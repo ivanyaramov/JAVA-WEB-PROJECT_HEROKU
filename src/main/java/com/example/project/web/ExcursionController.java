@@ -73,6 +73,7 @@ public class ExcursionController {
             model.addAttribute("zero", false);
         }
 
+
         return "excursion-booking";
     }
 
@@ -85,7 +86,7 @@ public class ExcursionController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("bookingExcursionBindingModel", bookingExcursionBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bookingExcursionBindingModel", bindingResult);
-        return "excursion-booking";
+            return "redirect:/excursions/booking/" + id;
         }
         Integer sum = bookingExcursionBindingModel.getCountOfAdults()+bookingExcursionBindingModel.getCountOfChildren();
         if(!excursionService.hasEnoughPlaces(id, sum)){

@@ -265,6 +265,45 @@ text-align: center;
     font-size: 18px;
 }
 
+#bookingexcursion .container #bookingexcursion-row #bookingexcursion-column #bookingexcursion-box {
+    margin-top: 25px;
+    max-width: 600px;
+    /*height: 740px;*/
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+    display: flex;
+    flex-direction: column;
+    min-height: 250px;
+
+}
+#bookingexcursion .container #bookingexcursion-row #bookingexcursion-column #bookingexcursion-box #bookingexcursion-form {
+    padding: 20px;
+
+}
+#bookingexcursion .bookingexcursion #bookingexcursion-row #bookingexcursion-column #bookingexcursion-box #bookingexcursion-form #bookingexcursion-link {
+    margin-top: -85px;
+}
+
+#bookingdestination .container #bookingdestination-row #bookingdestination-column #bookingdestination-box {
+    margin-top: 25px;
+    max-width: 600px;
+    /*height: 740px;*/
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+    display: flex;
+    flex-direction: column;
+    min-height: 250px;
+
+}
+#bookingdestination .container #bookingdestination-row #bookingdestination-column #bookingdestination-box #bookingdestination-form {
+    padding: 20px;
+
+}
+#bookingdestination .bookingdestination #bookingdestination-row #bookingdestination-column #bookingdestination-box #bookingdestination-form #bookingdestination-link {
+    margin-top: -85px;
+}
+
+
 
 
 

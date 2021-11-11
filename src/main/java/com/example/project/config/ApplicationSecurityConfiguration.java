@@ -25,8 +25,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.
-                authorizeRequests().
+        http.csrf().disable()
+                .authorizeRequests().
                 // with this line we allow access to all static resources
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // the next line allows access to the home page, login page and registration for everyone
@@ -60,6 +60,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         invalidateHttpSession(true).
                 //delete the cookie that references my session
                         deleteCookies("JSESSIONID");
+
 
     }
 
