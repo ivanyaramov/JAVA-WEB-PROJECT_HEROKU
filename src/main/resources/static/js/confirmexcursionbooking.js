@@ -7,8 +7,9 @@ $(window).on('load', function() {
 
         var countAdults = $("#countofadults").val();
         var countChildren = $("#countofchildren").val();
+        var id = window.location.pathname.split("/").pop();
 
-        var priceData = {'countOfAdults': countAdults, 'countOfChildren': countChildren };
+        var priceData = {'countOfAdults': countAdults, 'countOfChildren': countChildren, 'id': id };
         var formBody = [];
         for (var property in priceData) {
             var encodedKey = encodeURIComponent(property);
@@ -30,29 +31,50 @@ $(window).on('load', function() {
             }
             return resp.json(); // or resp.text() or whatever the server sends
         }).then((body) => {
-            price = body;
-            Swal.fire({
-                title: 'Are you sure you want to book?',
-                text: 'Price: ' + price + ' leva',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, book it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(event.target.action, {
-                        method: 'POST',
-                        redirect: 'follow',
-                        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-                    }).then((resp) => {
-                        if (resp.redirected) {
-                            window.location.href = resp.url;
-                        }
-                        return resp.json(); // or resp.text() or whatever the server sends
-                    })
-                }
-            });
+
+            if (body == -1) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Illegal values',
+                    text: 'Values must be positive or 0',
+                })
+            } else if (body == -2) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Illegal values',
+                    text: 'The booking should contain at least 1 person',
+                })
+            } else if (body == -3) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Too many people',
+                    text: 'The amount of people overloaded the free places',
+                })
+            } else{
+                price = body;
+                Swal.fire({
+                    title: 'Are you sure you want to book?',
+                    text: 'Price: ' + price + ' leva',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, book it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(event.target.action, {
+                            method: 'POST',
+                            redirect: 'follow',
+                            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+                        }).then((resp) => {
+                            if (resp.redirected) {
+                                window.location.href = resp.url;
+                            }
+                            return resp.json(); // or resp.text() or whatever the server sends
+                        })
+                    }
+                });
+            }
 
         }).catch((error) => {
             Swal.fire({
