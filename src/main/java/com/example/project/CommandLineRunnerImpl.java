@@ -19,8 +19,9 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private final ExcursionService excursionService;
     private final DayService dayService;
     private final UserRoleRepository userRoleRepository;
+    private final UserService userService;
 
-    public CommandLineRunnerImpl(CountryService countryService, TownService townService, HotelService hotelService, LandmarkService landmarkService, GuideService guideService, ExcursionService excursionService, DayService dayService, UserRoleRepository userRoleRepository) {
+    public CommandLineRunnerImpl(CountryService countryService, TownService townService, HotelService hotelService, LandmarkService landmarkService, GuideService guideService, ExcursionService excursionService, DayService dayService, UserRoleRepository userRoleRepository, UserService userService) {
         this.countryService = countryService;
         this.townService = townService;
         this.hotelService = hotelService;
@@ -29,6 +30,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         this.excursionService = excursionService;
         this.dayService = dayService;
         this.userRoleRepository = userRoleRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -45,6 +47,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         excursionService.initaliseExcursions();
         dayService.initaliseDays();
         initializeRoles();
+        userService.initaliseUsers();
 
     }
 

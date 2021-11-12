@@ -2,9 +2,13 @@ package com.example.project.web;
 
 import com.example.project.model.binding.BookingHotelBindingModel;
 import com.example.project.model.entity.Town;
+import com.example.project.model.service.BookingExcursionServiceModel;
+import com.example.project.model.service.BookingHotelServiceModel;
 import com.example.project.model.view.TownViewModel;
+import com.example.project.service.BookingHotelService;
 import com.example.project.service.CountryService;
 import com.example.project.service.TownService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +23,14 @@ import java.security.Principal;
 public class TownController {
     private final CountryService countryService;
     private final TownService townService;
+    private final ModelMapper modelMapper;
+    private final BookingHotelService bookingHotelService;
 
-    public TownController(CountryService countryService, TownService townService) {
+    public TownController(CountryService countryService, TownService townService, ModelMapper modelMapper, BookingHotelService bookingHotelService) {
         this.countryService = countryService;
         this.townService = townService;
+        this.modelMapper = modelMapper;
+        this.bookingHotelService = bookingHotelService;
     }
 
     @GetMapping("/all")
@@ -78,13 +86,24 @@ model.addAttribute("id", id);
                             @PathVariable Long id,
                             Principal principal){
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute(" bookingHotelBindingModel", bookingHotelBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult. bookingHotelBindingModel", bindingResult);
-            return "hotel-booking";
+            redirectAttributes.addFlashAttribute("bookingHotelBindingModel", bookingHotelBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bookingHotelBindingModel", bindingResult);
+            return "redirect:/towns/hotels/booking/" + id;
+
+        }
+        Integer sum = bookingHotelBindingModel.getCountOfAdults()+bookingHotelBindingModel.getCountOfChildren();
+
+        if(sum == 0){
+            redirectAttributes.addFlashAttribute("zero",true);
+            return "redirect:/towns/hotels/booking/" + id;
         }
 
+        BookingHotelServiceModel bookingHotelServiceModel = modelMapper.map(bookingHotelBindingModel, BookingHotelServiceModel.class);
+        bookingHotelServiceModel.setHotelId(id);
+        bookingHotelServiceModel.setUsername(principal.getName());
+        bookingHotelService.createBooking(bookingHotelServiceModel);
+        return "redirect:/";
 
-    return "redirect:/towns/hotels/booking/" + id;
     }
 
 

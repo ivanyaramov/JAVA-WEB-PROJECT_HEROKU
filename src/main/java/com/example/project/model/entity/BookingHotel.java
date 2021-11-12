@@ -13,7 +13,7 @@ public class BookingHotel extends BaseEntity{
     private Integer countOfAdults;
     private Integer countOfChildren;
     private LocalDate startDate;
-    private LocalDate endDate;
+    private Integer nights;
     @ManyToOne
     public UserEntity getUser() {
         return user;
@@ -54,12 +54,13 @@ public class BookingHotel extends BaseEntity{
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
+
     @Column
-    public LocalDate getEndDate() {
-        return endDate;
+    public Integer getNights() {
+        return nights;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setNights(Integer nights) {
+        this.nights = nights;
     }
 }

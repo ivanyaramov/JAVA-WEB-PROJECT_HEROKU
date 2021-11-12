@@ -3,6 +3,7 @@ package com.example.project.model.binding;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ public class BookingHotelBindingModel {
     private Integer countOfAdults;
     private Integer countOfChildren;
     private LocalDate startDate;
-    private LocalDate endDate;
+    private int nights;
     @PositiveOrZero
     @NotNull
     public Integer getCountOfAdults() {
@@ -40,14 +41,13 @@ public class BookingHotelBindingModel {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Future
-    public LocalDate getEndDate() {
-        return endDate;
+@Min(1)
+@NotNull
+    public int getNights() {
+        return nights;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setNights(int nights) {
+        this.nights = nights;
     }
 }

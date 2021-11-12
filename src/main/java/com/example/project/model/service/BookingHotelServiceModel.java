@@ -7,8 +7,8 @@ public class BookingHotelServiceModel {
     private Integer countOfAdults;
     private Integer countOfChildren;
     private LocalDate startDate;
-    private LocalDate endDate;
-    private Long excursionId;
+    private Integer nights;
+    private Long hotelId;
     private String username;
 
     public Long getId() {
@@ -43,20 +43,20 @@ public class BookingHotelServiceModel {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public Integer getNights() {
+        return nights;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setNights(Integer nights) {
+        this.nights = nights;
     }
 
-    public Long getExcursionId() {
-        return excursionId;
+    public Long getHotelId() {
+        return hotelId;
     }
 
-    public void setExcursionId(Long excursionId) {
-        this.excursionId = excursionId;
+    public void setHotelId(Long hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getUsername() {

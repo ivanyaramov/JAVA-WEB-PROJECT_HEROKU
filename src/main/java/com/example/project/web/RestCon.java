@@ -2,9 +2,9 @@ package com.example.project.web;
 
 import com.example.project.service.CountryService;
 import com.example.project.service.TownService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
@@ -23,5 +23,12 @@ public class RestCon {
                towns= townService.getAllTownsAsStrings();
 
         return towns;
+    }
+
+    @PostMapping ("/rest/bookingexcursionprice")
+    public BigDecimal sum(@RequestParam BigDecimal countOfAdults,
+                       @RequestParam BigDecimal countOfChildren){
+        return countOfAdults.add(countOfChildren);
+
     }
 }

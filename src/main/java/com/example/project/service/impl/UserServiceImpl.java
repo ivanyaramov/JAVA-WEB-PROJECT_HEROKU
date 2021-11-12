@@ -76,4 +76,40 @@ public class UserServiceImpl implements UserService {
     public boolean isEmailFree(String email) {
         return  userRepository.getByEmail(email).isEmpty();
     }
+
+    @Override
+    public void initaliseUsers() {
+        if(userRepository.count()==0) {
+            UserRoleEntity user = userRoleService.findByRole(UserRoleEnum.USER);
+            UserRoleEntity mod = userRoleService.findByRole(UserRoleEnum.MODERATOR);
+            UserRoleEntity admin = userRoleService.findByRole(UserRoleEnum.ADMIN);
+            UserEntity gosho = new UserEntity();
+            gosho.setFullName("Ivan Yaramov");
+            gosho.setPassword(passwordEncoder.encode("12345"));
+            gosho.setUsername("gosho");
+            gosho.setAge(20);
+            gosho.setEmail("absbs@gmail.com");
+            gosho.setTelephoneNum("08987874568");
+            gosho.setRoles(Set.of(user));
+            UserEntity moderator = new UserEntity();
+            moderator.setFullName("Moderator Moderatorov");
+            moderator.setPassword(passwordEncoder.encode("12345"));
+            moderator.setUsername("moder");
+            moderator.setAge(21);
+            moderator.setEmail("abs34bs@gmail.com");
+            moderator.setTelephoneNum("08947874568");
+            moderator.setRoles(Set.of(user, mod));
+            UserEntity adminentity = new UserEntity();
+            adminentity.setFullName("Admin Adminov");
+            adminentity.setPassword(passwordEncoder.encode("12345"));
+            adminentity.setUsername("admin");
+            adminentity.setAge(22);
+            adminentity.setEmail("abs52534bs@gmail.com");
+            adminentity.setTelephoneNum("08947814568");
+            adminentity.setRoles(Set.of(user, mod, admin));
+            userRepository.save(gosho);
+            userRepository.save(moderator);
+            userRepository.save(adminentity);
+        }
+    }
 }

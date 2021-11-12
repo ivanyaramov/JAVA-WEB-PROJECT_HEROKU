@@ -10,4 +10,5 @@ public interface UserService {
     UserEntity findByUsername(String username);
 
     boolean isEmailFree(String email);
+    void initaliseUsers();
 }

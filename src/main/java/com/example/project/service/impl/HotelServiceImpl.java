@@ -135,4 +135,9 @@ public class HotelServiceImpl implements HotelService {
 
         }
     }
+
+    @Override
+    public Hotel findById(Long id) {
+        return hotelRepository.findById(id).orElse(null);
+    }
 }

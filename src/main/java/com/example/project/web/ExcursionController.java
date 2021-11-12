@@ -67,7 +67,7 @@ public class ExcursionController {
     public String bookExcursion(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
         if(!model.containsAttribute("enoughPlaces")) {
-            model.addAttribute("enoughPlaces", true);
+            model.addAttribute("enoughPlaces", false);
         }
         if(!model.containsAttribute("zero")){
             model.addAttribute("zero", false);
@@ -84,18 +84,18 @@ public class ExcursionController {
                                 @PathVariable Long id,
                                 Principal principal) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("bookingExcursionBindingModel", bookingExcursionBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bookingExcursionBindingModel", bindingResult);
+            redirectAttributes.addAttribute("bookingExcursionBindingModel", bookingExcursionBindingModel);
+            redirectAttributes.addAttribute("org.springframework.validation.BindingResult.bookingExcursionBindingModel", bindingResult);
             return "redirect:/excursions/booking/" + id;
         }
         Integer sum = bookingExcursionBindingModel.getCountOfAdults()+bookingExcursionBindingModel.getCountOfChildren();
         if(!excursionService.hasEnoughPlaces(id, sum)){
-            redirectAttributes.addFlashAttribute("enoughPlaces", false);
-            redirectAttributes.addFlashAttribute("placesLeft", excursionService.determinePlacesLeft(excursionService.findById(id)));
+            redirectAttributes.addAttribute("enoughPlaces", true);
+            redirectAttributes.addAttribute("placesLeft", excursionService.determinePlacesLeft(excursionService.findById(id)));
             return "redirect:/excursions/booking/" + id;
         }
         if(sum == 0){
-            redirectAttributes.addFlashAttribute("zero",true);
+            redirectAttributes.addAttribute("zero",true);
             return "redirect:/excursions/booking/" + id;
         }
         BookingExcursionServiceModel bookingExcursionServiceModel = modelMapper.map(bookingExcursionBindingModel, BookingExcursionServiceModel.class);

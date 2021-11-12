@@ -16,7 +16,7 @@
                     <div id="bookingdestination-box" class="col-md-12" >
                         <form method="post" th:object="${bookingHotelBindingModel}"
                               th:action="@{/towns/hotels/booking/{id}(id=${id})}"  id="login-form" class="form" >
-                            <h3 class="text-center text-info">Booking for excursion</h3>
+                            <h3 class="text-center text-info">Hotel booking</h3>
                             <p class="bg-danger alert-danger" th:if="${zero}">You can't make a booking for 0 people!</p>
                             <div class="form-group">
                                 <label for="countofadults" class="text-info">Count of adults:</label><br>
@@ -36,9 +36,9 @@
                                 <p class="invalid-feedback">Field must be in the future and can't be null</p>
                             </div>
                             <div class="form-group">
-                                <label for="enddate" class="text-info">End date:</label><br>
-                                <input th:field="*{endDate}" th:errorclass="is-invalid" type="date" name="enddate" id="enddate" class="form-control">
-                                <p class="invalid-feedback">Field must be in the future and can't be null</p>
+                                <label for="enddate" class="text-info">Number of nights:</label><br>
+                                <input th:field="*{nights}" th:errorclass="is-invalid" type="number" name="enddate" id="enddate" class="form-control">
+                                <p class="invalid-feedback">Field can't be null and must be a positive number</p>
                             </div>
                             <div class="form-group">
                                 <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">

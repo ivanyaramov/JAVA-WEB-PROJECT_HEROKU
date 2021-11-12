@@ -18,7 +18,7 @@
                   th:action="@{/excursions/booking/{id}(id=${id})}"   class="form" >
               <h3 class="text-center text-info">Booking for excursion</h3>
               <p class="bg-danger alert-danger" th:if="${zero}">You can't make a booking for 0 people!</p>
-              <p class="bg-danger alert-danger" th:unless="${enoughPlaces}" th:text="|There are only ${placesLeft} places left, you cannot book for more|"></p>
+              <p class="bg-danger alert-danger" th:if="${enoughPlaces}" th:text="|There are only ${placesLeft} places left, you cannot book for more|"></p>
               <div class="form-group">
                 <label for="countofadults" class="text-info">Count of adults:</label><br>
                 <input th:field="*{countOfAdults}" th:errorclass="is-invalid" type="number" name="countofadults" id="countofadults" class="form-control">
