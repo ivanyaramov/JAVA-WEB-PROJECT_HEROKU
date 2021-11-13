@@ -5,6 +5,7 @@
 
 </head>
 <body class = "bodyoflogin">
+<script src="../../../js/confirmhotelbooking.js"></script>
 <header th:replace="fragments/commons::navigation">
 
 </header>
@@ -15,9 +16,8 @@
                 <div id="bookingdestination-column" class="col-md-6">
                     <div id="bookingdestination-box" class="col-md-12" >
                         <form method="post" th:object="${bookingHotelBindingModel}"
-                              th:action="@{/towns/hotels/booking/{id}(id=${id})}"  id="login-form" class="form" >
+                              th:action="@{/towns/hotels/booking/{id}(id=${id})}"  id="hotelBooking_form" class="form" >
                             <h3 class="text-center text-info">Hotel booking</h3>
-                            <p class="bg-danger alert-danger" th:if="${zero}">You can't make a booking for 0 people!</p>
                             <div class="form-group">
                                 <label for="countofadults" class="text-info">Count of adults:</label><br>
                                 <input th:field="*{countOfAdults}" th:errorclass="is-invalid" type="number" name="countofadults" id="countofadults" class="form-control">
@@ -36,8 +36,8 @@
                                 <p class="invalid-feedback">Field must be in the future and can't be null</p>
                             </div>
                             <div class="form-group">
-                                <label for="enddate" class="text-info">Number of nights:</label><br>
-                                <input th:field="*{nights}" th:errorclass="is-invalid" type="number" name="enddate" id="enddate" class="form-control">
+                                <label for="nights" class="text-info">Number of nights:</label><br>
+                                <input th:field="*{nights}" th:errorclass="is-invalid" type="number" name="nights" id="nights" class="form-control">
                                 <p class="invalid-feedback">Field can't be null and must be a positive number</p>
                             </div>
                             <div class="form-group">

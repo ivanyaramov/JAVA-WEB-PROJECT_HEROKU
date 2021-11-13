@@ -10,6 +10,7 @@ import com.example.project.service.GuideService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +92,24 @@ public class ExcursionServiceImpl implements ExcursionService {
         Integer avaliable = determinePlacesLeft(findById(excursionId));
         return avaliable >= bookingSum;
 
+    }
+
+    @Override
+    public BigDecimal priceOfExcursion(BigDecimal children, BigDecimal adults, Long id) {
+       Excursion excursion = findById(id);
+       BigDecimal priceForOneChild = new BigDecimal(0);
+       BigDecimal priceForOneAdult = new BigDecimal(0);
+       for(Day day : excursion.getDays()){
+           if(day.getHotel()!=null){
+               priceForOneChild = priceForOneChild.add(day.getHotel().getPricePerNightChild());
+               priceForOneAdult = priceForOneAdult.add(day.getHotel().getPricePerNightAdult());
+           }
+       }
+       BigDecimal priceForAllChildren = priceForOneChild.multiply(children);
+       BigDecimal priceForAllAdults = priceForOneAdult.multiply(adults);
+       BigDecimal totalPrice = BigDecimal.valueOf(100);
+       totalPrice = totalPrice.add(priceForAllAdults).add(priceForAllChildren);
+       return totalPrice;
     }
 
 

@@ -12,6 +12,7 @@ public interface TownService {
     Town findByName(String name);
     TownViewModel findById(Long id);
     List<String> getAllTownsAsStrings();
+    List<String> getOnlyTownsAsStrings();
     List<TownViewModel> getAllTowns();
     List<Town> getAllTownsAsNormal();
 }

@@ -179,6 +179,11 @@ public class TownServiceImpl implements TownService {
     }
 
     @Override
+    public List<String> getOnlyTownsAsStrings() {
+        return getAllTowns().stream().map(t->t.getName()).collect(Collectors.toList());
+    }
+
+    @Override
     public List<TownViewModel> getAllTowns() {
         return townRepository.findAll().stream()
                 .map(t-> {

@@ -111,11 +111,14 @@ body {
 
 
 #landmark .container #landmark-row #landmark-column #landmark-box {
-    margin-top: 120px;
+    margin-top: 25px;
     max-width: 600px;
-    height: 560px;
+    /*height: 740px;*/
     border: 1px solid #9C9C9C;
     background-color: #EAEAEA;
+    display: flex;
+    flex-direction: column;
+    min-height: 550px;
 }
 #landmark .container #landmark-row #landmark-column #landmark-box #landmark-form {
     padding: 20px;
@@ -132,19 +135,7 @@ body {
 
 }
 
-#hotel .container #hotel-row #hotel-column #hotel-box {
-    margin-top: 120px;
-    max-width: 600px;
-    height: 560px;
-    border: 1px solid #9C9C9C;
-    background-color: #EAEAEA;
-}
-#hotel .container #hotel-row #hotel-column #hotel-box #hotel-form {
-    padding: 20px;
-}
-#hotel .container #hotel-row #hotel-column #hotel-box #hotel-form #hotel-link {
-    margin-top: -85px;
-}
+
 
 #town .container #town-row #town-column #town-box {
     margin-top: 120px;
@@ -303,6 +294,25 @@ text-align: center;
     margin-top: -85px;
 }
 
+
+#hotel .container #hotel-row #hotel-column #hotel-box {
+    margin-top: 25px;
+    max-width: 600px;
+    /*height: 740px;*/
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+    display: flex;
+    flex-direction: column;
+    min-height: 550px;
+
+}
+#hotel .container #hotel-row #hotel-column #hotel-box #hotel-form {
+    padding: 20px;
+
+}
+#hotel .hotel #hotel-row #hotel-column #hotel-box #hotel-form #hotel-link {
+    margin-top: -85px;
+}
 
 
 

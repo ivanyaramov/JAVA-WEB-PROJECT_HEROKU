@@ -5,16 +5,18 @@ import com.example.project.model.entity.Town;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public class HotelBindingModel {
     private String name;
-    private StarsEnum stars;
+    private Integer stars;
     private BigDecimal pricePerNightAdult;
     private BigDecimal pricePerNightChild;
     private String imageUrl;
     private String town;
 @NotNull
+@Size(min = 1)
     public String getName() {
         return name;
     }
@@ -22,14 +24,15 @@ public class HotelBindingModel {
     public void setName(String name) {
         this.name = name;
     }
-    @NotNull
-    public StarsEnum getStars() {
+@NotNull
+    public Integer getStars() {
         return stars;
     }
 
-    public void setStars(StarsEnum stars) {
+    public void setStars(Integer stars) {
         this.stars = stars;
     }
+
     @Positive
     @NotNull
     public BigDecimal getPricePerNightAdult() {
@@ -49,6 +52,7 @@ public class HotelBindingModel {
         this.pricePerNightChild = pricePerNightChild;
     }
     @NotNull
+    @Size(min = 1)
     public String getImageUrl() {
         return imageUrl;
     }
@@ -57,6 +61,7 @@ public class HotelBindingModel {
         this.imageUrl = imageUrl;
     }
     @NotNull
+    @Size(min = 1)
     public String getTown() {
         return town;
     }

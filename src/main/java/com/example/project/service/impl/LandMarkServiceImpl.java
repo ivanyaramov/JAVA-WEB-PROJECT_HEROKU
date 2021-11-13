@@ -2,19 +2,23 @@ package com.example.project.service.impl;
 
 import com.example.project.model.entity.Landmark;
 import com.example.project.model.entity.Town;
+import com.example.project.model.service.LandmarkServiceModel;
 import com.example.project.repository.LandmarkRepository;
 import com.example.project.service.LandmarkService;
 import com.example.project.service.TownService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LandMarkServiceImpl implements LandmarkService {
     private final LandmarkRepository landmarkRepository;
     private final TownService townService;
+    private final ModelMapper modelMapper;
 
-    public LandMarkServiceImpl(LandmarkRepository landmarkRepository, TownService townService) {
+    public LandMarkServiceImpl(LandmarkRepository landmarkRepository, TownService townService, ModelMapper modelMapper) {
         this.landmarkRepository = landmarkRepository;
         this.townService = townService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -256,5 +260,11 @@ public class LandMarkServiceImpl implements LandmarkService {
 
         }
 
+    }
+
+    @Override
+    public void createLandmark(LandmarkServiceModel landmarkServiceModel) {
+        Landmark landmark = modelMapper.map(landmarkServiceModel,Landmark.class);
+        landmarkRepository.save(landmark);
     }
 }

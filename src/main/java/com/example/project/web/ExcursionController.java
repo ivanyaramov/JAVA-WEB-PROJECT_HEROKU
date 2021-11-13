@@ -66,13 +66,8 @@ public class ExcursionController {
     @GetMapping("/booking/{id}")
     public String bookExcursion(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
-        if(!model.containsAttribute("enoughPlaces")) {
-            model.addAttribute("enoughPlaces", false);
-        }
-        if(!model.containsAttribute("zero")){
-            model.addAttribute("zero", false);
-        }
-
+        Integer placesLeft = excursionService.determinePlacesLeft(excursionService.findById(id));
+        model.addAttribute("placesLeft", placesLeft);
 
         return "excursion-booking";
     }
@@ -83,21 +78,11 @@ public class ExcursionController {
                                 RedirectAttributes redirectAttributes,
                                 @PathVariable Long id,
                                 Principal principal) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addAttribute("bookingExcursionBindingModel", bookingExcursionBindingModel);
-            redirectAttributes.addAttribute("org.springframework.validation.BindingResult.bookingExcursionBindingModel", bindingResult);
-            return "redirect:/excursions/booking/" + id;
-        }
         Integer sum = bookingExcursionBindingModel.getCountOfAdults()+bookingExcursionBindingModel.getCountOfChildren();
-        if(!excursionService.hasEnoughPlaces(id, sum)){
-            redirectAttributes.addAttribute("enoughPlaces", true);
-            redirectAttributes.addAttribute("placesLeft", excursionService.determinePlacesLeft(excursionService.findById(id)));
+        if (bindingResult.hasErrors() || !excursionService.hasEnoughPlaces(id, sum) || sum == 0) {
             return "redirect:/excursions/booking/" + id;
         }
-        if(sum == 0){
-            redirectAttributes.addAttribute("zero",true);
-            return "redirect:/excursions/booking/" + id;
-        }
+
         BookingExcursionServiceModel bookingExcursionServiceModel = modelMapper.map(bookingExcursionBindingModel, BookingExcursionServiceModel.class);
         bookingExcursionServiceModel.setExcursionId(id);
         bookingExcursionServiceModel.setUsername(principal.getName());

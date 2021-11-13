@@ -66,11 +66,10 @@ public class TownController {
 
     @GetMapping("/hotels/booking/{id}")
     public String bookHotel(@PathVariable Long id, Model model){
+
 model.addAttribute("id", id);
 
-        if(!model.containsAttribute("zero")){
-            model.addAttribute("zero", false);
-        }
+
         return "hotel-booking";
     }
 
@@ -85,17 +84,11 @@ model.addAttribute("id", id);
                             RedirectAttributes redirectAttributes,
                             @PathVariable Long id,
                             Principal principal){
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("bookingHotelBindingModel", bookingHotelBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bookingHotelBindingModel", bindingResult);
-            return "redirect:/towns/hotels/booking/" + id;
-
-        }
         Integer sum = bookingHotelBindingModel.getCountOfAdults()+bookingHotelBindingModel.getCountOfChildren();
+        if (bindingResult.hasErrors() || sum == 0) {
 
-        if(sum == 0){
-            redirectAttributes.addFlashAttribute("zero",true);
             return "redirect:/towns/hotels/booking/" + id;
+
         }
 
         BookingHotelServiceModel bookingHotelServiceModel = modelMapper.map(bookingHotelBindingModel, BookingHotelServiceModel.class);

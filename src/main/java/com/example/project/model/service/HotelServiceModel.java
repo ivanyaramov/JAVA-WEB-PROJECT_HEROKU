@@ -1,16 +1,17 @@
 package com.example.project.model.service;
 
 import com.example.project.model.entity.StarsEnum;
+import com.example.project.model.entity.Town;
 
 import java.math.BigDecimal;
 
 public class HotelServiceModel {
     private String name;
-    private StarsEnum stars;
+    private Integer stars;
     private BigDecimal pricePerNightAdult;
     private BigDecimal pricePerNightChild;
     private String imageUrl;
-    private String town;
+    private Town town;
 
     public String getName() {
         return name;
@@ -20,11 +21,11 @@ public class HotelServiceModel {
         this.name = name;
     }
 
-    public StarsEnum getStars() {
+    public Integer getStars() {
         return stars;
     }
 
-    public void setStars(StarsEnum stars) {
+    public void setStars(Integer stars) {
         this.stars = stars;
     }
 
@@ -52,11 +53,11 @@ public class HotelServiceModel {
         this.imageUrl = imageUrl;
     }
 
-    public String getTown() {
+    public Town getTown() {
         return town;
     }
 
-    public void setTown(String town) {
+    public void setTown(Town town) {
         this.town = town;
     }
 }

@@ -1,9 +1,11 @@
 package com.example.project.service.impl;
 
 import com.example.project.model.entity.Hotel;
+import com.example.project.model.service.HotelServiceModel;
 import com.example.project.repository.HotelRepository;
 import com.example.project.service.HotelService;
 import com.example.project.service.TownService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -12,10 +14,12 @@ import java.math.BigDecimal;
 public class HotelServiceImpl implements HotelService {
     private final TownService townService;
     private final HotelRepository hotelRepository;
+    private final ModelMapper modelMapper;
 
-    public HotelServiceImpl(TownService townService, HotelRepository hotelRepository) {
+    public HotelServiceImpl(TownService townService, HotelRepository hotelRepository, ModelMapper modelMapper) {
         this.townService = townService;
         this.hotelRepository = hotelRepository;
+         this.modelMapper = modelMapper;
     }
 
     @Override
@@ -139,5 +143,21 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public Hotel findById(Long id) {
         return hotelRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public BigDecimal priceOfHotelBooking(BigDecimal countOfChildren, BigDecimal countOfAdults, Long id) {
+         Hotel hotel = findById(id);
+        BigDecimal priceForChildren = hotel.getPricePerNightChild().multiply(countOfChildren);
+        BigDecimal priceForAdults = hotel.getPricePerNightAdult().multiply(countOfAdults);
+
+         return priceForAdults.add(priceForChildren);
+    }
+
+    @Override
+    public void createHotel(HotelServiceModel hotelServiceModel) {
+         Hotel hotel = modelMapper.map(hotelServiceModel, Hotel.class);
+         hotelRepository.save(hotel);
+
     }
 }
