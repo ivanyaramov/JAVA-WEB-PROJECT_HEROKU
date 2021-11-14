@@ -10,12 +10,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LandMarkServiceImpl implements LandmarkService {
+public class LandmarkServiceImpl implements LandmarkService {
     private final LandmarkRepository landmarkRepository;
     private final TownService townService;
     private final ModelMapper modelMapper;
 
-    public LandMarkServiceImpl(LandmarkRepository landmarkRepository, TownService townService, ModelMapper modelMapper) {
+    public LandmarkServiceImpl(LandmarkRepository landmarkRepository, TownService townService, ModelMapper modelMapper) {
         this.landmarkRepository = landmarkRepository;
         this.townService = townService;
         this.modelMapper = modelMapper;

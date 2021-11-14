@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+  <div id="hotel">
+    <div class="container">
+      <div id="hotel-row" class="row justify-content-center align-items-center">
+        <div id="hotel-column" class="col-md-6">
+          <div id="hotel-box" class="col-md-12">
+            <form id="hotel-form" class="form" th:action="@{/edit/hotel/{id}(id=${id})}" method="post" th:object="${hotelBindingModel}">
+              <h3 class="text-center text-info">Edit hotel:</h3>
+              <div class="form-group">
+                <label for="name" class="text-info">Name:</label><br>
+                <input th:field="*{name}" th:errorclass="is-invalid" type="text" name="name" id="name" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label  for="town" class="text-info">Town:</label>
+                <input th:field="*{town}"  type="text" name="town" id="town" class="form-control" readonly disabled>
+
+              </div>
+              <div class="form-group">
+                <label for="stars" class="text-info">Stars:</label>
+                <select th:field="*{stars}" th:errorclass="is-invalid" name="stars" id="stars" class="custom-select">
+                  <option value="" selected>Select stars</option>
+                  <option th:each="s : ${T(com.example.project.model.entity.StarsEnum).values()}" th:value="${s}" th:text="${s}"></option>
+                </select>
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label  for="foradults" class="text-info">Price per night for adults:</label><br>
+                <input th:field="*{pricePerNightAdult}"  th:errorclass="is-invalid" type="number" name="foradults" id="foradults" class="form-control">
+                <p class="invalid-feedback">Field cant be null and must be positive</p>
+              </div>
+              <div class="form-group" >
+                <label  for="forchildren" class="text-info" >Price per night for children:</label><br>
+                <input th:field="*{pricePerNightChild}" th:errorclass="is-invalid" type="number" name="forchildren" id="forchildren" class="form-control">
+                <p class="invalid-feedback">Field cant be null and must be positive</p>
+              </div>
+              <div class="form-group" >
+                <label  for="imageurl" class="text-info" >Image URL:</label><br>
+                <input th:field="*{imageUrl}" th:errorclass="is-invalid" type="text" name="imageurl" id="imageurl" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <!--                            <div class="form-row m-5">-->
+              <!--                                <div class="col">-->
+              <!--                                    <label for="description">Description</label>-->
+              <!--                                    <textarea name="description" id="description" type="text" class="form-control" placeholder="Description"></textarea>-->
+              <!--                                </div>-->
+              <!--                            </div>-->
+              <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

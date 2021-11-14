@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.model.entity.Town;
+import com.example.project.model.service.TownServiceModel;
 import com.example.project.model.view.LandmarkViewModel;
 import com.example.project.model.view.TownViewModel;
 
@@ -15,4 +16,6 @@ public interface TownService {
     List<String> getOnlyTownsAsStrings();
     List<TownViewModel> getAllTowns();
     List<Town> getAllTownsAsNormal();
+
+    void createTown(TownServiceModel townServiceModel);
 }

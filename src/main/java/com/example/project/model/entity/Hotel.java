@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Table(name = "hotels")
 public class Hotel extends BaseEntity {
     private String name;
-    private int stars;
+    private Integer stars;
     private BigDecimal pricePerNightAdult;
     private BigDecimal pricePerNightChild;
     private String imageUrl;
@@ -19,7 +19,7 @@ public class Hotel extends BaseEntity {
     public Hotel() {
     }
 
-    public Hotel(String name, int stars, BigDecimal pricePerNightAdult, BigDecimal pricePerNightChild, Town town, String imageUrl) {
+    public Hotel(String name, Integer stars, BigDecimal pricePerNightAdult, BigDecimal pricePerNightChild, Town town, String imageUrl) {
         this.name = name;
         this.stars = stars;
         this.pricePerNightAdult = pricePerNightAdult;
@@ -65,11 +65,11 @@ public class Hotel extends BaseEntity {
         this.pricePerNightChild = pricePerNightChild;
     }
 @Column(nullable = false)
-    public int getStars() {
+    public Integer getStars() {
         return stars;
     }
 
-    public void setStars(int stars) {
+    public void setStars(Integer stars) {
         this.stars = stars;
     }
 @Column(nullable = false)

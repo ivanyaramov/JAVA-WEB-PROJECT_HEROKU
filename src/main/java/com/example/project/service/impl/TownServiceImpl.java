@@ -1,6 +1,7 @@
 package com.example.project.service.impl;
 
 import com.example.project.model.entity.Town;
+import com.example.project.model.service.TownServiceModel;
 import com.example.project.model.view.CountryViewModel;
 import com.example.project.model.view.LandmarkViewModel;
 import com.example.project.model.view.TownViewModel;
@@ -199,6 +200,12 @@ public class TownServiceImpl implements TownService {
     public List<Town> getAllTownsAsNormal() {
         List<Town> list = townRepository.findAll();
         return townRepository.findAll();
+    }
+
+    @Override
+    public void createTown(TownServiceModel townServiceModel) {
+        Town town = modelMapper.map(townServiceModel, Town.class);
+        townRepository.save(town);
     }
 
 
