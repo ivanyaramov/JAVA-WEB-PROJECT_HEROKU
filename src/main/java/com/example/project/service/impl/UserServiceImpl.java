@@ -1,9 +1,12 @@
 package com.example.project.service.impl;
 
+import com.example.project.model.comparator.BookingExcursionComparator;
+import com.example.project.model.comparator.DayComparator;
 import com.example.project.model.entity.UserEntity;
 import com.example.project.model.entity.UserRoleEntity;
 import com.example.project.model.entity.UserRoleEnum;
 import com.example.project.model.service.UserRegisterServiceModel;
+import com.example.project.model.view.BookingExcursionViewModel;
 import com.example.project.repository.UserRepository;
 import com.example.project.service.UserRoleService;
 import com.example.project.service.UserService;
@@ -15,7 +18,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -111,5 +117,24 @@ public class UserServiceImpl implements UserService {
             userRepository.save(moderator);
             userRepository.save(adminentity);
         }
+    }
+
+    @Override
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<BookingExcursionViewModel> getAllExcursionBookings(UserEntity user) {
+    List<BookingExcursionViewModel> list =  user.getBookingExcursions().stream()
+                .map(b-> {
+                    BookingExcursionViewModel bookingExcursionViewModel = modelMapper.map(b, BookingExcursionViewModel.class);
+bookingExcursionViewModel.setExcursion(b.getExcursion().getName());
+return bookingExcursionViewModel;
+                }).
+                     collect(Collectors.toList());
+
+        Collections.sort(list,new BookingExcursionComparator());
+        return list;
     }
 }

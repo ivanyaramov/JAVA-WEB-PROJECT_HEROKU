@@ -1,27 +1,34 @@
-package com.example.project.model.entity;
+package com.example.project.model.view;
 
-import javax.persistence.*;
+import com.example.project.model.entity.Excursion;
+
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "excursion_bookings")
-public class BookingExcursion extends BaseEntity{
-    private UserEntity user;
-    private Excursion excursion;
+public class BookingExcursionViewModel {
+    private Long id;
+    private String excursion;
     private Integer countOfAdults;
     private Integer countOfChildren;
     private LocalDate startDate;
     private LocalDate endDate;
     private Boolean isFinished;
-@ManyToOne
-    public UserEntity getUser() {
-        return user;
+
+    public Boolean getFinished() {
+        return isFinished;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setFinished(Boolean finished) {
+        isFinished = finished;
     }
-@Column
+
+    public String getExcursion() {
+        return excursion;
+    }
+
+    public void setExcursion(String excursion) {
+        this.excursion = excursion;
+    }
+
     public Integer getCountOfAdults() {
         return countOfAdults;
     }
@@ -29,7 +36,7 @@ public class BookingExcursion extends BaseEntity{
     public void setCountOfAdults(Integer countOfAdults) {
         this.countOfAdults = countOfAdults;
     }
-@Column
+
     public Integer getCountOfChildren() {
         return countOfChildren;
     }
@@ -37,15 +44,7 @@ public class BookingExcursion extends BaseEntity{
     public void setCountOfChildren(Integer countOfChildren) {
         this.countOfChildren = countOfChildren;
     }
-@ManyToOne
-    public Excursion getExcursion() {
-        return excursion;
-    }
 
-    public void setExcursion(Excursion excursion) {
-        this.excursion = excursion;
-    }
-@Column
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -53,7 +52,7 @@ public class BookingExcursion extends BaseEntity{
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-@Column
+
     public LocalDate getEndDate() {
         return endDate;
     }
@@ -61,12 +60,12 @@ public class BookingExcursion extends BaseEntity{
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-@Column
-    public Boolean getFinished() {
-        return isFinished;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setFinished(Boolean finished) {
-        isFinished = finished;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

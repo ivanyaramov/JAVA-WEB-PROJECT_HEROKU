@@ -2,6 +2,9 @@ package com.example.project.service;
 
 import com.example.project.model.entity.UserEntity;
 import com.example.project.model.service.UserRegisterServiceModel;
+import com.example.project.model.view.BookingExcursionViewModel;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -11,4 +14,6 @@ public interface UserService {
 
     boolean isEmailFree(String email);
     void initaliseUsers();
+    UserEntity findById(Long id);
+    List<BookingExcursionViewModel> getAllExcursionBookings(UserEntity userEntity);
 }

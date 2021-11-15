@@ -33,6 +33,7 @@ public class BookingExcursionServiceImpl implements BookingExcursionService {
         booking.setExcursion(excursion);
         booking.setStartDate(excursion.getStartDate());
         booking.setEndDate(excursion.getEndDate());
+        booking.setFinished(false);
         booking.setUser(user);
         bookingExcursionRepository.save(booking);
 

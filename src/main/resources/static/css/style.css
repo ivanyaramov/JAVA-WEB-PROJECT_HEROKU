@@ -327,7 +327,7 @@ table {
 
 }
 
-tr,td{ border: 1px solid; }
+tr,td,th{ border: 1px solid; }
 
 
 

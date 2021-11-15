@@ -8,26 +8,30 @@
 <header th:replace="fragments/commons::navigation">
 
 </header>
-<div class="centered">
+<div class="centered" style="min-height: 600px">
+  <p><h2>My Excursions</h2></p>
+<div class="centered mt-5 mb-5">
 <table class="centered">
   <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
-    <th>Country</th><th>Country</th>
+    <th>Excursion</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Finished</th>
+    <th>Rate</th>
   </tr>
+  <div th:each="b : ${bookings}" th:object="${b}">
   <tr >
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
+    <td th:text="*{excursion}">Alfreds Futterkiste</td>
+    <td th:text="*{startDate}">Maria Anders</td>
+    <td th:text="*{endDate}">Germany</td>
+    <div th:if="*{finished}"><td><p></p><p style="color: green;">YES</p></p></td></div>
+    <div th:unless="*{finished}"><td><p></p><p style="color: red;">NO</p></p></td></div>
     <td>Germany</td>
   </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
+  </div>
 
 </table>
+</div>
 </div>
 </main>
 <footer th:replace="fragments/commons::footer">
