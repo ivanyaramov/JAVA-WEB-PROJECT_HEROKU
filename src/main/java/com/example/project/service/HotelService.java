@@ -12,4 +12,6 @@ public interface HotelService {
     BigDecimal priceOfHotelBooking(BigDecimal countOfChildren, BigDecimal countOfAdults, Long id);
 
     void createHotel(HotelServiceModel hotelServiceModel);
+
+    void editHotel(Long id, HotelServiceModel hotelServiceModel);
 }

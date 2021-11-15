@@ -267,4 +267,18 @@ public class LandmarkServiceImpl implements LandmarkService {
         Landmark landmark = modelMapper.map(landmarkServiceModel,Landmark.class);
         landmarkRepository.save(landmark);
     }
+
+    @Override
+    public Landmark findById(Long id) {
+        return landmarkRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void editLandmark(Long id, LandmarkServiceModel landmarkServiceModel) {
+        Landmark landmark = findById(id);
+        landmark.setDescription(landmarkServiceModel.getDescription());
+        landmark.setName(landmarkServiceModel.getName());
+        landmark.setPictureURL(landmarkServiceModel.getPictureURL());
+        landmarkRepository.save(landmark);
+    }
 }

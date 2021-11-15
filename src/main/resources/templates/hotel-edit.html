@@ -14,7 +14,7 @@
       <div id="hotel-row" class="row justify-content-center align-items-center">
         <div id="hotel-column" class="col-md-6">
           <div id="hotel-box" class="col-md-12">
-            <form id="hotel-form" class="form" th:action="@{/edit/hotel/{id}(id=${id})}" method="post" th:object="${hotelBindingModel}">
+            <form id="hotel-form" class="form" th:action="@{/edit/hotel/{id}(id=${id})}" th:method="post" th:object="${hotelBindingModel}">
               <h3 class="text-center text-info">Edit hotel:</h3>
               <div class="form-group">
                 <label for="name" class="text-info">Name:</label><br>
@@ -23,7 +23,7 @@
               </div>
               <div class="form-group">
                 <label  for="town" class="text-info">Town:</label>
-                <input th:field="*{town}"  type="text" name="town" id="town" class="form-control" readonly disabled>
+                <input th:value="${town}"  type="text" name="town" id="town" class="form-control" readonly disabled>
 
               </div>
               <div class="form-group">

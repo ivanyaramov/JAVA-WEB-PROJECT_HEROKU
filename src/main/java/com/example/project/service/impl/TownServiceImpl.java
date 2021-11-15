@@ -163,6 +163,11 @@ public class TownServiceImpl implements TownService {
     }
 
     @Override
+    public Town findTownById(Long id) {
+        return townRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public List<String> getAllTownsAsStrings() {
 
         return getAllTowns().stream()
@@ -205,6 +210,15 @@ public class TownServiceImpl implements TownService {
     @Override
     public void createTown(TownServiceModel townServiceModel) {
         Town town = modelMapper.map(townServiceModel, Town.class);
+        townRepository.save(town);
+    }
+
+    @Override
+    public void editTown(Long id, TownServiceModel townServiceModel) {
+        Town town = findTownById(id);
+        town.setDescription(townServiceModel.getDescription());
+        town.setName(townServiceModel.getName());
+        town.setPictureUrl(townServiceModel.getPictureUrl());
         townRepository.save(town);
     }
 

@@ -1,8 +1,6 @@
 package com.example.project.web;
 
-import com.example.project.model.binding.HotelBindingModel;
-import com.example.project.model.binding.LandmarkBindingModel;
-import com.example.project.model.binding.TownBindingModel;
+import com.example.project.model.binding.*;
 import com.example.project.model.service.HotelServiceModel;
 import com.example.project.model.service.LandmarkServiceModel;
 import com.example.project.model.service.TownServiceModel;
@@ -14,13 +12,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class ModeratorController {
@@ -64,15 +60,83 @@ public class ModeratorController {
         return "redirect:/";
     }
 
-    @GetMapping("edit/hotel/{id}")
+    @GetMapping("/edit/hotel/{id}")
     public String editHotel(Model model, @PathVariable Long id){
-        model.addAttribute("towns", townService.getOnlyTownsAsStrings());
         HotelBindingModel hotelBindingModel = modelMapper.map(hotelService.findById(id),HotelBindingModel.class);
-        hotelBindingModel.setTown(hotelService.findById(id).getTown().getName());
+        model.addAttribute("town", hotelService.findById(id).getTown().getName());
         model.addAttribute("id",id);
         model.addAttribute("hotelBindingModel", hotelBindingModel);
         return "hotel-edit";
     }
+
+    @PostMapping("/edit/hotel/{id}")
+    public String editHotel(@Valid HotelBindingModelEdit hotelBindingModel,
+                            BindingResult bindingResult,
+                            @PathVariable Long id,
+                            RedirectAttributes redirectAttributes
+                            ){
+
+    if(bindingResult.hasErrors()){
+        redirectAttributes.addFlashAttribute("hotelBindingModel", hotelBindingModel);
+        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.hotelBindingModel", bindingResult);
+        return "redirect:/edit/hotel/"+id;
+    }
+    HotelServiceModel hotelServiceModel = modelMapper.map(hotelBindingModel, HotelServiceModel.class);
+    hotelService.editHotel(id, hotelServiceModel);
+        return "redirect:/";
+    }
+
+    @GetMapping("/edit/landmark/{id}")
+    public String editLandmark(Model model, @PathVariable Long id){
+        LandmarkBindingModel landmarkBindingModel = modelMapper.map(landmarkService.findById(id),LandmarkBindingModel.class);
+        model.addAttribute("town", landmarkService.findById(id).getTown().getName());
+        model.addAttribute("id",id);
+        model.addAttribute("landmarkBindingModel", landmarkBindingModel);
+        return "landmark-edit";
+    }
+
+    @PostMapping("/edit/landmark/{id}")
+    public String editLandmark(@Valid LandmarkBindingModelEdit landmarkBindingModel,
+                            BindingResult bindingResult,
+                            @PathVariable Long id,
+                            RedirectAttributes redirectAttributes
+    ){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("landmarkBindingModel", landmarkBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.landmarkBindingModel", bindingResult);
+            return "redirect:/edit/landmark/"+id;
+        }
+        LandmarkServiceModel landmarkServiceModel = modelMapper.map(landmarkBindingModel, LandmarkServiceModel.class);
+        landmarkService.editLandmark(id, landmarkServiceModel);
+return "redirect:/";
+    }
+
+
+    @GetMapping("/edit/town/{id}")
+    public String editTown(Model model, @PathVariable Long id){
+       TownBindingModel townBindingModel = modelMapper.map(townService.findById(id),TownBindingModel.class);
+        model.addAttribute("country", townService.findByName(townBindingModel.getName()).getCountry().getName());
+        model.addAttribute("id",id);
+        model.addAttribute("townBindingModel", townBindingModel);
+        return "town-edit";
+    }
+
+    @PostMapping("/edit/town/{id}")
+    public String editTown(@Valid TownBindingModelEdit townBindingModel,
+                               BindingResult bindingResult,
+                               @PathVariable Long id,
+                               RedirectAttributes redirectAttributes
+    ){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("townBindingModel", townBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.townBindingModel", bindingResult);
+            return "redirect:/edit/town/"+id;
+        }
+       TownServiceModel townServiceModel = modelMapper.map(townBindingModel, TownServiceModel.class);
+        townService.editTown(id, townServiceModel);
+        return "redirect:/";
+    }
+
 
     @GetMapping("/add/landmark")
     public String addLandmark(Model model){

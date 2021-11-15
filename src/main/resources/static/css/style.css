@@ -314,6 +314,23 @@ text-align: center;
     margin-top: -85px;
 }
 
+.solidborder{
+    border-style: solid;
+}
 
+table {
+    width: 100%;
+    border: 1px solid black;
+    /*background: #ddd;*/
+    table-layout: fixed;
+    background-color: #9fcdff;
+
+}
+
+tr,td{ border: 1px solid; }
+
+
+
+table tr.separator { height: 10px; }
 
 

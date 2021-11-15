@@ -1,6 +1,7 @@
 package com.example.project.model.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "excursion_bookings")
@@ -9,6 +10,8 @@ public class BookingExcursion extends BaseEntity{
     private Excursion excursion;
     private Integer countOfAdults;
     private Integer countOfChildren;
+    private LocalDate startDate;
+    private LocalDate endDate;
 @ManyToOne
     public UserEntity getUser() {
         return user;
@@ -40,5 +43,21 @@ public class BookingExcursion extends BaseEntity{
 
     public void setExcursion(Excursion excursion) {
         this.excursion = excursion;
+    }
+@Column
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+@Column
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }

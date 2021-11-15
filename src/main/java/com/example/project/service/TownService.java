@@ -12,10 +12,13 @@ public interface TownService {
     void initialiseTowns();
     Town findByName(String name);
     TownViewModel findById(Long id);
+    Town findTownById(Long id);
     List<String> getAllTownsAsStrings();
     List<String> getOnlyTownsAsStrings();
     List<TownViewModel> getAllTowns();
     List<Town> getAllTownsAsNormal();
 
     void createTown(TownServiceModel townServiceModel);
+
+    void editTown(Long id, TownServiceModel townServiceModel);
 }

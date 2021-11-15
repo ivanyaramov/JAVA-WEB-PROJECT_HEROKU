@@ -38,6 +38,7 @@ public class LandmarkBindingModel {
         this.pictureURL = pictureURL;
     }
     @NotNull
+    @Size(min = 1)
     public String getTown() {
         return town;
     }

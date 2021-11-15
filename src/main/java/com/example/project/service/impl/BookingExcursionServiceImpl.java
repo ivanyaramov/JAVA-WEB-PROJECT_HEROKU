@@ -31,6 +31,8 @@ public class BookingExcursionServiceImpl implements BookingExcursionService {
         Excursion excursion = excursionService.findById(bookingExcursionServiceModel.getExcursionId());
         UserEntity user = userService.findByUsername(bookingExcursionServiceModel.getUsername());
         booking.setExcursion(excursion);
+        booking.setStartDate(excursion.getStartDate());
+        booking.setEndDate(excursion.getEndDate());
         booking.setUser(user);
         bookingExcursionRepository.save(booking);
 

@@ -1,17 +1,15 @@
 package com.example.project.model.binding;
 
-import com.example.project.model.entity.Country;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class TownBindingModel {
+public class LandmarkBindingModelEdit {
     private String name;
     private String description;
-    private String pictureUrl;
-    private String country;
-@NotNull
-@Size(min = 1)
+    private String pictureURL;
+
+    @NotNull
+    @Size(min = 1)
     public String getName() {
         return name;
     }
@@ -19,8 +17,8 @@ public class TownBindingModel {
     public void setName(String name) {
         this.name = name;
     }
-    @NotNull
     @Size(min = 1)
+    @NotNull
     public String getDescription() {
         return description;
     }
@@ -28,22 +26,14 @@ public class TownBindingModel {
     public void setDescription(String description) {
         this.description = description;
     }
-    @NotNull
     @Size(min = 1)
-    public String getPictureUrl() {
-        return pictureUrl;
+    @NotNull
+    public String getPictureURL() {
+        return pictureURL;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
-    }
-    @NotNull
-    @Size(min = 1)
-    public String getCountry() {
-        return country;
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
 }

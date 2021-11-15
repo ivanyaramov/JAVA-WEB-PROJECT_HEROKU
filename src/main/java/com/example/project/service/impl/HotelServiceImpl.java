@@ -160,4 +160,15 @@ public class HotelServiceImpl implements HotelService {
          hotelRepository.save(hotel);
 
     }
+
+    @Override
+    public void editHotel(Long id, HotelServiceModel hotelServiceModel) {
+        Hotel hotel = findById(id);
+        hotel.setImageUrl(hotelServiceModel.getImageUrl());
+        hotel.setName(hotelServiceModel.getName());
+        hotel.setStars(hotelServiceModel.getStars());
+        hotel.setPricePerNightAdult(hotelServiceModel.getPricePerNightAdult());
+        hotel.setPricePerNightChild(hotelServiceModel.getPricePerNightChild());
+        hotelRepository.save(hotel);
+    }
 }
