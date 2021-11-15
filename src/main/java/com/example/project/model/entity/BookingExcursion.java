@@ -2,6 +2,7 @@ package com.example.project.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "excursion_bookings")
@@ -13,6 +14,7 @@ public class BookingExcursion extends BaseEntity{
     private LocalDate startDate;
     private LocalDate endDate;
     private Boolean isFinished;
+    private Rating rating;
 @ManyToOne
     public UserEntity getUser() {
         return user;
@@ -68,5 +70,13 @@ public class BookingExcursion extends BaseEntity{
 
     public void setFinished(Boolean finished) {
         isFinished = finished;
+    }
+@OneToOne(mappedBy = "bookingExcursion")
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 }

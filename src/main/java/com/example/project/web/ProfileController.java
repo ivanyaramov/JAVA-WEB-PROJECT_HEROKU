@@ -2,6 +2,7 @@ package com.example.project.web;
 
 import com.example.project.model.binding.RatingBindingModel;
 import com.example.project.model.entity.UserEntity;
+import com.example.project.service.RatingService;
 import com.example.project.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,11 @@ import javax.validation.Valid;
 @Controller
 public class ProfileController {
     private final UserService userService;
+    private final RatingService ratingService;
 
-    public ProfileController(UserService userService) {
+    public ProfileController(UserService userService, RatingService ratingService) {
         this.userService = userService;
+        this.ratingService = ratingService;
     }
 
     @GetMapping("/users/excursions/{id}")
@@ -27,6 +30,7 @@ public class ProfileController {
         UserEntity user = userService.findById(id);
         model.addAttribute("bookings",userService.getAllExcursionBookings(user));
         model.addAttribute("userid",id);
+
         return "user-excursions";
     }
 
@@ -35,19 +39,19 @@ public class ProfileController {
         return new RatingBindingModel();
     }
 
-    @PostMapping("/users/excursions/{userid}/{excursionid}")
+    @PostMapping("/users/excursions/{userid}/{bookingid}")
     public String rating(@Valid RatingBindingModel ratingBindingModel,
                          BindingResult bindingResult,
                          @PathVariable Long userid,
-                         @PathVariable Long excursionid,
+                         @PathVariable Long bookingid,
                          RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("ratingBindingModel", ratingBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.ratingBindingModel", bindingResult);
-            return String.format("redirect:/users/excursions/%d/%d",userid, excursionid);
+            return String.format("redirect:/users/excursions/%d",userid);
         }
-
-        return "redirect:/";
+ratingService.createRating(userid, bookingid, ratingBindingModel);
+        return String.format("redirect:/users/excursions/%d",userid);
 
     }
 }

@@ -11,6 +11,8 @@ import com.example.project.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class BookingExcursionServiceImpl implements BookingExcursionService {
     private final ModelMapper modelMapper;
@@ -37,5 +39,25 @@ public class BookingExcursionServiceImpl implements BookingExcursionService {
         booking.setUser(user);
         bookingExcursionRepository.save(booking);
 
+    }
+
+    @Override
+    public BookingExcursion findById(Long bookingid) {
+        return bookingExcursionRepository.findById(bookingid).orElse(null);
+    }
+
+    @Override
+    public boolean checkIfBookingIsFinished(Long id) {
+        BookingExcursion bookingExcursion = findById(id);
+        return LocalDate.now().compareTo(bookingExcursion.getEndDate()) > 0;
+    }
+
+    @Override
+    public void setBookingAsFinishedIfNeeded(Long id) {
+        if (checkIfBookingIsFinished(id)){
+            BookingExcursion bookingExcursion = findById(id);
+            bookingExcursion.setFinished(true);
+            bookingExcursionRepository.save(bookingExcursion);
+        }
     }
 }

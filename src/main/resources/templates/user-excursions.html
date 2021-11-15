@@ -26,8 +26,15 @@
     <td th:text="*{endDate}">Germany</td>
     <div th:if="*{finished}"><td><p></p><p style="color: green;">YES</p></p></td></div>
     <div th:unless="*{finished}"><td><p></p><p style="color: red;">NO</p></p></td></div>
+    <div th:unless="*{finished}">
+      <td>
+      Excursion not yet finished!
+      </td>
+    </div>
+    <div th:if="*{finished}">
     <td>
-      <form th:action="@{/users/excursions/{userid}/{excursionid}(userid=${userid},excursionid=${b.id})}" method="post" th:object="${ratingBindingModel}" id="landmark-form" class="form" action="" >
+      <div th:if="*{rating == null}">
+      <form th:action="@{/users/excursions/{userid}/{bookingid}(userid=${userid},bookingid=${b.id})}" method="post" th:object="${ratingBindingModel}" id="landmark-form" class="form" action="" >
         <h3 class="text-center text-info"></h3>
         <div class="form-group">
           <label for="rating" class="text-info"></label><br>
@@ -36,13 +43,20 @@
             <option th:each="r : ${T(com.example.project.model.entity.RatingEnum).values()}" th:value="${r}" th:text="${r}"></option>
 
           </select>
+
         </div>
         <div class="form-group">
           <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
         </div>
       </form>
+      </div>
+    <div th:unless="*{rating == null}" th:text="|Your rating is: *{rating.rating}|">
+
+    </div>
+
 
     </td>
+    </div>
   </tr>
   </div>
 

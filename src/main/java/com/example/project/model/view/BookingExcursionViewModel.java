@@ -12,6 +12,7 @@ public class BookingExcursionViewModel {
     private LocalDate startDate;
     private LocalDate endDate;
     private Boolean isFinished;
+    private RatingViewModel rating;
 
     public Boolean getFinished() {
         return isFinished;
@@ -67,5 +68,13 @@ public class BookingExcursionViewModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public RatingViewModel getRating() {
+        return rating;
+    }
+
+    public void setRating(RatingViewModel rating) {
+        this.rating = rating;
     }
 }

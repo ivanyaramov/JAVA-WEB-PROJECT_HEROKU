@@ -5,15 +5,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ratings")
 public class Rating extends BaseEntity {
-    private RatingEnum rating;
-    private BookingExcursion excursion;
+    private Integer rating;
+    private BookingExcursion bookingExcursion;
     private UserEntity user;
-@Enumerated(EnumType.STRING)
-    public RatingEnum getRating() {
+@Column
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(RatingEnum rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -27,11 +27,11 @@ public class Rating extends BaseEntity {
     }
 @OneToOne
 
-    public BookingExcursion getExcursion() {
-        return excursion;
+    public BookingExcursion getBookingExcursion() {
+        return bookingExcursion;
     }
 
-    public void setExcursion(BookingExcursion excursion) {
-        this.excursion = excursion;
+    public void setBookingExcursion(BookingExcursion bookingExcursion) {
+        this.bookingExcursion = bookingExcursion;
     }
 }
