@@ -1,26 +1,23 @@
 package com.example.project.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ratings")
 public class Rating extends BaseEntity {
-    private Double rating;
-    private Excursion excursion;
+    private RatingEnum rating;
+    private BookingExcursion excursion;
     private UserEntity user;
-    @Column
-    public Double getRating() {
+@Enumerated(EnumType.STRING)
+    public RatingEnum getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(RatingEnum rating) {
         this.rating = rating;
     }
 
-@ManyToOne
+    @ManyToOne
     public UserEntity getUser() {
         return user;
     }
@@ -28,12 +25,13 @@ public class Rating extends BaseEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
-@ManyToOne
-    public Excursion getExcursion() {
+@OneToOne
+
+    public BookingExcursion getExcursion() {
         return excursion;
     }
 
-    public void setExcursion(Excursion excursion) {
+    public void setExcursion(BookingExcursion excursion) {
         this.excursion = excursion;
     }
 }
