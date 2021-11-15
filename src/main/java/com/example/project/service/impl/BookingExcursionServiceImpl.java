@@ -49,7 +49,7 @@ public class BookingExcursionServiceImpl implements BookingExcursionService {
     @Override
     public boolean checkIfBookingIsFinished(Long id) {
         BookingExcursion bookingExcursion = findById(id);
-        return LocalDate.now().compareTo(bookingExcursion.getEndDate()) > 0;
+        return LocalDate.now().compareTo(bookingExcursion.getEndDate()) < 0;
     }
 
     @Override

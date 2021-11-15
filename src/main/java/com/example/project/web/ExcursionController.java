@@ -67,6 +67,9 @@ public class ExcursionController {
     public String bookExcursion(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
         Integer placesLeft = excursionService.determinePlacesLeft(excursionService.findById(id));
+        if(placesLeft == 0 || excursionService.hasExcursionStarted(id)){
+            return "excursion-not-available";
+        }
         model.addAttribute("placesLeft", placesLeft);
 
         return "excursion-booking";

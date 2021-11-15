@@ -112,5 +112,11 @@ public class ExcursionServiceImpl implements ExcursionService {
        return totalPrice;
     }
 
+    @Override
+    public boolean hasExcursionStarted(Long id) {
+        return LocalDate.now().compareTo(findById(id).getStartDate())<0;
+
+    }
+
 
 }

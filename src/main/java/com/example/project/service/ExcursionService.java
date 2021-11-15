@@ -15,4 +15,6 @@ public interface ExcursionService {
     Integer determinePlacesLeft(Excursion excursion);
     boolean hasEnoughPlaces(Long excursionId, Integer bookingSum);
     BigDecimal priceOfExcursion(BigDecimal children, BigDecimal adults, Long id);
+
+    boolean hasExcursionStarted(Long id);
 }
