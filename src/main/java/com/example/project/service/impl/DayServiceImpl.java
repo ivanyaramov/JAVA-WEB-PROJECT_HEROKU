@@ -176,6 +176,22 @@ public class DayServiceImpl implements DayService {
     @Override
     public void createDaysForExcursionInSpain() {
         List<Day> list = new ArrayList<>();
+        Town porto = townService.findByName("Porto");
+        Town sofia = townService.findByName("Sofia");
+        Town lisabon = townService.findByName("Lisbon");
+        Town madrid = townService.findByName("Madrid");
+        Town barcelona = townService.findByName("Barcelona");
+        Town andorra = townService.findByName("Andorra la Vella");
+        Town seville = townService.findByName("Seville");
+        Town lyon = townService.findByName("Lyon");
+        Town paris = townService.findByName("Paris");
+        Excursion inSpain = excursionService.findByName("Excursion in Spain");
+        Day day1 = new Day(1, Set.of(sofia), inSpain, getHotel(lisabon));
+        day1.setDescription("At the first day we will meet at the Sofia airport at 1t 15:00 Our flight takes off " +
+                "at 17:30. We will arrive in Lisabon at 20:00 and then immediately go to our hotel with the bus.");
+        Day day2 = new Day(2, Set.of(lisabon), inSpain, getHotel(porto));
+        day2.setDescription("On day 2 we will wake up at  7:30. We will first visit Castelo de S. Jorge which is a great historic sight " +
+                "in the capital of Portugal. ");
     }
 
     @Override
