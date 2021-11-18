@@ -35,4 +35,6 @@ public class BookingHotelServiceImpl implements BookingHotelService {
         booking.setUser(user);
         bookingHotelRepository.save(booking);
     }
+
+
 }

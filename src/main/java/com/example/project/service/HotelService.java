@@ -9,7 +9,7 @@ public interface HotelService {
     void initialiseHotels();
     Hotel findById(Long id);
 
-    BigDecimal priceOfHotelBooking(BigDecimal countOfChildren, BigDecimal countOfAdults, Long id);
+    BigDecimal priceOfHotelBooking(Integer nights, BigDecimal countOfChildren, BigDecimal countOfAdults, Long id);
 
     void createHotel(HotelServiceModel hotelServiceModel);
 

@@ -17,6 +17,7 @@ public class UserEntity extends BaseEntity{
     private boolean isActive;
     private Set<UserRoleEntity> roles = new HashSet<>();
     private Set<BookingExcursion> bookingExcursions;
+    private Set<BookingHotel> bookingHotels;
 @Column
     public int getAge() {
         return age;
@@ -90,6 +91,14 @@ public class UserEntity extends BaseEntity{
 
     public void setBookingExcursions(Set<BookingExcursion> bookingExcursions) {
         this.bookingExcursions = bookingExcursions;
+    }
+@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    public Set<BookingHotel> getBookingHotels() {
+        return bookingHotels;
+    }
+
+    public void setBookingHotels(Set<BookingHotel> bookingHotels) {
+        this.bookingHotels = bookingHotels;
     }
 }
 

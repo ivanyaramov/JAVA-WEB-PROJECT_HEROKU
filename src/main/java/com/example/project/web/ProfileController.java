@@ -2,6 +2,7 @@ package com.example.project.web;
 
 import com.example.project.model.binding.RatingBindingModel;
 import com.example.project.model.entity.UserEntity;
+import com.example.project.service.HotelService;
 import com.example.project.service.RatingService;
 import com.example.project.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,12 @@ import javax.validation.Valid;
 public class ProfileController {
     private final UserService userService;
     private final RatingService ratingService;
+    private final HotelService hotelService;
 
-    public ProfileController(UserService userService, RatingService ratingService) {
+    public ProfileController(UserService userService, RatingService ratingService, HotelService hotelService) {
         this.userService = userService;
         this.ratingService = ratingService;
+        this.hotelService = hotelService;
     }
 
     @GetMapping("/users/excursions/{id}")
@@ -53,5 +56,15 @@ public class ProfileController {
 ratingService.createRating(userid, bookingid, ratingBindingModel);
         return String.format("redirect:/users/excursions/%d",userid);
 
+    }
+
+
+    @GetMapping("/users/destinations/{id}")
+    public String getDestinationsForUser(Model model, @PathVariable Long id){
+        UserEntity user = userService.findById(id);
+        model.addAttribute("destinations",userService.getAllHotelBookings(user));
+        model.addAttribute("userid",id);
+
+        return "user-destinations";
     }
 }

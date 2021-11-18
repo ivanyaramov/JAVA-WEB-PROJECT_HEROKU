@@ -3,6 +3,7 @@ package com.example.project.service.impl;
 import com.example.project.model.entity.BookingExcursion;
 import com.example.project.model.entity.Day;
 import com.example.project.model.entity.Excursion;
+import com.example.project.model.entity.Rating;
 import com.example.project.model.view.ExcursionViewModel;
 import com.example.project.repository.ExcursionRepository;
 import com.example.project.service.ExcursionService;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,9 +61,19 @@ public class ExcursionServiceImpl implements ExcursionService {
         for(Excursion e: excursionRepository.findAll()){
             ExcursionViewModel excursion = modelMapper.map(e, ExcursionViewModel.class);
             excursion.setPlacesLeft(determinePlacesLeft(e));
+            Double rating = getAverageRating(e.getId());
+            if(rating == -1){
+                rating = 5.0;
+            }
+            excursion.setRating(rating);
             list.add(excursion);
         }
      return list;
+    }
+
+    @Override
+    public List<ExcursionViewModel> getFirst3() {
+        return getAll().stream().limit(3).collect(Collectors.toList());
     }
 
     @Override
@@ -69,6 +81,11 @@ public class ExcursionServiceImpl implements ExcursionService {
         Excursion excursion= excursionRepository.findById(id).orElse(null);
        ExcursionViewModel excursionViewModel = modelMapper.map(excursion, ExcursionViewModel.class);
        excursionViewModel.setPlacesLeft(determinePlacesLeft(excursion));
+       Double rating = getAverageRating(id);
+       if(rating == -1){
+           rating = 5.0;
+       }
+       excursionViewModel.setRating(rating);
        return excursionViewModel;
     }
 
@@ -113,8 +130,28 @@ public class ExcursionServiceImpl implements ExcursionService {
     }
 
     @Override
+    public Double getAverageRating(Long id) {
+        Excursion excursion = findById(id);
+       Set<BookingExcursion> set = excursion.getBookingExcursions();
+       double brratings = 0;
+       int sum = 0;
+       for(BookingExcursion bookingExcursion : set){
+           Rating rating = bookingExcursion.getRating();
+           if(rating!=null){
+               brratings++;
+               sum+=rating.getRating();
+           }
+       }
+       if(brratings==0){
+           return -1.0;
+       }
+      double average = sum/brratings;
+       return average;
+    }
+
+    @Override
     public boolean hasExcursionStarted(Long id) {
-        return LocalDate.now().compareTo(findById(id).getStartDate())<0;
+        return LocalDate.now().compareTo(findById(id).getStartDate())>=0;
 
     }
 

@@ -1,13 +1,15 @@
 package com.example.project.service.impl;
 
 import com.example.project.model.comparator.BookingExcursionComparator;
-import com.example.project.model.comparator.DayComparator;
+import com.example.project.model.comparator.BookingHotelComparator;
 import com.example.project.model.entity.UserEntity;
 import com.example.project.model.entity.UserRoleEntity;
 import com.example.project.model.entity.UserRoleEnum;
 import com.example.project.model.service.UserRegisterServiceModel;
 import com.example.project.model.view.BookingExcursionViewModel;
+import com.example.project.model.view.BookingHotelViewModel;
 import com.example.project.repository.UserRepository;
+import com.example.project.service.HotelService;
 import com.example.project.service.UserRoleService;
 import com.example.project.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -18,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -30,13 +33,15 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final ProjectUserServiceImpl projectUserService;
     private final ModelMapper modelMapper;
+    private final HotelService hotelService;
 
-    public UserServiceImpl(UserRoleService userRoleService, UserRepository userRepository, PasswordEncoder passwordEncoder, ProjectUserServiceImpl projectUserService, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRoleService userRoleService, UserRepository userRepository, PasswordEncoder passwordEncoder, ProjectUserServiceImpl projectUserService, ModelMapper modelMapper, HotelService hotelService) {
         this.userRoleService = userRoleService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.projectUserService = projectUserService;
         this.modelMapper = modelMapper;
+        this.hotelService = hotelService;
     }
 
 
@@ -136,5 +141,19 @@ return bookingExcursionViewModel;
 
         Collections.sort(list,new BookingExcursionComparator());
         return list;
+    }
+
+    @Override
+    public List<BookingHotelViewModel> getAllHotelBookings(UserEntity userEntity) {
+        List<BookingHotelViewModel> list = userEntity.getBookingHotels().stream()
+                .map(b->{
+                    BookingHotelViewModel bookingHotelViewModel = modelMapper.map(b, BookingHotelViewModel.class);
+                    bookingHotelViewModel.setHotel(b.getHotel().getName());
+                    bookingHotelViewModel.setTown(b.getHotel().getTown().getName());
+                    bookingHotelViewModel.setPrice(hotelService.priceOfHotelBooking(b.getNights(), BigDecimal.valueOf(b.getCountOfChildren()), BigDecimal.valueOf(b.getCountOfAdults()),b.getHotel().getId()));
+                    return bookingHotelViewModel;
+                }).collect(Collectors.toList());
+        Collections.sort(list,new BookingHotelComparator());
+return list;
     }
 }

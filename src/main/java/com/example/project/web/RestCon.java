@@ -72,7 +72,7 @@ public class RestCon {
             return BigDecimal.valueOf(-4);
         }
 
-        return hotelService.priceOfHotelBooking(countOfChildren, countOfAdults, id);
+        return hotelService.priceOfHotelBooking(nights, countOfChildren, countOfAdults, id);
 
     }
 }

@@ -146,12 +146,12 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public BigDecimal priceOfHotelBooking(BigDecimal countOfChildren, BigDecimal countOfAdults, Long id) {
+    public BigDecimal priceOfHotelBooking(Integer nights, BigDecimal countOfChildren, BigDecimal countOfAdults, Long id) {
          Hotel hotel = findById(id);
         BigDecimal priceForChildren = hotel.getPricePerNightChild().multiply(countOfChildren);
         BigDecimal priceForAdults = hotel.getPricePerNightAdult().multiply(countOfAdults);
 
-         return priceForAdults.add(priceForChildren);
+         return priceForAdults.add(priceForChildren).multiply(BigDecimal.valueOf(nights));
     }
 
     @Override

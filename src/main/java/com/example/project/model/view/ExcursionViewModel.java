@@ -15,6 +15,7 @@ public class ExcursionViewModel {
     private Set<DayViewModel> days;
     private Integer placesLeft;
     private GuideViewModel guide;
+    private Double rating;
 
     public String getName() {
         return name;
@@ -86,5 +87,13 @@ public class ExcursionViewModel {
 
     public void setPlacesLeft(Integer placesLeft) {
         this.placesLeft = placesLeft;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 }

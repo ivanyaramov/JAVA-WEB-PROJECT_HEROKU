@@ -8,7 +8,10 @@
 <header th:replace="fragments/commons::navigation">
 
 </header>
+
 <main class="p-5 align-content-center bg-blur my-main">
+    <th:block sec:authorize="isAuthenticated()">
+    <h2 class="text-light centered">Search for your destination here!</h2>
     <div class="searchbox centered">
         <input style="padding: 5px; border-radius: 15px" id="searchbar" list="townsandcountries" placeholder="Where would you want to go?" type="search">
             <button style="cursor:pointer; width: 100px; border-radius: 20px; outline: none; border: 1px solid black;" class="btn-primary" id="buttonlistener">Show!</button>
@@ -17,13 +20,89 @@
         </datalist>
 
     </div>
-    <h1 class="text-light centered align-content-center pl-2">Welcome to</h1>
-    <h1 class="text-light centered pl-2">My travel agency application!</h1>
+</th:block>
+    <div class="shortaboutus text-light mt-5 mb-5">
+<h1>Short about us:</h1>
+<h4>Ivan's travel agency is a touring company that was founded in 2009.</h4>
+<h4>We offer you to go to the most trendy destinations for the best prices!</h4>
+<h4>Don't miss to look at the set of 3 excursions we have that have the best rating in Europe.</h4>
+ <h4>Our phones lines are open 24/7!</h4>
+    </div>
+    <h1 class="text-light centered align-content-center pl-2">See the most trendy destinations!</h1>
     <div class="d-flex justify-content-center">
 <!--        <div class="my-index-div w-50">-->
 <!--            <iframe class="w-100 h-100" src="https://www.youtube.com/embed/Q93n3dvaaTI?rel=0" title="YouTube video"-->
 <!--                    allowfullscreen></iframe>-->
 <!--        </div>-->
+    </div>
+
+    <div id="carouselExampleDark" class="carousel carousel-dark slide mt-5 mb-5" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="10000">
+                <img src="https://res.cloudinary.com/ivoto22/image/upload/v1637232826/hongkong1081704_uad87b.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>London</h1>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+                <img src="https://res.cloudinary.com/ivoto22/image/upload/v1637232704/lake_ueof0w.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>Maldives</h1>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://res.cloudinary.com/ivoto22/image/upload/v1637233154/57436_download-wallpapers-2560x1024-munich-city-skyline-dual-monitor_2560x1024_h_su6ui9.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>Munich</h1>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <h2 class="text-light centered">We have the best excursions!</h2>
+
+    <div class="row">
+        <div th:each="e : ${excursions}" th:object="${e}" class="card col-lg-3 m-5 centered" style="width: 18rem;">
+            <div class="pt-2 centered"><b><h4 th:text="*{name}"></h4></b></div>
+            <img class="card-img-top img" th:src="*{pictureUrl}" alt="Card image cap">
+            <hr>
+            <div class="title centered"><h3>Start date:</h3></div>
+            <div class="card-body centered" th:text="|*{startDate}|"  >
+                <p class="card-text">a</p>
+            </div>
+            <div class="title centered"><h3>End date:</h3></div>
+            <div class="card-body centered" th:text="|*{endDate}|"  >
+                <p class="card-text">a</p>
+            </div>
+            <div class="title centered"><h3>Places available:</h3></div>
+            <div class="card-body centered" th:text="|*{placesLeft}|"  >
+                <p class="card-text">a</p>
+            </div>
+            <div class="title centered"><h3>Rating:</h3></div>
+            <div class="card-body centered" th:text="|*{rating}|"  >
+                <p class="card-text">a</p>
+            </div>
+            <th:block sec:authorize="isAuthenticated()">
+            <div id="landmark-link" class = "card-footer" >
+                <!--        <br/>-->
+                <a th:href="@{/excursions/info/{id}(id=*{id})}" class="text-info h5 alignleft">More info & book now!</a>
+                <a th:href="@{/excursions/guide/{id}(id=*{id})}" class="text-info h5 alignright">Guide</a>
+            </div>
+            </th:block>
+        </div>
     </div>
 </main>
 <footer th:replace="fragments/commons::footer">

@@ -10,11 +10,13 @@ public interface ExcursionService {
     void initaliseExcursions();
     Excursion findByName(String name);
     List<ExcursionViewModel> getAll();
+    List<ExcursionViewModel> getFirst3();
     ExcursionViewModel getExcursionById(Long id);
     Excursion findById(Long id);
     Integer determinePlacesLeft(Excursion excursion);
     boolean hasEnoughPlaces(Long excursionId, Integer bookingSum);
     BigDecimal priceOfExcursion(BigDecimal children, BigDecimal adults, Long id);
+    Double getAverageRating(Long id);
 
     boolean hasExcursionStarted(Long id);
 }

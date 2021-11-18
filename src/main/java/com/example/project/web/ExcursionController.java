@@ -35,7 +35,7 @@ public class ExcursionController {
     }
 
     @GetMapping("/all")
-    public String viewAllTowns(Model model) {
+    public String viewAllExcursions(Model model) {
         model.addAttribute("excursions", excursionService.getAll());
 
 
