@@ -1,5 +1,6 @@
 package com.example.project.service.impl;
 
+import com.example.project.model.binding.RoleBindingModel;
 import com.example.project.model.comparator.BookingExcursionComparator;
 import com.example.project.model.comparator.BookingHotelComparator;
 import com.example.project.model.entity.UserEntity;
@@ -8,6 +9,7 @@ import com.example.project.model.entity.UserRoleEnum;
 import com.example.project.model.service.UserRegisterServiceModel;
 import com.example.project.model.view.BookingExcursionViewModel;
 import com.example.project.model.view.BookingHotelViewModel;
+import com.example.project.model.view.UserEntityViewModel;
 import com.example.project.repository.UserRepository;
 import com.example.project.service.HotelService;
 import com.example.project.service.UserRoleService;
@@ -155,5 +157,40 @@ return bookingExcursionViewModel;
                 }).collect(Collectors.toList());
         Collections.sort(list,new BookingHotelComparator());
 return list;
+    }
+
+    @Override
+    public List<UserEntityViewModel> getAllUsersView() {
+        return getAllUsers().stream()
+                .map(u-> {
+                    UserEntityViewModel userEntityViewModel = modelMapper.map(u, UserEntityViewModel.class);
+                    List<String> list = u.getRoles().stream().map(r->r.getRole().toString()).collect(Collectors.toList());
+                    userEntityViewModel.setRoles(String.join(", ", list));
+                    return userEntityViewModel;
+                } ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void addRole(Long userid, RoleBindingModel roleBindingModel) {
+        UserEntity user = findById(userid);
+        UserRoleEntity userRoleEntity = userRoleService.findByRole(roleBindingModel.getUserRoleEnum());
+             user.getRoles().add(userRoleEntity);
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public void removeRole(Long userid, RoleBindingModel roleBindingModel) {
+        UserEntity user = findById(userid);
+        UserRoleEntity userRoleEntity = userRoleService.findByRole(roleBindingModel.getUserRoleEnum());
+        if(!userRoleEntity.getRole().toString().equals("USER")){
+            user.getRoles().remove(userRoleEntity);
+            userRepository.save(user);
+        }
     }
 }

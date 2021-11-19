@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body>
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<div class="centered" style="min-height: 600px">
+    <p><h2>My Excursions</h2></p>
+    <div class="centered mt-5 mb-5">
+        <table class="centered">
+            <tr>
+                <th>Username</th>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Telephone number</th>
+                <th>Roles</th>
+                <th>Add role</th>
+                <th>Remove role</th>
+
+            </tr>
+            <div th:each="u : ${users}" th:object="${u}">
+                <tr >
+                    <td th:text="*{username}">Alfreds Futterkiste</td>
+                    <td th:text="*{fullName}">Maria Anders</td>
+                    <td th:text="*{email}">Germany</td>
+                    <td th:text="*{telephoneNum}">Maria Anders</td>
+                    <td th:text="*{roles}">Maria Anders</td>
+
+                        <td>
+
+                                <form th:action="@{/admin/users/addrole/{userid}(userid=${u.id})}" method="post" th:object="${roleBindingModel}" id="landmark-form" class="form" action="" >
+                                    <h3 class="text-center text-info"></h3>
+                                    <div class="form-group">
+                                        <label for="rating" class="text-info"></label><br>
+                                        <select th:field="*{userRoleEnum}" th:errorclass="is-invalid"  class="custom-select" name="rating" id="rating" aria-label="Default select example">
+                                            <option  value="" selected>Select role to add:</option>
+                                            <option th:each="r : ${T(com.example.project.model.entity.UserRoleEnum).values()}" th:value="${r}" th:text="${r}"></option>
+
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+                                    </div>
+                                </form>
+
+                        </td>
+
+
+                    <td>
+
+                        <form th:action="@{/admin/users/removerole/{userid}(userid=${u.id})}" method="post" th:object="${roleBindingModel}" id="remove-form" class="form" action="" >
+                            <h3 class="text-center text-info"></h3>
+                            <div class="form-group">
+                                <label for="rating" class="text-info"></label><br>
+                                <select th:field="*{userRoleEnum}" th:errorclass="is-invalid"  class="custom-select" name="remove" id="remove" aria-label="Default select example">
+                                    <option  value="" selected>Select role to remove:</option>
+                                    <option th:each="r : ${T(com.example.project.model.entity.UserRoleEnum).values()}" th:value="${r}" th:text="${r}"></option>
+
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+                            </div>
+                        </form>
+
+                    </td>
+                </tr>
+                            </div>
+
+        </table>
+    </div>
+</div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>
