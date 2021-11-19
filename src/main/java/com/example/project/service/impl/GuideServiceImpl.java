@@ -1,16 +1,20 @@
 package com.example.project.service.impl;
 
 import com.example.project.model.entity.Guide;
+import com.example.project.model.service.GuideServiceModel;
 import com.example.project.repository.GuideRepository;
 import com.example.project.service.GuideService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GuideServiceImpl implements GuideService {
     private final GuideRepository guideRepository;
+    private final ModelMapper modelMapper;
 
-    public GuideServiceImpl(GuideRepository guideRepository) {
+    public GuideServiceImpl(GuideRepository guideRepository, ModelMapper modelMapper) {
         this.guideRepository = guideRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -31,5 +35,31 @@ public class GuideServiceImpl implements GuideService {
     @Override
     public Guide findByFullName(String fullName) {
         return guideRepository.findByFullName(fullName).orElse(null);
+    }
+
+    @Override
+    public void createGuide(GuideServiceModel guideServiceModel) {
+        Guide guide = modelMapper.map(guideServiceModel, Guide.class);
+        guideRepository.save(guide);
+    }
+
+    @Override
+    public GuideServiceModel findById(Long id) {
+        return modelMapper.map(guideRepository.findById(id).orElse(null),GuideServiceModel.class);
+    }
+
+    @Override
+    public Guide findGuideById(Long id) {
+        return guideRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void editGuide(Long id, GuideServiceModel guideServiceModel) {
+    Guide guide = findGuideById(id);
+    guide.setFullName(guideServiceModel.getFullName());
+    guide.setDescription(guideServiceModel.getDescription());
+    guide.setAge(guideServiceModel.getAge());
+    guide.setPictureUrl(guideServiceModel.getPictureUrl());
+    guideRepository.save(guide);
     }
 }

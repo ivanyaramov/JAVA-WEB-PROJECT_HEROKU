@@ -171,4 +171,15 @@ public class HotelServiceImpl implements HotelService {
         hotel.setPricePerNightChild(hotelServiceModel.getPricePerNightChild());
         hotelRepository.save(hotel);
     }
+
+    @Override
+    public Long findTownId(Long id) {
+
+        return findById(id).getTown().getId();
+    }
+
+    @Override
+    public void deleteHotel(Long id) {
+        hotelRepository.deleteById(id);
+    }
 }

@@ -10,6 +10,9 @@
 </header>
 
 <main class="p-5 align-content-center bg-blur my-main">
+    <th:block sec:authorize="!isAuthenticated()">
+        <h1 class="text-light centered align-content-center pl-2">Welcome to Ivan's travel agency!</h1>
+    </th:block>
     <th:block sec:authorize="isAuthenticated()">
     <h2 class="text-light centered">Search for your destination here!</h2>
     <div class="searchbox centered">

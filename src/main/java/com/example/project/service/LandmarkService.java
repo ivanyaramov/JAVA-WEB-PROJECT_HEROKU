@@ -11,4 +11,8 @@ public interface LandmarkService {
     Landmark findById(Long id);
 
     void editLandmark(Long id, LandmarkServiceModel landmarkServiceModel);
+
+    Long getTownId(Long id);
+
+    void deleteLandmark(Long id);
 }

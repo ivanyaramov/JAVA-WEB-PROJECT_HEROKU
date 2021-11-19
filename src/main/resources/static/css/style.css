@@ -303,7 +303,7 @@ text-align: center;
     background-color: #EAEAEA;
     display: flex;
     flex-direction: column;
-    min-height: 550px;
+    min-height: 250px;
 
 }
 #hotel .container #hotel-row #hotel-column #hotel-box #hotel-form {

@@ -1,13 +1,8 @@
 package com.example.project.web;
 
 import com.example.project.model.binding.*;
-import com.example.project.model.service.HotelServiceModel;
-import com.example.project.model.service.LandmarkServiceModel;
-import com.example.project.model.service.TownServiceModel;
-import com.example.project.service.CountryService;
-import com.example.project.service.HotelService;
-import com.example.project.service.LandmarkService;
-import com.example.project.service.TownService;
+import com.example.project.model.service.*;
+import com.example.project.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
+import java.sql.SQLException;
 
 @Controller
 public class ModeratorController {
@@ -25,13 +20,15 @@ public class ModeratorController {
     private final HotelService hotelService;
     private final LandmarkService landmarkService;
     private final CountryService countryService;
+    private final GuideService guideService;
 
-    public ModeratorController(TownService townService, ModelMapper modelMapper, HotelService hotelService, LandmarkService landmarkService, CountryService countryService) {
+    public ModeratorController(TownService townService, ModelMapper modelMapper, HotelService hotelService, LandmarkService landmarkService, CountryService countryService, GuideService guideService) {
         this.townService = townService;
         this.modelMapper = modelMapper;
         this.hotelService = hotelService;
         this.landmarkService = landmarkService;
         this.countryService = countryService;
+        this.guideService = guideService;
     }
 
     @GetMapping("/add/hotel")
@@ -83,7 +80,8 @@ public class ModeratorController {
     }
     HotelServiceModel hotelServiceModel = modelMapper.map(hotelBindingModel, HotelServiceModel.class);
     hotelService.editHotel(id, hotelServiceModel);
-        return "redirect:/";
+    Long townId = hotelService.findTownId(id);
+        return "redirect:/towns/hotels/" +townId;
     }
 
     @GetMapping("/edit/landmark/{id}")
@@ -108,7 +106,8 @@ public class ModeratorController {
         }
         LandmarkServiceModel landmarkServiceModel = modelMapper.map(landmarkBindingModel, LandmarkServiceModel.class);
         landmarkService.editLandmark(id, landmarkServiceModel);
-return "redirect:/";
+        Long townId = landmarkService.getTownId(id);
+return "redirect:/towns/landmarks/" + townId;
     }
 
 
@@ -134,7 +133,7 @@ return "redirect:/";
         }
        TownServiceModel townServiceModel = modelMapper.map(townBindingModel, TownServiceModel.class);
         townService.editTown(id, townServiceModel);
-        return "redirect:/";
+        return "redirect:/towns/all";
     }
 
 
@@ -189,6 +188,120 @@ model.addAttribute("countries", countryService.getALlCountriesAsStrings());
         townService.createTown(townServiceModel);
 return "redirect:/";
     }
+
+    @ModelAttribute
+    public GuideBindingModel guideBindingModel(){
+        return new GuideBindingModel();
+    }
+
+    @GetMapping("/add/guide")
+    public String addGuide(){
+        return "guide-add";
+    }
+
+    @PostMapping("/add/guide")
+    public String addGuide(@Valid GuideBindingModel guideBindingModel,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("guideBindingModel",guideBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.guideBindingModel", bindingResult);
+            return "redirect:/add/guide";
+        }
+        GuideServiceModel guideServiceModel = modelMapper.map(guideBindingModel, GuideServiceModel.class);
+        guideService.createGuide(guideServiceModel);
+        return "redirect:/";
+    }
+
+    @GetMapping("/edit/guide/{id}")
+    public String editGuide(Model model, @PathVariable Long id){
+        GuideBindingModel guideBindingModel = modelMapper.map(guideService.findById(id), GuideBindingModel.class);
+        model.addAttribute("id",id);
+        model.addAttribute("guideBindingModel", guideBindingModel);
+        return "guide-edit";
+    }
+
+    @PostMapping("/edit/guide/{id}")
+    public String editGuide(@Valid GuideBindingModel guideBindingModel,
+                           BindingResult bindingResult,
+                           @PathVariable Long id,
+                           RedirectAttributes redirectAttributes
+    ){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("guideBindingModel", guideBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.guideBindingModel", bindingResult);
+            return "redirect:/edit/guide/"+id;
+        }
+        GuideServiceModel guideServiceModel = modelMapper.map(guideBindingModel, GuideServiceModel.class);
+        guideService.editGuide(id, guideServiceModel);
+        return "redirect:/";
+    }
+
+    @ModelAttribute
+    public CountryBindingModel countryBindingModel(){
+        return new CountryBindingModel();
+    }
+
+    @GetMapping("/add/country")
+    public String addCountry(Model model){
+        if(!model.containsAttribute("exists")){
+        model.addAttribute("exists",false);}
+        return "country-add";
+    }
+
+    @PostMapping("/add/country")
+    public String addCountry(@Valid CountryBindingModel countryBindingModel,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("countryBindingModel",countryBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.countryBindingModel", bindingResult);
+            return "redirect:/add/country";
+        }
+        if(countryService.existsByName(countryBindingModel.getName())){
+            redirectAttributes.addFlashAttribute("exists",true);
+            return "redirect:/add/country";
+        }
+        CountryServiceModel countryServiceModel = modelMapper.map(countryBindingModel,CountryServiceModel.class);
+        countryService.createCountry(countryServiceModel);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/delete/landmark/{id}")
+    public String deleteLandmark(@PathVariable Long id) {
+        Long townId = landmarkService.getTownId(id);
+        landmarkService.deleteLandmark(id);
+
+        return "redirect:/towns/landmarks/" + townId;
+    }
+
+
+    @DeleteMapping("/delete/hotel/{id}")
+    public String deleteHotel(@PathVariable Long id) {
+        Long townId = hotelService.findTownId(id);
+        try {
+            hotelService.deleteHotel(id);
+        }
+        catch (Exception e){
+            return "hotel-into-usage";
+        }
+
+        return "redirect:/towns/hotels/" + townId;
+    }
+
+
+    @DeleteMapping("/delete/town/{id}")
+    public String deleteTown(@PathVariable Long id) {
+        try {
+            townService.deleteTown(id);
+        }
+        catch (Exception e){
+            return "town-into-usage";
+        }
+
+        return "redirect:/towns/all";
+    }
+
 
 
 }

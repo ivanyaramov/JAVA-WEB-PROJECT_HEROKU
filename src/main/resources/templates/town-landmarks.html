@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head">
 
 </head>
@@ -21,6 +22,16 @@
       <img class="card-img-top img" th:src="*{pictureURL}" alt="Card image cap">
       <div class="card-body" th:text="*{description}" >
         <p class="card-text"></p>
+      </div>
+      <div class="card-footer centered"  sec:authorize="hasRole('ROLE_MODERATOR')">
+      <div >
+        <a th:href="@{/edit/landmark/{id}(id=*{id})}"  class="text-info  h5 alignleft">Edit</a>
+      </div>
+      <div>
+        <form th:action="@{/delete/landmark/{id}(id=*{id})}" th:method="delete">
+          <input type="submit" class="text-info  h5 alignright" value="Delete"/>
+        </form>
+      </div>
       </div>
 
     </div>

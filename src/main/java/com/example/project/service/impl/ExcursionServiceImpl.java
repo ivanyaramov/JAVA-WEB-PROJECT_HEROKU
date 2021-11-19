@@ -73,7 +73,18 @@ public class ExcursionServiceImpl implements ExcursionService {
 
     @Override
     public List<ExcursionViewModel> getFirst3() {
-        return getAll().stream().limit(3).collect(Collectors.toList());
+       List<ExcursionViewModel> list = new ArrayList<>();
+       int br=0;
+       for(ExcursionViewModel e: getAll()){
+           if(br>=3){
+               break;
+           }
+           if(LocalDate.now().compareTo(e.getStartDate())<0){
+               br++;
+               list.add(e);
+           }
+       }
+        return list;
     }
 
     @Override

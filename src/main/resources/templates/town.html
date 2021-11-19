@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head">
 
 </head>
@@ -9,12 +10,18 @@
 
 </header>
 <div  th:each="c : ${countries}" th:object="${c}" class = "mb-4 centered">
+
     <div class="townbgcolor">
    <h2 style="padding-top: 10px" th:text="|---*{name}---|"></h2>
+
         </div>
+
 <div class="row">
 <div th:each="t : ${c.towns}" th:object="${t}" class="card col-lg-3" style="width: 18rem;">
-    <div class="pt-2"><b><h4 th:text="*{name}"></h4></b></div>
+
+    <div class="pt-2">
+        <b><h4 class="centered" th:text="*{name}"></h4></b>
+    </div>
     <img class="card-img-top img" th:src="*{pictureUrl}" alt="Card image cap">
     <div class="card-body " th:text="*{description}" >
         <p class="card-text"></p>
@@ -22,7 +29,18 @@
     <div id="landmark-link" class = "card-footer" >
 <!--        <br/>-->
         <a th:href="@{/towns/hotels/{id}(id=*{id})}" class="text-info h5 alignleft">Hotels</a>
+        <div sec:authorize="hasRole('ROLE_MODERATOR')">
+        <a th:href="@{/edit/town/{id}(id=*{id})}" class="text-info pl-5 h5 alignleft">Edit</a>
+        </div>
+
         <a th:href="@{/towns/landmarks/{id}(id=*{id})}" class="text-info h5 alignright">Landmarks</a>
+
+        <div sec:authorize="hasRole('ROLE_MODERATOR')">
+            <form th:action="@{/delete/town/{id}(id=*{id})}" th:method="delete">
+                <input type="submit" class="text-info mr-5 h5 alignright" value="Delete"/>
+            </form>
+        </div>
+
     </div>
 </div>
 </div>

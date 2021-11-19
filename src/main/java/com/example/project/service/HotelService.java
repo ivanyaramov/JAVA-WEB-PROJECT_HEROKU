@@ -14,4 +14,8 @@ public interface HotelService {
     void createHotel(HotelServiceModel hotelServiceModel);
 
     void editHotel(Long id, HotelServiceModel hotelServiceModel);
+
+    Long findTownId(Long id);
+
+    void deleteHotel(Long id);
 }

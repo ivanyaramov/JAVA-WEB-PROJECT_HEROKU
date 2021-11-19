@@ -1,11 +1,10 @@
 package com.example.project.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Set;
+
 @Entity
 @Table(name = "hotels")
 public class Hotel extends BaseEntity {
@@ -15,6 +14,7 @@ public class Hotel extends BaseEntity {
     private BigDecimal pricePerNightChild;
     private String imageUrl;
     private Town town;
+    private Set<BookingHotel> bookingHotels;
 
     public Hotel() {
     }
@@ -79,5 +79,13 @@ public class Hotel extends BaseEntity {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+@OneToMany(mappedBy = "hotel", cascade = CascadeType.REMOVE)
+    public Set<BookingHotel> getBookingHotels() {
+        return bookingHotels;
+    }
+
+    public void setBookingHotels(Set<BookingHotel> bookingHotels) {
+        this.bookingHotels = bookingHotels;
     }
 }

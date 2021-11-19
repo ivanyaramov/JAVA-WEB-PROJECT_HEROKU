@@ -21,4 +21,6 @@ public interface TownService {
     void createTown(TownServiceModel townServiceModel);
 
     void editTown(Long id, TownServiceModel townServiceModel);
+
+    void deleteTown(Long id);
 }

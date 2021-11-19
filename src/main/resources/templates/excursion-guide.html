@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head">
 
 </head>
@@ -22,6 +23,14 @@
     <div style="font-weight: bold" class="centered"><h4>About me:</h4> </div>
     <div th:text="*{description}"></div>
     </div>
+  <div class="card-footer centered"  sec:authorize="hasRole('ROLE_MODERATOR')">
+    <div >
+      <a th:href="@{/edit/landmark/{id}(id=*{id})}" class="text-info  h5 alignleft">Edit</a>
+    </div>
+    <div>
+      <a th:href="@{/edit/hotel/{id}(id=*{id})}" class="text-info  h5 alignright">Delete</a>
+    </div>
+  </div>
 </div>
 
 

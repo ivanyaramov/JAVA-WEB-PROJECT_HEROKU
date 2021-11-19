@@ -8,10 +8,10 @@ import java.util.Set;
 @Table(name = "guides")
 public class Guide extends BaseEntity{
     private String fullName;
-    private int age;
+    private Integer age;
     private String pictureUrl;
     private String description;
-    private Excursion excursion;
+    private Set<Excursion> excursion;
 
     public Guide() {
     }
@@ -39,14 +39,15 @@ public class Guide extends BaseEntity{
         this.fullName = name;
     }
 @Column
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
-@Column(columnDefinition = "TEXT")
+
+    @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
@@ -54,12 +55,13 @@ public class Guide extends BaseEntity{
     public void setDescription(String description) {
         this.description = description;
     }
-@OneToOne(mappedBy = "guide")
-    public Excursion getExcursion() {
+@OneToMany(mappedBy = "guide")
+
+    public Set<Excursion> getExcursion() {
         return excursion;
     }
 
-    public void setExcursion(Excursion excursion) {
+    public void setExcursion(Set<Excursion> excursion) {
         this.excursion = excursion;
     }
 }

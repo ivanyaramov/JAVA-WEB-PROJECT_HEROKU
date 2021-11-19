@@ -281,4 +281,14 @@ public class LandmarkServiceImpl implements LandmarkService {
         landmark.setPictureURL(landmarkServiceModel.getPictureURL());
         landmarkRepository.save(landmark);
     }
+
+    @Override
+    public Long getTownId(Long id) {
+        return findById(id).getTown().getId();
+    }
+
+    @Override
+    public void deleteLandmark(Long id) {
+        landmarkRepository.deleteById(id);
+    }
 }

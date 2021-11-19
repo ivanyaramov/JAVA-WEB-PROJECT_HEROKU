@@ -80,7 +80,7 @@ public class Excursion  extends BaseEntity{
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
     }
-@OneToOne
+@ManyToOne
     public Guide getGuide() {
         return guide;
     }

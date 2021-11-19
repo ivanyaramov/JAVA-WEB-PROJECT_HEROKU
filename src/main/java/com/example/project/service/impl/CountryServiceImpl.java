@@ -1,6 +1,7 @@
 package com.example.project.service.impl;
 
 import com.example.project.model.entity.Country;
+import com.example.project.model.service.CountryServiceModel;
 import com.example.project.model.view.CountryViewModel;
 import com.example.project.repository.CountryRepository;
 import com.example.project.service.CountryService;
@@ -68,6 +69,14 @@ private final ModelMapper modelMapper;
     }
 
     @Override
+    public boolean existsByName(String name) {
+        if(findByName(name)!=null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public List<CountryViewModel> getAllCountries() {
         return countryRepository.findAll().stream()
                 .map(c->modelMapper.map(c,CountryViewModel.class))
@@ -79,5 +88,11 @@ private final ModelMapper modelMapper;
         return getAllCountries().stream()
                 .map(c->c.getName()).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public void createCountry(CountryServiceModel countryServiceModel) {
+        Country country = modelMapper.map(countryServiceModel, Country.class);
+        countryRepository.save(country);
     }
 }
