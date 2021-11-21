@@ -35,11 +35,7 @@
 
         <a th:href="@{/towns/landmarks/{id}(id=*{id})}" class="text-info h5 alignright">Landmarks</a>
 
-        <div sec:authorize="hasRole('ROLE_MODERATOR')">
-            <form th:action="@{/delete/town/{id}(id=*{id})}" th:method="delete">
-                <input type="submit" class="text-info mr-5 h5 alignright" value="Delete"/>
-            </form>
-        </div>
+
 
     </div>
 </div>

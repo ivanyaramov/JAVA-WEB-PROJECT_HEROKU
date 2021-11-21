@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.model.entity.Excursion;
+import com.example.project.model.service.ExcursionServiceModel;
 import com.example.project.model.view.ExcursionViewModel;
 
 import java.math.BigDecimal;
@@ -19,4 +20,6 @@ public interface ExcursionService {
     Double getAverageRating(Long id);
 
     boolean hasExcursionStarted(Long id);
+
+    void createExcursion(ExcursionServiceModel excursionServiceModel);
 }

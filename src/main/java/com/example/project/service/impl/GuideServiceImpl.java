@@ -7,6 +7,9 @@ import com.example.project.service.GuideService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class GuideServiceImpl implements GuideService {
     private final GuideRepository guideRepository;
@@ -61,5 +64,10 @@ public class GuideServiceImpl implements GuideService {
     guide.setAge(guideServiceModel.getAge());
     guide.setPictureUrl(guideServiceModel.getPictureUrl());
     guideRepository.save(guide);
+    }
+
+    @Override
+    public List<String> getAllGuides() {
+        return guideRepository.findAll().stream().map(g->g.getFullName()).collect(Collectors.toList());
     }
 }

@@ -4,6 +4,7 @@ import com.example.project.model.entity.BookingExcursion;
 import com.example.project.model.entity.Day;
 import com.example.project.model.entity.Excursion;
 import com.example.project.model.entity.Rating;
+import com.example.project.model.service.ExcursionServiceModel;
 import com.example.project.model.view.ExcursionViewModel;
 import com.example.project.repository.ExcursionRepository;
 import com.example.project.service.ExcursionService;
@@ -164,6 +165,13 @@ public class ExcursionServiceImpl implements ExcursionService {
     public boolean hasExcursionStarted(Long id) {
         return LocalDate.now().compareTo(findById(id).getStartDate())>=0;
 
+    }
+
+    @Override
+    public void createExcursion(ExcursionServiceModel excursionServiceModel) {
+        Excursion excursion = modelMapper.map(excursionServiceModel, Excursion.class);
+        excursion.setGuide(guideService.findByFullName(excursionServiceModel.getGuide()));
+        excursionRepository.save(excursion);
     }
 
 

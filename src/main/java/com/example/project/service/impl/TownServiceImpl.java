@@ -222,10 +222,7 @@ public class TownServiceImpl implements TownService {
         townRepository.save(town);
     }
 
-    @Override
-    public void deleteTown(Long id) {
-        townRepository.deleteById(id);
-    }
+
 
 
 }

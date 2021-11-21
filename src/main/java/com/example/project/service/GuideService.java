@@ -3,6 +3,8 @@ package com.example.project.service;
 import com.example.project.model.entity.Guide;
 import com.example.project.model.service.GuideServiceModel;
 
+import java.util.List;
+
 public interface GuideService {
     void initaliseGuides();
     Guide findByFullName(String fullName);
@@ -13,4 +15,6 @@ public interface GuideService {
     Guide findGuideById(Long id);
 
     void editGuide(Long id, GuideServiceModel guideServiceModel);
+
+    List<String> getAllGuides();
 }

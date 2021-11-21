@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
 
 @Controller
 public class ModeratorController {
@@ -21,14 +20,16 @@ public class ModeratorController {
     private final LandmarkService landmarkService;
     private final CountryService countryService;
     private final GuideService guideService;
+    private final ExcursionService excursionService;
 
-    public ModeratorController(TownService townService, ModelMapper modelMapper, HotelService hotelService, LandmarkService landmarkService, CountryService countryService, GuideService guideService) {
+    public ModeratorController(TownService townService, ModelMapper modelMapper, HotelService hotelService, LandmarkService landmarkService, CountryService countryService, GuideService guideService, ExcursionService excursionService) {
         this.townService = townService;
         this.modelMapper = modelMapper;
         this.hotelService = hotelService;
         this.landmarkService = landmarkService;
         this.countryService = countryService;
         this.guideService = guideService;
+        this.excursionService = excursionService;
     }
 
     @GetMapping("/add/hotel")
@@ -290,16 +291,31 @@ return "redirect:/";
     }
 
 
-    @DeleteMapping("/delete/town/{id}")
-    public String deleteTown(@PathVariable Long id) {
-        try {
-            townService.deleteTown(id);
-        }
-        catch (Exception e){
-            return "town-into-usage";
-        }
+    @ModelAttribute
+    public  ExcursionBindingModel excursionBindingModel(){
+        return new ExcursionBindingModel();
+}
 
-        return "redirect:/towns/all";
+@GetMapping("/add/excursion")
+    public String addExcursion(Model model){
+model.addAttribute("guides",guideService.getAllGuides());
+        return "excursion-add";
+}
+
+
+    @PostMapping("/add/excursion")
+    public String addExcursion(@Valid ExcursionBindingModel excursionBindingModel,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("excursionBindingModel", excursionBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.excursionBindingModel", bindingResult);
+            return "redirect:/add/excursion";
+        }
+        ExcursionServiceModel excursionServiceModel = modelMapper.map(excursionBindingModel, ExcursionServiceModel.class);
+        excursionService.createExcursion(excursionServiceModel);
+
+        return "redirect:/excursions/all";
     }
 
 

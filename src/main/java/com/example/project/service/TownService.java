@@ -22,5 +22,4 @@ public interface TownService {
 
     void editTown(Long id, TownServiceModel townServiceModel);
 
-    void deleteTown(Long id);
 }
