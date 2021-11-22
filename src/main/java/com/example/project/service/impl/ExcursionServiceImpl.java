@@ -174,5 +174,24 @@ public class ExcursionServiceImpl implements ExcursionService {
         excursionRepository.save(excursion);
     }
 
+    @Override
+    public void editExcursion(Long id, ExcursionServiceModel excursionServiceModel) {
+        Excursion excursion = findById(id);
+        excursion.setName(excursionServiceModel.getName());
+        excursion.setPictureUrl(excursionServiceModel.getPictureUrl());
+        excursion.setGuide(guideService.findByFullName(excursionServiceModel.getGuide()));
+        excursion.setCapacity(excursionServiceModel.getCapacity());
+        excursion.setStartDate(excursionServiceModel.getStartDate());
+        excursion.setEndDate(excursionServiceModel.getEndDate());
+        excursionRepository.save(excursion);
+    }
+
+    @Override
+    public void addDay(Long id, Day day) {
+        Excursion excursion = findById(id);
+        excursion.getDays().add(day);
+        excursionRepository.save(excursion);
+    }
+
 
 }

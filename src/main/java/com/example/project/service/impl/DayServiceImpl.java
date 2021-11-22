@@ -1,21 +1,21 @@
 package com.example.project.service.impl;
 
+import com.example.project.model.binding.DayBindingModel;
 import com.example.project.model.comparator.DayComparator;
 import com.example.project.model.entity.Day;
 import com.example.project.model.entity.Excursion;
 import com.example.project.model.entity.Hotel;
 import com.example.project.model.entity.Town;
+import com.example.project.model.service.DayServiceModel;
 import com.example.project.model.view.DayViewModel;
 import com.example.project.repository.DayRepository;
 import com.example.project.service.DayService;
 import com.example.project.service.ExcursionService;
 import com.example.project.service.TownService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,11 +23,13 @@ public class DayServiceImpl implements DayService {
     private final DayRepository dayRepository;
     private final TownService townService;
     private final ExcursionService excursionService;
+    private final ModelMapper modelMapper;
 
-    public DayServiceImpl(DayRepository dayRepository, TownService townService, ExcursionService excursionService) {
+    public DayServiceImpl(DayRepository dayRepository, TownService townService, ExcursionService excursionService, ModelMapper modelMapper) {
         this.dayRepository = dayRepository;
         this.townService = townService;
         this.excursionService = excursionService;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -222,6 +224,91 @@ for(Day day: days){
             createDaysForExcursionInSpain();
 
         }
+    }
+
+    @Override
+    public void createDay(Long id, DayServiceModel dayServiceModel) {
+dayServiceModel.setId(null);
+        Day day = modelMapper.map(dayServiceModel, Day.class);
+        Set<Town> set = new HashSet<>();
+        day.setHotel(getHotel(townService.findByName(dayServiceModel.getSleep())));
+        set.add(townService.findByName(dayServiceModel.getTown1()));
+        if(!dayServiceModel.getTown2().equals("")) {
+            set.add(townService.findByName(dayServiceModel.getTown2()));
+        }
+        if(!dayServiceModel.getTown3().equals("")) {
+            set.add(townService.findByName(dayServiceModel.getTown3()));
+        }
+        day.setTowns(set);
+        day.setExcursion(excursionService.findById(id));
+
+
+        Excursion excursion = excursionService.findById(id);
+        Set<DayViewModel> setOfViewModel= excursion.getDays().stream().map(d-> modelMapper.map(d, DayViewModel.class)).collect(Collectors.toSet());
+        List<DayViewModel> list = orderDays(setOfViewModel);
+        boolean incrementDays = false;
+        for(DayViewModel d: list){
+            if(d.getNumberOfDay().equals(day.getNumberOfDay())){
+                incrementDays = true;
+                break;
+            }
+        }
+        if(incrementDays){
+            for(DayViewModel d: list){
+                if(d.getNumberOfDay().compareTo(day.getNumberOfDay()) >=0){
+                    Day current = findById(d.getId());
+                    current.setNumberOfDay(current.getNumberOfDay()+1);
+                    dayRepository.save(current);
+                }
+            }
+        }
+        dayRepository.save(day);
+        excursionService.addDay(id, day);
+    }
+
+    @Override
+    public Day findById(Long id) {
+        return dayRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void editDay(Long id, Long excursionid, DayServiceModel dayServiceModel) {
+        Day day = modelMapper.map(dayServiceModel, Day.class);
+        day.setDescription(dayServiceModel.getDescription());
+        day.setHotel(getHotel(townService.findByName(dayServiceModel.getSleep())));
+        Set<Town> set = new HashSet<>();
+        set.add(townService.findByName(dayServiceModel.getTown1()));
+        if(!dayServiceModel.getTown2().equals("")) {
+            set.add(townService.findByName(dayServiceModel.getTown2()));
+        }
+        if(!dayServiceModel.getTown3().equals("")) {
+            set.add(townService.findByName(dayServiceModel.getTown3()));
+        }
+        day.setTowns(set);
+        day.setExcursion(excursionService.findById(excursionid));
+        dayRepository.save(day);
+    }
+
+    @Override
+    public DayBindingModel mapDayToBinding(Long id) {
+       Day day = findById(id);
+       Set<Town> set = day.getTowns();
+       List<Town> list = new ArrayList<>();
+       list.addAll(set);
+       DayBindingModel dayBindingModel = modelMapper.map(day, DayBindingModel.class);
+       for(int i=0;i<list.size();i++){
+           if(i==0){
+               dayBindingModel.setTown1(list.get(i).getName());
+           }
+           if(i==1){
+               dayBindingModel.setTown2(list.get(i).getName());
+           }
+           if(i==2){
+               dayBindingModel.setTown3(list.get(i).getName());
+           }
+       }
+       dayBindingModel.setSleep(day.getHotel().getTown().getName());
+return dayBindingModel;
     }
 
 

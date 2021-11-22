@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head">
 
 </head>
@@ -33,6 +34,9 @@
             <div id="landmark-link" class = "card-footer" >
                 <!--        <br/>-->
                 <a th:href="@{/excursions/info/{id}(id=*{id})}" class="text-info h5 alignleft">More info & book now!</a>
+                <div sec:authorize="hasRole('ROLE_MODERATOR')">
+                <a th:href="@{/edit/excursion/{id}(id=*{id})}" class="pl-5 text-info h5 alignleft">Edit</a>
+                </div>
                 <a th:href="@{/excursions/guide/{id}(id=*{id})}" class="text-info h5 alignright">Guide</a>
             </div>
         </div>

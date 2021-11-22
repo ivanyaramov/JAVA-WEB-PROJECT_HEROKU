@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/commons::head">
 
 </head>
@@ -10,13 +10,22 @@
 </header>
 <div   th:object="${excursion}" class = "mb-4 centered">
   <div class="townbgcolorforexcursion">
+
     <h2 style="padding-top: 10px" th:text="|---*{name}---|"></h2>
+
   </div>
+
   <div th:if="*{placesLeft}" class="booknowbgcolor">
     <a th:href="@{/excursions/booking/{id}(id=*{id})}" class=""><h1>Click here to book now!</h1></a>
   </div>
+  <div sec:authorize="hasRole('ROLE_MODERATOR')">
+    <a th:href="@{/add/day/excursion/{id}/{excursionid}(id=${id}, excursionid=${excursion.id})}" class=" text-danger h2 centered">Click here to add new day</a>
+  </div>
   <div class="wrapwholeelement" style="margin-top: 20px" th:each="d : ${days}" th:object="${d}">
     <div class="daybgcolor">
+      <div sec:authorize="hasRole('ROLE_MODERATOR')">
+        <a th:href="@{/edit/day/{id}/{excursionid}(id=*{id}, excursionid=${excursion.id})}" class=" text-danger h2 centered">Edit</a>
+      </div>
       <h2 style="padding-top: 10px" th:text="|---Day *{numberOfDay}---|"></h2>
       <h4 style="padding-top: 10px" th:text="*{description}"></h4>
     </div>

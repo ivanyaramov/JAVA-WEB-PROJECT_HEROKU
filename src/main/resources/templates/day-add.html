@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+  <div id="landmark">
+    <div class="container">
+      <div id="landmark-row" class="row justify-content-center align-items-center">
+        <div id="landmark-column" class="col-md-6">
+          <div id="landmark-box" class="col-md-12">
+            <form th:action="@{/add/day/excursion/{id}/{excursionid}(id=${id}, excursionid=${excursionid})}" method="post" th:object="${dayBindingModel}" id="landmark-form" class="form" action="" >
+              <h3 class="text-center text-info">Add day</h3>
+              <div class="form-group">
+                <label for="name" class="text-info">Number of day:</label><br>
+                <input  th:field="*{numberOfDay}" th:errorclass="is-invalid" type="number" name="name" id="name" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="town" class="text-info">Town1:</label><br>
+                <select th:field="*{town1}" th:errorclass="is-invalid"  class="custom-select" name="town" id="town" aria-label="Default select example">
+                  <option  value="" selected>Select a town:</option>
+                  <option th:each="t : ${towns}"  th:value="${t}" th:text="${t}"  value="">One</option>
+                </select>
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="town2" class="text-info">Town2:</label><br>
+                <select th:field="*{town2}" th:errorclass="is-invalid"  class="custom-select" name="town" id="town2" aria-label="Default select example">
+                  <option  value="" selected>Select a town:</option>
+                  <option th:each="t : ${towns}"  th:value="${t}" th:text="${t}"  value="">One</option>
+                </select>
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="town3" class="text-info">Town3:</label><br>
+                <select th:field="*{town3}" th:errorclass="is-invalid"  class="custom-select" name="town" id="town3" aria-label="Default select example">
+                  <option  value="" selected>Select a town:</option>
+                  <option th:each="t : ${towns}"  th:value="${t}" th:text="${t}"  value="">One</option>
+                </select>
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="town4" class="text-info">Town to sleep in:</label><br>
+                <select th:field="*{sleep}" th:errorclass="is-invalid"  class="custom-select" name="town" id="town4" aria-label="Default select example">
+                  <option  value="" selected>Select a town:</option>
+                  <option th:each="t : ${towns}"  th:value="${t}" th:text="${t}"  value="">One</option>
+                </select>
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group" >
+                <label for="description" class="text-info" >Description:</label><br>
+                <textarea  th:field="*{description}" th:errorclass="is-invalid" type="text" name="description" id="description" class="form-control" style=" height: 140px; "></textarea>
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <!--                            <div class="form-row m-5">-->
+              <!--                                <div class="col">-->
+              <!--                                    <label for="description">Description</label>-->
+              <!--                                    <textarea name="description" id="description" type="text" class="form-control" placeholder="Description"></textarea>-->
+              <!--                                </div>-->
+              <!--                            </div>-->
+              <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

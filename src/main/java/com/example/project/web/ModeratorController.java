@@ -21,8 +21,9 @@ public class ModeratorController {
     private final CountryService countryService;
     private final GuideService guideService;
     private final ExcursionService excursionService;
+    private final DayService dayService;
 
-    public ModeratorController(TownService townService, ModelMapper modelMapper, HotelService hotelService, LandmarkService landmarkService, CountryService countryService, GuideService guideService, ExcursionService excursionService) {
+    public ModeratorController(TownService townService, ModelMapper modelMapper, HotelService hotelService, LandmarkService landmarkService, CountryService countryService, GuideService guideService, ExcursionService excursionService, DayService dayService) {
         this.townService = townService;
         this.modelMapper = modelMapper;
         this.hotelService = hotelService;
@@ -30,6 +31,7 @@ public class ModeratorController {
         this.countryService = countryService;
         this.guideService = guideService;
         this.excursionService = excursionService;
+        this.dayService = dayService;
     }
 
     @GetMapping("/add/hotel")
@@ -319,5 +321,89 @@ model.addAttribute("guides",guideService.getAllGuides());
     }
 
 
+
+    @PostMapping("/edit/excursion/{id}")
+    public String editExcursion(@Valid ExcursionBindingModel excursionBindingModel,
+                            BindingResult bindingResult,
+                            @PathVariable Long id,
+                            RedirectAttributes redirectAttributes
+    ){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("excursionBindingModel", excursionBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.excursionBindingModel", bindingResult);
+            return "redirect:/edit/excursion/"+id;
+        }
+        ExcursionServiceModel excursionServiceModel = modelMapper.map(excursionBindingModel, ExcursionServiceModel.class);
+        excursionService.editExcursion(id, excursionServiceModel);
+        return "redirect:/excursions/all";
+    }
+
+
+    @GetMapping("/edit/excursion/{id}")
+    public String editExcursion(Model model, @PathVariable Long id){
+        ExcursionBindingModel excursionBindingModel = modelMapper.map(excursionService.findById(id), ExcursionBindingModel.class);
+        excursionBindingModel.setGuide(excursionService.findById(id).getGuide().getFullName());
+        model.addAttribute("guides",guideService.getAllGuides());
+        model.addAttribute("id",id);
+        model.addAttribute("excursionBindingModel", excursionBindingModel);
+        return "excursion-edit";
+    }
+
+    @ModelAttribute
+    public DayBindingModel dayBindingModel(){
+
+        return new DayBindingModel();
+    }
+
+    @GetMapping("/add/day/excursion/{id}/{excursionid}")
+    public String addDay(Model model, @PathVariable Long id, @PathVariable Long excursionid){
+        model.addAttribute("id", id);
+        model.addAttribute("excursionid", excursionid);
+        model.addAttribute("towns", townService.getOnlyTownsAsStrings());
+        return "day-add";
+    }
+
+    @PostMapping("/add/day/excursion/{id}/{excursionid}")
+    public String addDay(@Valid DayBindingModel dayBindingModel,
+                               BindingResult bindingResult,
+                               @PathVariable Long id,
+                         @PathVariable Long excursionid,
+                               RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("dayBindingModel", dayBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.dayBindingModel", bindingResult);
+            return "redirect:/add/day/excursion/" + id+ "/" + excursionid;
+        }
+        DayServiceModel dayServiceModel = modelMapper.map(dayBindingModel, DayServiceModel.class);
+        dayService.createDay(id, dayServiceModel);
+
+        return "redirect:/excursions/info/" + excursionid;
+    }
+    @GetMapping("/edit/day/{id}/{excursionid}")
+    public String editDay(Model model, @PathVariable Long id, @PathVariable Long excursionid){
+        DayBindingModel dayBindingModel = dayService.mapDayToBinding(id);
+        model.addAttribute("towns", townService.getOnlyTownsAsStrings());
+        model.addAttribute("id",id);
+        model.addAttribute("excursionid",excursionid);
+        model.addAttribute("dayBindingModel", dayBindingModel);
+        return "day-edit";
+    }
+
+    @PostMapping("/edit/day/{id}/{excursionid}")
+    public String editDay(@Valid DayBindingModel dayBindingModel,
+                                BindingResult bindingResult,
+                                @PathVariable Long id,
+                          @PathVariable Long excursionid,
+                                RedirectAttributes redirectAttributes
+    ){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("dayBindingModel", dayBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.dayBindingModel", bindingResult);
+            return "redirect:/edit/day/"+id + "/" + excursionid;
+        }
+        DayServiceModel dayServiceModel = modelMapper.map(dayBindingModel, DayServiceModel.class);
+        dayService.editDay(id, excursionid, dayServiceModel);
+        return "redirect:/excursions/info/" + excursionid;
+    }
 
 }
