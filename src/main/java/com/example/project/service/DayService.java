@@ -25,5 +25,7 @@ public interface DayService {
 
     void editDay(Long id, Long excursionid,  DayServiceModel dayServiceModel);
 
+    void deleteDay(Long id);
+
     DayBindingModel mapDayToBinding(Long id);
 }

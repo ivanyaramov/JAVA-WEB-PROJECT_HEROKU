@@ -290,6 +290,24 @@ dayServiceModel.setId(null);
     }
 
     @Override
+    public void deleteDay(Long id) {
+        Day day = findById(id);
+        Excursion excursion = excursionService.findById(day.getExcursion().getId());
+        Set<DayViewModel> setOfViewModel= excursion.getDays().stream().map(d-> modelMapper.map(d, DayViewModel.class)).collect(Collectors.toSet());
+        List<DayViewModel> list = orderDays(setOfViewModel);
+        for(DayViewModel d: list){
+            if(d.getNumberOfDay().compareTo(day.getNumberOfDay()) >=0){
+                Day current = findById(d.getId());
+                current.setNumberOfDay(current.getNumberOfDay()-1);
+                dayRepository.save(current);
+            }
+        }
+
+        dayRepository.deleteById(id);
+
+    }
+
+    @Override
     public DayBindingModel mapDayToBinding(Long id) {
        Day day = findById(id);
        Set<Town> set = day.getTowns();

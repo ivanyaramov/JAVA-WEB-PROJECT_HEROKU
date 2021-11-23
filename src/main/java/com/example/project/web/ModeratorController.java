@@ -406,4 +406,12 @@ model.addAttribute("guides",guideService.getAllGuides());
         return "redirect:/excursions/info/" + excursionid;
     }
 
+    @DeleteMapping("/delete/day/{id}/{excursionid}")
+    public String deleteDay(@PathVariable Long id, @PathVariable Long excursionid) {
+       dayService.deleteDay(id);
+
+
+        return "redirect:/excursions/info/" + excursionid;
+    }
+
 }

@@ -25,6 +25,9 @@
     <div class="daybgcolor">
       <div sec:authorize="hasRole('ROLE_MODERATOR')">
         <a th:href="@{/edit/day/{id}/{excursionid}(id=*{id}, excursionid=${excursion.id})}" class=" text-danger h2 centered">Edit</a>
+        <form th:action="@{/delete/day/{id}/{excursionid}(id=*{id}, excursionid=${excursion.id})}" th:method="delete">
+          <input type="submit" class="text-info  h5 centered" value="Delete"/>
+        </form>
       </div>
       <h2 style="padding-top: 10px" th:text="|---Day *{numberOfDay}---|"></h2>
       <h4 style="padding-top: 10px" th:text="*{description}"></h4>
