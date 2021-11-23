@@ -1,6 +1,8 @@
 package com.example.project.service.impl;
 
 import com.example.project.model.binding.RoleBindingModel;
+import com.example.project.model.binding.UserProfileBindingModel;
+import com.example.project.model.binding.UserRegisterBindingModel;
 import com.example.project.model.comparator.BookingExcursionComparator;
 import com.example.project.model.comparator.BookingHotelComparator;
 import com.example.project.model.entity.UserEntity;
@@ -132,7 +134,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<BookingExcursionViewModel> getAllExcursionBookings(UserEntity user) {
+    public List<BookingExcursionViewModel> getAllExcursionBookings(String username) {
+        UserEntity user = findByUsername(username);
     List<BookingExcursionViewModel> list =  user.getBookingExcursions().stream()
                 .map(b-> {
                     BookingExcursionViewModel bookingExcursionViewModel = modelMapper.map(b, BookingExcursionViewModel.class);
@@ -146,7 +149,8 @@ return bookingExcursionViewModel;
     }
 
     @Override
-    public List<BookingHotelViewModel> getAllHotelBookings(UserEntity userEntity) {
+    public List<BookingHotelViewModel> getAllHotelBookings(String username) {
+        UserEntity userEntity = findByUsername(username);
         List<BookingHotelViewModel> list = userEntity.getBookingHotels().stream()
                 .map(b->{
                     BookingHotelViewModel bookingHotelViewModel = modelMapper.map(b, BookingHotelViewModel.class);
@@ -192,5 +196,10 @@ return list;
             user.getRoles().remove(userRoleEntity);
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public UserProfileBindingModel mapUserToBindingModel(String username) {
+        return modelMapper.map(findByUsername(username),UserProfileBindingModel.class);
     }
 }

@@ -30,8 +30,7 @@ public class ProfileController {
 
     @GetMapping("/users/excursions/{username}")
     public String getExcursionsForUser(Model model, @PathVariable String username){
-        UserEntity user = userService.findByUsername(username);
-        model.addAttribute("bookings",userService.getAllExcursionBookings(user));
+        model.addAttribute("bookings",userService.getAllExcursionBookings(username));
         model.addAttribute("username",username);
 
         return "user-excursions";
@@ -59,12 +58,42 @@ ratingService.createRating(username, bookingid, ratingBindingModel);
     }
 
 
-    @GetMapping("/users/destinations/{id}")
-    public String getDestinationsForUser(Model model, @PathVariable Long id){
-        UserEntity user = userService.findById(id);
-        model.addAttribute("destinations",userService.getAllHotelBookings(user));
-        model.addAttribute("userid",id);
+    @GetMapping("/users/destinations/{username}")
+    public String getDestinationsForUser(Model model, @PathVariable String username){
+        model.addAttribute("destinations",userService.getAllHotelBookings(username));
+        model.addAttribute("username",username);
 
         return "user-destinations";
+    }
+
+    @GetMapping("/users/profile/{username}")
+    public String viewProfile(Model model, @PathVariable String username){
+        model.addAttribute("user", userService.mapUserToBindingModel(username));
+        model.addAttribute("username", username);
+        return "user-profile";
+    }
+
+    @GetMapping("/users/profile/{username}/edit")
+    public String editProfile(Model model, @PathVariable String username){
+        model.addAttribute("user", userService.mapUserToBindingModel(username));
+        model.addAttribute("username", username);
+
+        return "profile-edit";
+    }
+
+    @PostMapping("/users/profile/{username}/edit")
+    public String editProfile(@Valid RatingBindingModel ratingBindingModel,
+                         BindingResult bindingResult,
+                         @PathVariable String username,
+                         @PathVariable Long bookingid,
+                         RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("ratingBindingModel", ratingBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.ratingBindingModel", bindingResult);
+            return String.format("redirect:/users/excursions/%s",username);
+        }
+        ratingService.createRating(username, bookingid, ratingBindingModel);
+        return String.format("redirect:/users/excursions/%s",username);
+
     }
 }

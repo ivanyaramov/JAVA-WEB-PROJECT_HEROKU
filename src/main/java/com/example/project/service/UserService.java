@@ -1,6 +1,8 @@
 package com.example.project.service;
 
 import com.example.project.model.binding.RoleBindingModel;
+import com.example.project.model.binding.UserProfileBindingModel;
+import com.example.project.model.binding.UserRegisterBindingModel;
 import com.example.project.model.entity.UserEntity;
 import com.example.project.model.service.UserRegisterServiceModel;
 import com.example.project.model.view.BookingExcursionViewModel;
@@ -18,8 +20,8 @@ public interface UserService {
     boolean isEmailFree(String email);
     void initaliseUsers();
     UserEntity findById(Long id);
-    List<BookingExcursionViewModel> getAllExcursionBookings(UserEntity userEntity);
-    List<BookingHotelViewModel> getAllHotelBookings(UserEntity userEntity);
+    List<BookingExcursionViewModel> getAllExcursionBookings(String username);
+    List<BookingHotelViewModel> getAllHotelBookings(String username);
 
     List<UserEntityViewModel> getAllUsersView();
     List<UserEntity> getAllUsers();
@@ -27,4 +29,6 @@ public interface UserService {
     void addRole(Long userid, RoleBindingModel roleBindingModel);
 
     void removeRole(Long userid, RoleBindingModel roleBindingModel);
+
+    UserProfileBindingModel mapUserToBindingModel(String username);
 }
