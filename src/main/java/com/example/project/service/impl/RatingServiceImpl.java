@@ -21,10 +21,10 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public void createRating(Long userid, Long bookingid, RatingBindingModel ratingBindingModel) {
+    public void createRating(String username, Long bookingid, RatingBindingModel ratingBindingModel) {
         Rating rating = new Rating();
         rating.setRating(ratingBindingModel.getRating());
-        rating.setUser(userService.findById(userid));
+        rating.setUser(userService.findByUsername(username));
         rating.setBookingExcursion(bookingExcursionService.findById(bookingid));
         ratingRepository.save(rating);
 

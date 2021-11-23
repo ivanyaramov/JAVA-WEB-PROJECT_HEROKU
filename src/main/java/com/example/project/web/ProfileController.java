@@ -28,11 +28,11 @@ public class ProfileController {
         this.hotelService = hotelService;
     }
 
-    @GetMapping("/users/excursions/{id}")
-    public String getExcursionsForUser(Model model, @PathVariable Long id){
-        UserEntity user = userService.findById(id);
+    @GetMapping("/users/excursions/{username}")
+    public String getExcursionsForUser(Model model, @PathVariable String username){
+        UserEntity user = userService.findByUsername(username);
         model.addAttribute("bookings",userService.getAllExcursionBookings(user));
-        model.addAttribute("userid",id);
+        model.addAttribute("username",username);
 
         return "user-excursions";
     }
@@ -42,19 +42,19 @@ public class ProfileController {
         return new RatingBindingModel();
     }
 
-    @PostMapping("/users/excursions/{userid}/{bookingid}")
+    @PostMapping("/users/excursions/{username}/{bookingid}")
     public String rating(@Valid RatingBindingModel ratingBindingModel,
                          BindingResult bindingResult,
-                         @PathVariable Long userid,
+                         @PathVariable String username,
                          @PathVariable Long bookingid,
                          RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("ratingBindingModel", ratingBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.ratingBindingModel", bindingResult);
-            return String.format("redirect:/users/excursions/%d",userid);
+            return String.format("redirect:/users/excursions/%s",username);
         }
-ratingService.createRating(userid, bookingid, ratingBindingModel);
-        return String.format("redirect:/users/excursions/%d",userid);
+ratingService.createRating(username, bookingid, ratingBindingModel);
+        return String.format("redirect:/users/excursions/%s",username);
 
     }
 

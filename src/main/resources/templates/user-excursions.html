@@ -34,7 +34,7 @@
     <div th:if="*{finished}">
     <td>
       <div th:if="*{rating == null}">
-      <form th:action="@{/users/excursions/{userid}/{bookingid}(userid=${userid},bookingid=${b.id})}" method="post" th:object="${ratingBindingModel}" id="landmark-form" class="form" action="" >
+      <form th:action="@{/users/excursions/{username}/{bookingid}(username=${username},bookingid=${b.id})}" method="post" th:object="${ratingBindingModel}" id="landmark-form" class="form" action="" >
         <h3 class="text-center text-info"></h3>
         <div class="form-group">
           <label for="rating" class="text-info"></label><br>
