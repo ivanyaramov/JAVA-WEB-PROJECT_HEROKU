@@ -14,7 +14,7 @@
       <div id="hotel-row" class="row justify-content-center align-items-center">
         <div id="hotel-column" class="col-md-6">
           <div id="hotel-box" class="col-md-12">
-            <form id="hotel-form" class="form" th:action="@{/users/profile/{username}/edit(username=${username})}" th:method="post" th:object="${user}">
+            <form id="hotel-form" class="form" th:action="@{/users/profile/{username}/edit(username=${username})}" th:method="post" th:object="${userProfileBindingModel}">
               <h3 class="text-center text-info">Edit profile:</h3>
               <div class="form-group">
                 <label for="name" class="text-info">Full name:</label><br>
@@ -22,8 +22,8 @@
                 <p class="invalid-feedback">Field cant be null</p>
               </div>
               <div class="form-group">
-                <label  for="town" class="text-info">Email:</label>
-                <input th:value="*{email}"  type="text" name="town" id="town" class="form-control">
+                <label  for="email" class="text-info">Email:</label>
+                <input th:value="*{email}"  th:errorclass="is-invalid" type="email" name="email" id="email" class="form-control">
                 <p class="invalid-feedback">Field cant be null</p>
               </div>
 
@@ -35,7 +35,7 @@
               <div class="form-group" >
                 <label  for="forchildren" class="text-info" >Telephone number:</label><br>
                 <input th:field="*{telephoneNum}" th:errorclass="is-invalid" type="text" name="forchildren" id="forchildren" class="form-control">
-                <p class="invalid-feedback">Field cant be null and must be positive</p>
+                <p class="invalid-feedback">Field cant be null and must contain only numbers</p>
               </div>
 
               <!--                            <div class="form-row m-5">-->

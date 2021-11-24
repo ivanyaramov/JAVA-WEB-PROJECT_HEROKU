@@ -193,7 +193,42 @@ public class DayServiceImpl implements DayService {
                 "at 17:30. We will arrive in Lisabon at 20:00 and then immediately go to our hotel with the bus.");
         Day day2 = new Day(2, Set.of(lisabon), inSpain, getHotel(porto));
         day2.setDescription("On day 2 we will wake up at  7:30. We will first visit Castelo de S. Jorge which is a great historic sight " +
-                "in the capital of Portugal. ");
+                "in the capital of Portugal. Then we will visit Praca do Comercio and you'll have free time for about 3 hours. " +
+                "After that we'll go to the hotel.");
+        Day day3 = new Day(3, Set.of(porto), inSpain, getHotel(madrid));
+        day3.setDescription("On day 3 we will get up at 6:00. Then we will visit Luis do Bridge and have lunch at the best burgers in " +
+                "Portugal. The bus will leave you at the main square of the city and you'll have 1.30 hours to do some shopping. " +
+                "You'll get picked up at the same place and then we'll have a long journey to Madrid. There we'll go directly to our hotel.");
+        Day day4 = new Day(4, Set.of(madrid), inSpain, getHotel(seville));
+        day4.setDescription("On day 4 we will get up at 7:00. The first thing we will be doing is that we visit the " +
+                "great Santiagu Bernabeu stadium of Real Madrid. Then we will visit the Temple of Deboud and after we are done with it " +
+                "we will head towards Seville. We will be there by midnight.");
+        Day day5 = new Day(5, Set.of(seville), inSpain, getHotel(barcelona));
+        day5.setDescription("On day 5 we will get up at 7:00. Then we will go to Plaza de Espana and a few other landmarks. After " +
+                "we go round the city we will head towards Barcelona.");
+        Day day6 = new Day(6, Set.of(barcelona),inSpain, getHotel(andorra));
+        day6.setDescription("On day 6 we get up at 7:30. We will first visit the Camp nou stadium of Barcelona. Then " +
+                "we will get in the famous Cathedral and afterwards you will be able to go wherever you want. " +
+                "At about 6:00 we will meet up at the bus and head towards Andorra.");
+        Day day7 = new Day(7, Set.of(andorra), inSpain, getHotel(andorra));
+        day7.setDescription("We will spend the whole day 7 in the small country of Andorra! We will climb the mountain to see the " +
+                "picturesque view from the top. The ones who don't want to climb the mountain will have free time in the capital city.");
+        Day day8 = new Day(8, Set.of(lyon), inSpain, getHotel(lyon));
+        day8.setDescription("This is the last day before our departure. We will drive from Andorra to Lyon. At Lyon we will " +
+                "visit the Bellecour and some other landmarks. We will go to our hotel at late evening.");
+        Day day9 = new Day(9, null, inSpain, null);
+        day9.setDescription("We take our flight from Lyon to Sofia at 10:30. We will be at sofia at about 12:30.");
+        list.add(day1);
+        list.add(day2);
+        list.add(day3);
+        list.add(day4);
+        list.add(day5);
+        list.add(day6);
+        list.add(day7);
+        list.add(day8);
+        list.add(day9);
+        saveDaysToDatabase(list);
+
     }
 
     @Override

@@ -1,14 +1,11 @@
-package com.example.project.model.binding;
+package com.example.project.model.service;
 
-import javax.validation.constraints.*;
-
-public class UserProfileBindingModel {
+public class UserProfileServiceModel {
     private String fullName;
     private String email;
     private Integer age;
     private String telephoneNum;
-    @NotNull
-    @Size(min = 4)
+
     public String getFullName() {
         return fullName;
     }
@@ -16,9 +13,7 @@ public class UserProfileBindingModel {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-    @NotNull
-    @NotBlank
-    @Email
+
     public String getEmail() {
         return email;
     }
@@ -26,8 +21,7 @@ public class UserProfileBindingModel {
     public void setEmail(String email) {
         this.email = email;
     }
-    @Positive
-    @NotNull
+
     public Integer getAge() {
         return age;
     }
@@ -35,9 +29,7 @@ public class UserProfileBindingModel {
     public void setAge(Integer age) {
         this.age = age;
     }
-    @NotNull
-    @Size(min = 6, max = 11)
-    @Pattern(regexp="[\\d]+")
+
     public String getTelephoneNum() {
         return telephoneNum;
     }

@@ -1,10 +1,12 @@
 package com.example.project.web;
 
 import com.example.project.model.binding.RatingBindingModel;
-import com.example.project.model.entity.UserEntity;
+import com.example.project.model.binding.UserProfileBindingModel;
+import com.example.project.model.service.UserProfileServiceModel;
 import com.example.project.service.HotelService;
 import com.example.project.service.RatingService;
 import com.example.project.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,11 +23,13 @@ public class ProfileController {
     private final UserService userService;
     private final RatingService ratingService;
     private final HotelService hotelService;
+    private final ModelMapper modelMapper;
 
-    public ProfileController(UserService userService, RatingService ratingService, HotelService hotelService) {
+    public ProfileController(UserService userService, RatingService ratingService, HotelService hotelService, ModelMapper modelMapper) {
         this.userService = userService;
         this.ratingService = ratingService;
         this.hotelService = hotelService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/users/excursions/{username}")
@@ -73,27 +77,30 @@ ratingService.createRating(username, bookingid, ratingBindingModel);
         return "user-profile";
     }
 
+
+
     @GetMapping("/users/profile/{username}/edit")
     public String editProfile(Model model, @PathVariable String username){
-        model.addAttribute("user", userService.mapUserToBindingModel(username));
+        if(!model.containsAttribute("userProfileBindingModel")) {
+            model.addAttribute("userProfileBindingModel", userService.mapUserToBindingModel(username));
+        }
         model.addAttribute("username", username);
 
         return "profile-edit";
     }
 
     @PostMapping("/users/profile/{username}/edit")
-    public String editProfile(@Valid RatingBindingModel ratingBindingModel,
+    public String editProfile(@Valid UserProfileBindingModel userProfileBindingModel,
                          BindingResult bindingResult,
                          @PathVariable String username,
-                         @PathVariable Long bookingid,
                          RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("ratingBindingModel", ratingBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.ratingBindingModel", bindingResult);
-            return String.format("redirect:/users/excursions/%s",username);
+            redirectAttributes.addFlashAttribute("userProfileBindingModel", userProfileBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userProfileBindingModel", bindingResult);
+            return String.format("redirect:/users/profile/%s/edit",username);
         }
-        ratingService.createRating(username, bookingid, ratingBindingModel);
-        return String.format("redirect:/users/excursions/%s",username);
+        userService.editUser(username, modelMapper.map(userProfileBindingModel, UserProfileServiceModel.class));
+        return "redirect:/users/profile/{username}";
 
     }
 }

@@ -4,6 +4,7 @@ import com.example.project.model.binding.RoleBindingModel;
 import com.example.project.model.binding.UserProfileBindingModel;
 import com.example.project.model.binding.UserRegisterBindingModel;
 import com.example.project.model.entity.UserEntity;
+import com.example.project.model.service.UserProfileServiceModel;
 import com.example.project.model.service.UserRegisterServiceModel;
 import com.example.project.model.view.BookingExcursionViewModel;
 import com.example.project.model.view.BookingHotelViewModel;
@@ -31,4 +32,6 @@ public interface UserService {
     void removeRole(Long userid, RoleBindingModel roleBindingModel);
 
     UserProfileBindingModel mapUserToBindingModel(String username);
+
+    void editUser(String username, UserProfileServiceModel userProfileServiceModel);
 }

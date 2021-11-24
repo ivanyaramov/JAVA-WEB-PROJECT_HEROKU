@@ -73,7 +73,7 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
     @NotNull
-    @Size(min = 6, max = 10)
+    @Size(min = 6, max = 11)
     @Pattern(regexp="[\\d]+")
     public String getTelephoneNum() {
         return telephoneNum;

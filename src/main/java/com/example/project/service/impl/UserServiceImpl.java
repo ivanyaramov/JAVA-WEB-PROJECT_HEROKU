@@ -8,6 +8,7 @@ import com.example.project.model.comparator.BookingHotelComparator;
 import com.example.project.model.entity.UserEntity;
 import com.example.project.model.entity.UserRoleEntity;
 import com.example.project.model.entity.UserRoleEnum;
+import com.example.project.model.service.UserProfileServiceModel;
 import com.example.project.model.service.UserRegisterServiceModel;
 import com.example.project.model.view.BookingExcursionViewModel;
 import com.example.project.model.view.BookingHotelViewModel;
@@ -201,5 +202,16 @@ return list;
     @Override
     public UserProfileBindingModel mapUserToBindingModel(String username) {
         return modelMapper.map(findByUsername(username),UserProfileBindingModel.class);
+    }
+
+    @Override
+    public void editUser(String username, UserProfileServiceModel userProfileServiceModel) {
+        UserEntity user = findByUsername(username);
+        user.setEmail(userProfileServiceModel.getEmail());
+        user.setAge(userProfileServiceModel.getAge());
+        user.setTelephoneNum(userProfileServiceModel.getTelephoneNum());
+        user.setFullName(userProfileServiceModel.getFullName());
+        userRepository.save(user);
+
     }
 }
