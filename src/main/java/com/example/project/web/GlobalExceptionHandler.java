@@ -14,4 +14,16 @@ public class GlobalExceptionHandler {
         model.addAttribute("type", e.getType());
         return "object-not-found";
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public String handleDbExceptions(UserNotFoundException e, Model model) {
+        model.addAttribute("username", e.getUsername());
+        model.addAttribute("type", e.getType());
+        return "user-not-found";
+    }
+
+    @ExceptionHandler(NoAccessException.class)
+    public String handleDbExceptions(NoAccessException e) {
+        return "no-access";
+    }
 }

@@ -17,6 +17,7 @@ import com.example.project.repository.UserRepository;
 import com.example.project.service.HotelService;
 import com.example.project.service.UserRoleService;
 import com.example.project.service.UserService;
+import com.example.project.web.NoAccessException;
 import com.example.project.web.ObjectNotFoundException;
 import com.example.project.web.UserNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -209,6 +210,16 @@ return list;
     @Override
     public void throwExceptionIfUsernameDoesNotExist(String username) {
         findByUsername(username);
+    }
+
+    @Override
+    public boolean canAccess(String usernameOfCaller, String usernameOfModified) {
+        throwExceptionIfUsernameDoesNotExist(usernameOfCaller);
+        throwExceptionIfUsernameDoesNotExist(usernameOfModified);
+        if(!usernameOfCaller.equals(usernameOfModified)){
+            throw new NoAccessException();
+        }
+        return true;
     }
 
     @Override

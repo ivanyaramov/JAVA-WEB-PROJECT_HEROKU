@@ -7,6 +7,7 @@ import com.example.project.service.HotelService;
 import com.example.project.service.RatingService;
 import com.example.project.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +32,7 @@ public class ProfileController {
         this.hotelService = hotelService;
         this.modelMapper = modelMapper;
     }
-
+    @PreAuthorize("canAccess(#username)")
     @GetMapping("/users/excursions/{username}")
     public String getExcursionsForUser(Model model, @PathVariable String username){
         model.addAttribute("bookings",userService.getAllExcursionBookings(username));
@@ -44,7 +45,7 @@ public class ProfileController {
     public RatingBindingModel ratingBindingModel(){
         return new RatingBindingModel();
     }
-
+    @PreAuthorize("canAccess(#username)")
     @PostMapping("/users/excursions/{username}/{bookingid}")
     public String rating(@Valid RatingBindingModel ratingBindingModel,
                          BindingResult bindingResult,
@@ -61,7 +62,7 @@ ratingService.createRating(username, bookingid, ratingBindingModel);
 
     }
 
-
+    @PreAuthorize("canAccess(#username)")
     @GetMapping("/users/destinations/{username}")
     public String getDestinationsForUser(Model model, @PathVariable String username){
         model.addAttribute("destinations",userService.getAllHotelBookings(username));
@@ -69,7 +70,7 @@ ratingService.createRating(username, bookingid, ratingBindingModel);
 
         return "user-destinations";
     }
-
+    @PreAuthorize("canAccess(#username)")
     @GetMapping("/users/profile/{username}")
     public String viewProfile(Model model, @PathVariable String username){
         model.addAttribute("user", userService.mapUserToBindingModel(username));
@@ -78,7 +79,7 @@ ratingService.createRating(username, bookingid, ratingBindingModel);
     }
 
 
-
+    @PreAuthorize("canAccess(#username)")
     @GetMapping("/users/profile/{username}/edit")
     public String editProfile(Model model, @PathVariable String username){
         if(!model.containsAttribute("userProfileBindingModel")) {
@@ -88,7 +89,7 @@ ratingService.createRating(username, bookingid, ratingBindingModel);
 
         return "profile-edit";
     }
-
+    @PreAuthorize("canAccess(#username)")
     @PostMapping("/users/profile/{username}/edit")
     public String editProfile(@Valid UserProfileBindingModel userProfileBindingModel,
                          BindingResult bindingResult,

@@ -33,6 +33,7 @@ public interface UserService {
 
     UserProfileBindingModel mapUserToBindingModel(String username);
     void throwExceptionIfUsernameDoesNotExist(String username);
+    boolean canAccess(String usernameOfCaller, String usernameOfModified);
 
     void editUser(String username, UserProfileServiceModel userProfileServiceModel);
 }
