@@ -17,6 +17,7 @@ public interface TownService {
     List<String> getOnlyTownsAsStrings();
     List<TownViewModel> getAllTowns();
     List<Town> getAllTownsAsNormal();
+    void throrExceptionIfTownNotFound(Long id);
 
     void createTown(TownServiceModel townServiceModel);
 

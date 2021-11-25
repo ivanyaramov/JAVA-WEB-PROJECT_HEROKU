@@ -16,6 +16,6 @@ public interface HotelService {
     void editHotel(Long id, HotelServiceModel hotelServiceModel);
 
     Long findTownId(Long id);
-
+    void throwExceptionIfHotelNotFound(Long id);
     void deleteHotel(Long id);
 }

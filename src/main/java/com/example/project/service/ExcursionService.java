@@ -27,4 +27,5 @@ public interface ExcursionService {
     void editExcursion(Long id, ExcursionServiceModel excursionServiceModel);
 
     void addDay(Long id, Day day);
+    void throwExceptionIfExcursionDoesNotExist(Long id);
 }

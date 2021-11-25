@@ -32,6 +32,7 @@ public interface UserService {
     void removeRole(Long userid, RoleBindingModel roleBindingModel);
 
     UserProfileBindingModel mapUserToBindingModel(String username);
+    void throwExceptionIfUsernameDoesNotExist(String username);
 
     void editUser(String username, UserProfileServiceModel userProfileServiceModel);
 }

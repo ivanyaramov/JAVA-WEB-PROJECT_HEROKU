@@ -24,7 +24,7 @@ public interface DayService {
     Day findById(Long id);
 
     void editDay(Long id, Long excursionid,  DayServiceModel dayServiceModel);
-
+    void throwExceptionIfDayNotFound(Long id);
     void deleteDay(Long id);
 
     DayBindingModel mapDayToBinding(Long id);

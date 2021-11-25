@@ -91,7 +91,7 @@ public class ExcursionServiceImpl implements ExcursionService {
 
     @Override
     public ExcursionViewModel getExcursionById(Long id) {
-        Excursion excursion= excursionRepository.findById(id).orElseThrow(()->new ObjectNotFoundException(id, "excursions"));
+        Excursion excursion= findById(id);
        ExcursionViewModel excursionViewModel = modelMapper.map(excursion, ExcursionViewModel.class);
        excursionViewModel.setPlacesLeft(determinePlacesLeft(excursion));
        Double rating = getAverageRating(id);
@@ -104,7 +104,7 @@ public class ExcursionServiceImpl implements ExcursionService {
 
     @Override
     public Excursion findById(Long id) {
-        return  excursionRepository.findById(id).orElse(null);
+        return  excursionRepository.findById(id).orElseThrow(() ->new ObjectNotFoundException(id, "excursions"));
     }
 
     @Override
@@ -192,6 +192,11 @@ public class ExcursionServiceImpl implements ExcursionService {
         Excursion excursion = findById(id);
         excursion.getDays().add(day);
         excursionRepository.save(excursion);
+    }
+
+    @Override
+    public void throwExceptionIfExcursionDoesNotExist(Long id) {
+        findById(id);
     }
 
 

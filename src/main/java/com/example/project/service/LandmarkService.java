@@ -13,6 +13,6 @@ public interface LandmarkService {
     void editLandmark(Long id, LandmarkServiceModel landmarkServiceModel);
 
     Long getTownId(Long id);
-
+    void throwExceptionIfLandmarkNotFound(Long id);
     void deleteLandmark(Long id);
 }

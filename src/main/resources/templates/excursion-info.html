@@ -19,7 +19,7 @@
     <a th:href="@{/excursions/booking/{id}(id=*{id})}" class=""><h1>Click here to book now!</h1></a>
   </div>
   <div sec:authorize="hasRole('ROLE_MODERATOR')">
-    <a th:href="@{/add/day/excursion/{id}/{excursionid}(id=${id}, excursionid=${excursion.id})}" class=" text-danger h2 centered">Click here to add new day</a>
+    <a th:href="@{/add/day/excursion/{excursionid}(excursionid=${excursion.id})}" class=" text-danger h2 centered">Click here to add new day</a>
   </div>
   <div class="wrapwholeelement" style="margin-top: 20px" th:each="d : ${days}" th:object="${d}">
     <div class="daybgcolor">

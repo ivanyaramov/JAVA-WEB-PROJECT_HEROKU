@@ -65,6 +65,7 @@ public class ExcursionController {
 
     @GetMapping("/booking/{id}")
     public String bookExcursion(@PathVariable Long id, Model model) {
+        excursionService.throwExceptionIfExcursionDoesNotExist(id);
         model.addAttribute("id", id);
         Integer placesLeft = excursionService.determinePlacesLeft(excursionService.findById(id));
         if(placesLeft == 0 || excursionService.hasExcursionStarted(id)){

@@ -5,6 +5,7 @@ import com.example.project.model.service.HotelServiceModel;
 import com.example.project.repository.HotelRepository;
 import com.example.project.service.HotelService;
 import com.example.project.service.TownService;
+import com.example.project.web.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
@@ -142,7 +143,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public Hotel findById(Long id) {
-        return hotelRepository.findById(id).orElse(null);
+        return hotelRepository.findById(id).orElseThrow(()->new ObjectNotFoundException(id,"hotels"));
     }
 
     @Override
@@ -176,6 +177,11 @@ public class HotelServiceImpl implements HotelService {
     public Long findTownId(Long id) {
 
         return findById(id).getTown().getId();
+    }
+
+    @Override
+    public void throwExceptionIfHotelNotFound(Long id) {
+        findById(id);
     }
 
     @Override

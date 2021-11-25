@@ -8,6 +8,7 @@ import com.example.project.model.view.TownViewModel;
 import com.example.project.repository.TownRepository;
 import com.example.project.service.CountryService;
 import com.example.project.service.TownService;
+import com.example.project.web.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -157,7 +158,7 @@ public class TownServiceImpl implements TownService {
 
     @Override
     public TownViewModel findById(Long id) {
-        Town town1 = townRepository.findById(id).orElse(null);
+        Town town1 = townRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id,"towns"));
         TownViewModel town = modelMapper.map(town1,TownViewModel.class);
         return town;
     }
@@ -205,6 +206,11 @@ public class TownServiceImpl implements TownService {
     public List<Town> getAllTownsAsNormal() {
         List<Town> list = townRepository.findAll();
         return townRepository.findAll();
+    }
+
+    @Override
+    public void throrExceptionIfTownNotFound(Long id) {
+        findById(id);
     }
 
     @Override

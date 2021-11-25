@@ -15,7 +15,7 @@
         <div id="landmark-column" class="col-md-6">
           <div id="landmark-box" class="col-md-12">
             <form th:action="@{/edit/landmark/{id}(id=${id})}" method="post" th:object="${landmarkBindingModel}" id="landmark-form" class="form" action="" >
-              <h3 class="text-center text-info">Add landmark</h3>
+              <h3 class="text-center text-info">Edit landmark</h3>
               <div class="form-group">
                 <label for="name" class="text-info">Name:</label><br>
                 <input  th:field="*{name}" th:errorclass="is-invalid" type="text" name="name" id="name" class="form-control">

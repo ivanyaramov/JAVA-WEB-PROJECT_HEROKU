@@ -17,6 +17,8 @@ import com.example.project.repository.UserRepository;
 import com.example.project.service.HotelService;
 import com.example.project.service.UserRoleService;
 import com.example.project.service.UserService;
+import com.example.project.web.ObjectNotFoundException;
+import com.example.project.web.UserNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -85,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+        return userRepository.findByUsername(username).orElseThrow(()-> new UserNotFoundException(username, "users"));
     }
 
     @Override
@@ -202,6 +204,11 @@ return list;
     @Override
     public UserProfileBindingModel mapUserToBindingModel(String username) {
         return modelMapper.map(findByUsername(username),UserProfileBindingModel.class);
+    }
+
+    @Override
+    public void throwExceptionIfUsernameDoesNotExist(String username) {
+        findByUsername(username);
     }
 
     @Override

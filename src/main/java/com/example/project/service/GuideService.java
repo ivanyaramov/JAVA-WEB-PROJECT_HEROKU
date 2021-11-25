@@ -13,7 +13,7 @@ public interface GuideService {
 
     GuideServiceModel findById(Long id);
     Guide findGuideById(Long id);
-
+    void throwExceptionIfGuideNotFound(Long id);
     void editGuide(Long id, GuideServiceModel guideServiceModel);
 
     List<String> getAllGuides();

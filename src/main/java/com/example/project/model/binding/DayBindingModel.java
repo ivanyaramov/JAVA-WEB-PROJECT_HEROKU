@@ -24,8 +24,7 @@ public class DayBindingModel {
         this.id = id;
     }
 
-    @NotNull
-@Size(min = 1)
+
     public String getSleep() {
         return sleep;
     }
@@ -52,8 +51,7 @@ public class DayBindingModel {
     public void setDescription(String description) {
         this.description = description;
     }
-    @NotNull
-    @Size(min = 1)
+
     public String getTown1() {
         return town1;
     }

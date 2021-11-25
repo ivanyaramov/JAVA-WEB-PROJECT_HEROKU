@@ -6,6 +6,7 @@ import com.example.project.model.service.LandmarkServiceModel;
 import com.example.project.repository.LandmarkRepository;
 import com.example.project.service.LandmarkService;
 import com.example.project.service.TownService;
+import com.example.project.web.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -270,7 +271,7 @@ public class LandmarkServiceImpl implements LandmarkService {
 
     @Override
     public Landmark findById(Long id) {
-        return landmarkRepository.findById(id).orElse(null);
+        return landmarkRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(id,"landmarks"));
     }
 
     @Override
@@ -285,6 +286,11 @@ public class LandmarkServiceImpl implements LandmarkService {
     @Override
     public Long getTownId(Long id) {
         return findById(id).getTown().getId();
+    }
+
+    @Override
+    public void throwExceptionIfLandmarkNotFound(Long id) {
+        findById(id);
     }
 
     @Override

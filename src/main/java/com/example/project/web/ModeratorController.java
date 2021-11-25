@@ -1,6 +1,7 @@
 package com.example.project.web;
 
 import com.example.project.model.binding.*;
+import com.example.project.model.entity.Excursion;
 import com.example.project.model.service.*;
 import com.example.project.service.*;
 import org.modelmapper.ModelMapper;
@@ -62,6 +63,7 @@ public class ModeratorController {
 
     @GetMapping("/edit/hotel/{id}")
     public String editHotel(Model model, @PathVariable Long id){
+        hotelService.throwExceptionIfHotelNotFound(id);
         HotelBindingModel hotelBindingModel = modelMapper.map(hotelService.findById(id),HotelBindingModel.class);
         model.addAttribute("town", hotelService.findById(id).getTown().getName());
         model.addAttribute("id",id);
@@ -75,7 +77,7 @@ public class ModeratorController {
                             @PathVariable Long id,
                             RedirectAttributes redirectAttributes
                             ){
-
+hotelService.throwExceptionIfHotelNotFound(id);
     if(bindingResult.hasErrors()){
         redirectAttributes.addFlashAttribute("hotelBindingModel", hotelBindingModel);
         redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.hotelBindingModel", bindingResult);
@@ -89,6 +91,7 @@ public class ModeratorController {
 
     @GetMapping("/edit/landmark/{id}")
     public String editLandmark(Model model, @PathVariable Long id){
+        landmarkService.throwExceptionIfLandmarkNotFound(id);
         LandmarkBindingModel landmarkBindingModel = modelMapper.map(landmarkService.findById(id),LandmarkBindingModel.class);
         model.addAttribute("town", landmarkService.findById(id).getTown().getName());
         model.addAttribute("id",id);
@@ -102,6 +105,7 @@ public class ModeratorController {
                             @PathVariable Long id,
                             RedirectAttributes redirectAttributes
     ){
+        landmarkService.throwExceptionIfLandmarkNotFound(id);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("landmarkBindingModel", landmarkBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.landmarkBindingModel", bindingResult);
@@ -116,6 +120,7 @@ return "redirect:/towns/landmarks/" + townId;
 
     @GetMapping("/edit/town/{id}")
     public String editTown(Model model, @PathVariable Long id){
+        townService.throrExceptionIfTownNotFound(id);
        TownBindingModel townBindingModel = modelMapper.map(townService.findById(id),TownBindingModel.class);
         model.addAttribute("country", townService.findByName(townBindingModel.getName()).getCountry().getName());
         model.addAttribute("id",id);
@@ -128,7 +133,7 @@ return "redirect:/towns/landmarks/" + townId;
                                BindingResult bindingResult,
                                @PathVariable Long id,
                                RedirectAttributes redirectAttributes
-    ){
+    ){townService.throrExceptionIfTownNotFound(id);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("townBindingModel", townBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.townBindingModel", bindingResult);
@@ -206,6 +211,7 @@ return "redirect:/";
     public String addGuide(@Valid GuideBindingModel guideBindingModel,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes){
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("guideBindingModel",guideBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.guideBindingModel", bindingResult);
@@ -218,6 +224,7 @@ return "redirect:/";
 
     @GetMapping("/edit/guide/{id}")
     public String editGuide(Model model, @PathVariable Long id){
+        guideService.throwExceptionIfGuideNotFound(id);
         GuideBindingModel guideBindingModel = modelMapper.map(guideService.findById(id), GuideBindingModel.class);
         model.addAttribute("id",id);
         model.addAttribute("guideBindingModel", guideBindingModel);
@@ -230,6 +237,7 @@ return "redirect:/";
                            @PathVariable Long id,
                            RedirectAttributes redirectAttributes
     ){
+        guideService.throwExceptionIfGuideNotFound(id);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("guideBindingModel", guideBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.guideBindingModel", bindingResult);
@@ -272,6 +280,7 @@ return "redirect:/";
 
     @DeleteMapping("/delete/landmark/{id}")
     public String deleteLandmark(@PathVariable Long id) {
+        landmarkService.throwExceptionIfLandmarkNotFound(id);
         Long townId = landmarkService.getTownId(id);
         landmarkService.deleteLandmark(id);
 
@@ -281,6 +290,7 @@ return "redirect:/";
 
     @DeleteMapping("/delete/hotel/{id}")
     public String deleteHotel(@PathVariable Long id) {
+        hotelService.throwExceptionIfHotelNotFound(id);
         Long townId = hotelService.findTownId(id);
         try {
             hotelService.deleteHotel(id);
@@ -328,6 +338,7 @@ model.addAttribute("guides",guideService.getAllGuides());
                             @PathVariable Long id,
                             RedirectAttributes redirectAttributes
     ){
+        excursionService.throwExceptionIfExcursionDoesNotExist(id);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("excursionBindingModel", excursionBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.excursionBindingModel", bindingResult);
@@ -341,6 +352,7 @@ model.addAttribute("guides",guideService.getAllGuides());
 
     @GetMapping("/edit/excursion/{id}")
     public String editExcursion(Model model, @PathVariable Long id){
+        excursionService.throwExceptionIfExcursionDoesNotExist(id);
         ExcursionBindingModel excursionBindingModel = modelMapper.map(excursionService.findById(id), ExcursionBindingModel.class);
         excursionBindingModel.setGuide(excursionService.findById(id).getGuide().getFullName());
         model.addAttribute("guides",guideService.getAllGuides());
@@ -355,33 +367,34 @@ model.addAttribute("guides",guideService.getAllGuides());
         return new DayBindingModel();
     }
 
-    @GetMapping("/add/day/excursion/{id}/{excursionid}")
-    public String addDay(Model model, @PathVariable Long id, @PathVariable Long excursionid){
-        model.addAttribute("id", id);
+    @GetMapping("/add/day/excursion/{excursionid}")
+    public String addDay(Model model, @PathVariable Long excursionid){
+        excursionService.throwExceptionIfExcursionDoesNotExist(excursionid);
         model.addAttribute("excursionid", excursionid);
         model.addAttribute("towns", townService.getOnlyTownsAsStrings());
         return "day-add";
     }
 
-    @PostMapping("/add/day/excursion/{id}/{excursionid}")
+    @PostMapping("/add/day/excursion/{excursionid}")
     public String addDay(@Valid DayBindingModel dayBindingModel,
                                BindingResult bindingResult,
-                               @PathVariable Long id,
                          @PathVariable Long excursionid,
                                RedirectAttributes redirectAttributes){
+        excursionService.throwExceptionIfExcursionDoesNotExist(excursionid);
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("dayBindingModel", dayBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.dayBindingModel", bindingResult);
-            return "redirect:/add/day/excursion/" + id+ "/" + excursionid;
+            return "redirect:/add/day/excursion/" + excursionid;
         }
         DayServiceModel dayServiceModel = modelMapper.map(dayBindingModel, DayServiceModel.class);
-        dayService.createDay(id, dayServiceModel);
+        dayService.createDay(excursionid, dayServiceModel);
 
         return "redirect:/excursions/info/" + excursionid;
     }
     @GetMapping("/edit/day/{id}/{excursionid}")
     public String editDay(Model model, @PathVariable Long id, @PathVariable Long excursionid){
         DayBindingModel dayBindingModel = dayService.mapDayToBinding(id);
+        excursionService.throwExceptionIfExcursionDoesNotExist(excursionid);
         model.addAttribute("towns", townService.getOnlyTownsAsStrings());
         model.addAttribute("id",id);
         model.addAttribute("excursionid",excursionid);
@@ -395,7 +408,8 @@ model.addAttribute("guides",guideService.getAllGuides());
                                 @PathVariable Long id,
                           @PathVariable Long excursionid,
                                 RedirectAttributes redirectAttributes
-    ){
+    ){dayService.throwExceptionIfDayNotFound(id);
+        excursionService.throwExceptionIfExcursionDoesNotExist(excursionid);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("dayBindingModel", dayBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.dayBindingModel", bindingResult);

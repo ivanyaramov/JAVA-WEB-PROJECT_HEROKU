@@ -12,6 +12,7 @@ import com.example.project.repository.DayRepository;
 import com.example.project.service.DayService;
 import com.example.project.service.ExcursionService;
 import com.example.project.service.TownService;
+import com.example.project.web.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -303,14 +304,22 @@ dayServiceModel.setId(null);
 
     @Override
     public Day findById(Long id) {
-        return dayRepository.findById(id).orElse(null);
+        return dayRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(id,"days"));
+    }
+
+    @Override
+    public void throwExceptionIfDayNotFound(Long id){
+        findById(id);
     }
 
     @Override
     public void editDay(Long id, Long excursionid, DayServiceModel dayServiceModel) {
+        throwExceptionIfDayNotFound(id);
         Day day = modelMapper.map(dayServiceModel, Day.class);
         day.setDescription(dayServiceModel.getDescription());
-        day.setHotel(getHotel(townService.findByName(dayServiceModel.getSleep())));
+        if(!dayServiceModel.getSleep().equals("")) {
+            day.setHotel(getHotel(townService.findByName(dayServiceModel.getSleep())));
+        }
         Set<Town> set = new HashSet<>();
         set.add(townService.findByName(dayServiceModel.getTown1()));
         if(!dayServiceModel.getTown2().equals("")) {
@@ -360,7 +369,9 @@ dayServiceModel.setId(null);
                dayBindingModel.setTown3(list.get(i).getName());
            }
        }
-       dayBindingModel.setSleep(day.getHotel().getTown().getName());
+       if(day.getHotel() !=null) {
+           dayBindingModel.setSleep(day.getHotel().getTown().getName());
+       }
 return dayBindingModel;
     }
 

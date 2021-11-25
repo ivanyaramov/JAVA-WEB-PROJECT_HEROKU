@@ -4,6 +4,7 @@ import com.example.project.model.entity.Guide;
 import com.example.project.model.service.GuideServiceModel;
 import com.example.project.repository.GuideRepository;
 import com.example.project.service.GuideService;
+import com.example.project.web.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -48,12 +49,17 @@ public class GuideServiceImpl implements GuideService {
 
     @Override
     public GuideServiceModel findById(Long id) {
-        return modelMapper.map(guideRepository.findById(id).orElse(null),GuideServiceModel.class);
+        return modelMapper.map(guideRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(id,"guides")),GuideServiceModel.class);
     }
 
     @Override
     public Guide findGuideById(Long id) {
         return guideRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void throwExceptionIfGuideNotFound(Long id) {
+        findById(id);
     }
 
     @Override

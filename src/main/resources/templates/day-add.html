@@ -14,7 +14,7 @@
       <div id="landmark-row" class="row justify-content-center align-items-center">
         <div id="landmark-column" class="col-md-6">
           <div id="landmark-box" class="col-md-12">
-            <form th:action="@{/add/day/excursion/{id}/{excursionid}(id=${id}, excursionid=${excursionid})}" method="post" th:object="${dayBindingModel}" id="landmark-form" class="form" action="" >
+            <form th:action="@{/add/day/excursion/{excursionid}(excursionid=${excursionid})}" method="post" th:object="${dayBindingModel}" id="landmark-form" class="form" action="" >
               <h3 class="text-center text-info">Add day</h3>
               <div class="form-group">
                 <label for="name" class="text-info">Number of day:</label><br>
