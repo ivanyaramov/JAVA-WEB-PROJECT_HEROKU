@@ -9,6 +9,7 @@ import com.example.project.service.BookingExcursionService;
 import com.example.project.service.ExcursionService;
 import com.example.project.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -49,15 +50,16 @@ public class BookingExcursionServiceImpl implements BookingExcursionService {
     @Override
     public boolean checkIfBookingIsFinished(Long id) {
         BookingExcursion bookingExcursion = findById(id);
-        return LocalDate.now().compareTo(bookingExcursion.getEndDate()) < 0;
+        return LocalDate.now().compareTo(bookingExcursion.getEndDate()) > 0;
     }
-
+    @Scheduled(cron = "${schedulers.cron}")
     @Override
-    public void setBookingAsFinishedIfNeeded(Long id) {
-        if (checkIfBookingIsFinished(id)){
-            BookingExcursion bookingExcursion = findById(id);
-            bookingExcursion.setFinished(true);
-            bookingExcursionRepository.save(bookingExcursion);
+    public void setBookingAsFinishedIfNeeded() {
+        for(BookingExcursion b: bookingExcursionRepository.findAll()) {
+            if (checkIfBookingIsFinished(b.getId())) {
+                b.setFinished(true);
+                bookingExcursionRepository.save(b);
+            }
         }
     }
 }

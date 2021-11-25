@@ -8,6 +8,6 @@ public interface BookingExcursionService {
 
     BookingExcursion findById(Long bookingid);
     boolean checkIfBookingIsFinished(Long id);
-    void setBookingAsFinishedIfNeeded(Long id);
+    void setBookingAsFinishedIfNeeded();
 
 }

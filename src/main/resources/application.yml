@@ -33,5 +33,6 @@ spring:
   #api-key:
   #api-secret:
   #cloud-name:
-
+schedulers:
+  cron: "0 0 1 * * ?"
 

@@ -27,7 +27,7 @@ public class BookingHotel extends BaseEntity{
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
-    @Column
+    @Column(nullable = false)
     public Integer getCountOfAdults() {
         return countOfAdults;
     }
@@ -35,7 +35,7 @@ public class BookingHotel extends BaseEntity{
     public void setCountOfAdults(Integer countOfAdults) {
         this.countOfAdults = countOfAdults;
     }
-    @Column
+    @Column(nullable = false)
     public Integer getCountOfChildren() {
         return countOfChildren;
     }
@@ -43,7 +43,7 @@ public class BookingHotel extends BaseEntity{
     public void setCountOfChildren(Integer countOfChildren) {
         this.countOfChildren = countOfChildren;
     }
-    @Column
+    @Column(nullable = false)
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -52,7 +52,7 @@ public class BookingHotel extends BaseEntity{
         this.startDate = startDate;
     }
 
-    @Column
+    @Column(nullable = false)
     public Integer getNights() {
         return nights;
     }

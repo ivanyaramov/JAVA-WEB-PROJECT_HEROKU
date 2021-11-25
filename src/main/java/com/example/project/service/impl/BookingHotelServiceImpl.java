@@ -9,7 +9,10 @@ import com.example.project.service.BookingHotelService;
 import com.example.project.service.HotelService;
 import com.example.project.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 public class BookingHotelServiceImpl implements BookingHotelService {
@@ -34,6 +37,27 @@ public class BookingHotelServiceImpl implements BookingHotelService {
         booking.setHotel(hotel);
         booking.setUser(user);
         bookingHotelRepository.save(booking);
+    }
+
+    @Override
+    public boolean checkIfBookingIsOlderThan1Year(Long id) {
+        BookingHotel bookingHotel = bookingHotelRepository.findById(id).orElse(null);
+        LocalDate dateOfBooking = bookingHotel.getStartDate();
+        LocalDate now = LocalDate.now();
+
+
+        return now.isAfter(dateOfBooking.plusYears(1));
+
+    }
+
+    @Override
+    @Scheduled(cron = "${schedulers.cron}")
+    public void deleteBookingsIfOlderThan1Year() {
+        for(BookingHotel b: bookingHotelRepository.findAll()){
+            if(checkIfBookingIsOlderThan1Year(b.getId())){
+                bookingHotelRepository.delete(b);
+            }
+        }
     }
 
 
