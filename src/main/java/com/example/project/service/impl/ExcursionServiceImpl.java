@@ -9,6 +9,7 @@ import com.example.project.model.view.ExcursionViewModel;
 import com.example.project.repository.ExcursionRepository;
 import com.example.project.service.ExcursionService;
 import com.example.project.service.GuideService;
+import com.example.project.web.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -90,7 +91,7 @@ public class ExcursionServiceImpl implements ExcursionService {
 
     @Override
     public ExcursionViewModel getExcursionById(Long id) {
-        Excursion excursion= excursionRepository.findById(id).orElse(null);
+        Excursion excursion= excursionRepository.findById(id).orElseThrow(()->new ObjectNotFoundException(id, "excursions"));
        ExcursionViewModel excursionViewModel = modelMapper.map(excursion, ExcursionViewModel.class);
        excursionViewModel.setPlacesLeft(determinePlacesLeft(excursion));
        Double rating = getAverageRating(id);
