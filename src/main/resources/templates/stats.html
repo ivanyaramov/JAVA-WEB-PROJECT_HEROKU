@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="centered h1 text-danger mt-5 mb-5">
+  <div class="container-fluid">
+    <h1 class="text-center  mt-5">Welcome to Stats!</h1>
+    <h3 class="text-center  mt-5">Total requests <th:block th:text="${stats.getTotalRequests()}"></th:block></h3>
+    <h3 class="text-center  mt-5">Anonymous requests <th:block th:text="${stats.getAnonRequests()}"></th:block></h3>
+    <h3 class="text-center  mt-5">Authorized requests <th:block th:text="${stats.getAuthRequests()}"></th:block></h3>
+
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

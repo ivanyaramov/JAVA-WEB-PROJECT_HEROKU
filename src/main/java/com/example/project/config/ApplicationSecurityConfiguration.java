@@ -33,7 +33,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         antMatchers("/", "/users/login", "/users/register").permitAll().
                 // we permit the page below only for admin users
                         antMatchers("/add/**","/edit/**,/delete/**").hasRole(UserRoleEnum.MODERATOR.name()).
-                antMatchers("/admin/**").hasRole(UserRoleEnum.ADMIN.name()).
+                antMatchers("/admin/**", "/statistics").hasRole(UserRoleEnum.ADMIN.name()).
                 // next we forbid all other pages for unauthenticated users.
                         antMatchers("/**").authenticated().
                 and().
