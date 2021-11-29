@@ -34,6 +34,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.mockito.Mockito.lenient;
+
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -181,8 +183,8 @@ public class UserServiceTest {
 
     @Test
     void TestCanAcessForFirst(){
-        Mockito.when(mockUserRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
-        Assertions.assertThrows(UserNotFoundException.class,() -> userServiceToTest.canAccess("random", testUser.getUsername()));
+        lenient().when(mockUserRepository.findByUsername(testUser2.getUsername())).thenReturn(Optional.of(testUser2));
+        Assertions.assertThrows(UserNotFoundException.class,() -> userServiceToTest.canAccess("random", testUser2.getUsername()));
     }
 
     @Test

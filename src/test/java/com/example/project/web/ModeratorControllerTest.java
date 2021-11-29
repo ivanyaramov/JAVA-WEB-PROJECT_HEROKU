@@ -48,10 +48,11 @@ private HotelService hotelService;
     ModelMapper modelMapper;
     @Autowired
     HotelRepository hotelRepository;
+
     @Autowired
 MockMvc mockMvc;
 
-    @Mock
+    @Autowired
     private HotelService mockHotelService;
 
 
