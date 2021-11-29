@@ -100,6 +100,8 @@ public class UserEntity extends BaseEntity{
     public void setBookingHotels(Set<BookingHotel> bookingHotels) {
         this.bookingHotels = bookingHotels;
     }
+
+
 }
 
 

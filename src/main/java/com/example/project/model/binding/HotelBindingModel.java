@@ -9,13 +9,23 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public class HotelBindingModel {
+    private Long id;
     private String name;
     private Integer stars;
     private BigDecimal pricePerNightAdult;
     private BigDecimal pricePerNightChild;
     private String imageUrl;
     private String town;
-@NotNull
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @NotNull
 @Size(min = 1)
     public String getName() {
         return name;

@@ -6,12 +6,21 @@ import com.example.project.model.entity.Town;
 import java.math.BigDecimal;
 
 public class HotelServiceModel {
+    private Long id;
     private String name;
     private Integer stars;
     private BigDecimal pricePerNightAdult;
     private BigDecimal pricePerNightChild;
     private String imageUrl;
     private Town town;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
