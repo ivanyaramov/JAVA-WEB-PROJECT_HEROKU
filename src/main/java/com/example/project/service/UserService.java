@@ -1,9 +1,11 @@
 package com.example.project.service;
 
+import com.example.project.model.binding.ChangePasswordBindingModel;
 import com.example.project.model.binding.RoleBindingModel;
 import com.example.project.model.binding.UserProfileBindingModel;
 import com.example.project.model.binding.UserRegisterBindingModel;
 import com.example.project.model.entity.UserEntity;
+import com.example.project.model.service.ChangePasswordServiceModel;
 import com.example.project.model.service.UserProfileServiceModel;
 import com.example.project.model.service.UserRegisterServiceModel;
 import com.example.project.model.view.BookingExcursionViewModel;
@@ -36,4 +38,8 @@ public interface UserService {
     boolean canAccess(String usernameOfCaller, String usernameOfModified);
 
     void editUser(String username, UserProfileServiceModel userProfileServiceModel);
+
+    boolean isPasswordCorrect(String username, ChangePasswordServiceModel changePasswordServiceModel);
+
+    void changePassword(String username, ChangePasswordServiceModel changePasswordServiceModel);
 }

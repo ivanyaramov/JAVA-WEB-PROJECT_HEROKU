@@ -1,5 +1,6 @@
 package com.example.project.service.impl;
 
+import com.example.project.model.binding.ChangePasswordBindingModel;
 import com.example.project.model.binding.RoleBindingModel;
 import com.example.project.model.binding.UserProfileBindingModel;
 import com.example.project.model.binding.UserRegisterBindingModel;
@@ -8,6 +9,7 @@ import com.example.project.model.comparator.BookingHotelComparator;
 import com.example.project.model.entity.UserEntity;
 import com.example.project.model.entity.UserRoleEntity;
 import com.example.project.model.entity.UserRoleEnum;
+import com.example.project.model.service.ChangePasswordServiceModel;
 import com.example.project.model.service.UserProfileServiceModel;
 import com.example.project.model.service.UserRegisterServiceModel;
 import com.example.project.model.view.BookingExcursionViewModel;
@@ -231,5 +233,19 @@ return list;
         user.setFullName(userProfileServiceModel.getFullName());
         userRepository.save(user);
 
+    }
+
+    @Override
+    public boolean isPasswordCorrect(String username, ChangePasswordServiceModel changePasswordServiceModel) {
+        UserEntity user = findByUsername(username);
+
+        return passwordEncoder.matches(changePasswordServiceModel.getOldPassword(), user.getPassword());
+    }
+
+    @Override
+    public void changePassword(String username, ChangePasswordServiceModel changePasswordServiceModel) {
+        UserEntity user = findByUsername(username);
+        user.setPassword(passwordEncoder.encode(changePasswordServiceModel.getNewPassword()));
+        userRepository.save(user);
     }
 }

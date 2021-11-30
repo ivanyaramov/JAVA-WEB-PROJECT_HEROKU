@@ -18,7 +18,8 @@
     </ul>
     <div id="edit-profile" class = "card-footer" >
       <!--        <br/>-->
-      <a th:href="@{/users/profile/{username}/edit(username=${username})}" class="text-info h5 centered">Edit</a>
+      <a th:href="@{/users/profile/{username}/edit(username=${username})}" class="text-info h5 centered alignright" >Edit</a>
+      <a th:href="@{/users/profile/{username}/changePassword(username=${username})}" class="text-info h5 centered alignleft" >Change password</a>
 
     </div>
   </div>

@@ -1,7 +1,9 @@
 package com.example.project.web;
 
+import com.example.project.model.binding.ChangePasswordBindingModel;
 import com.example.project.model.binding.RatingBindingModel;
 import com.example.project.model.binding.UserProfileBindingModel;
+import com.example.project.model.service.ChangePasswordServiceModel;
 import com.example.project.model.service.UserProfileServiceModel;
 import com.example.project.service.HotelService;
 import com.example.project.service.RatingService;
@@ -102,6 +104,50 @@ ratingService.createRating(username, bookingid, ratingBindingModel);
         }
         userService.editUser(username, modelMapper.map(userProfileBindingModel, UserProfileServiceModel.class));
         return "redirect:/users/profile/{username}";
+
+    }
+
+    @ModelAttribute
+    public ChangePasswordBindingModel changePasswordBindingModel(){
+        return new ChangePasswordBindingModel();
+    }
+
+    @PreAuthorize("canAccess(#username)")
+    @GetMapping("/users/profile/{username}/changePassword")
+    public String changePassword(Model model, @PathVariable String username){
+        if(!model.containsAttribute("passwordDoesNotMatch")){
+            model.addAttribute("passwordDoesNotMatch", false);
+        }
+        if(!model.containsAttribute("incorrectPassword")){
+            model.addAttribute("incorrectPassword", false);
+        }
+
+        return "password-change";
+    }
+
+    @PreAuthorize("canAccess(#username)")
+    @PostMapping("/users/profile/{username}/changePassword")
+    public String changePassword(@Valid ChangePasswordBindingModel changePasswordBindingModel,
+                              BindingResult bindingResult,
+                              @PathVariable String username,
+                              RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("changePasswordBindingModel", changePasswordBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.changePasswordBindingModel", bindingResult);
+            return String.format("redirect:/users/profile/%s/changePassword",username);
+        }
+        ChangePasswordServiceModel changePasswordServiceModel = modelMapper.map(changePasswordBindingModel, ChangePasswordServiceModel.class);
+        if(!(changePasswordBindingModel.getNewPassword().equals(changePasswordBindingModel.getConfirmPassword())) ||  !userService.isPasswordCorrect(username, changePasswordServiceModel)){
+            if (!changePasswordBindingModel.getNewPassword().equals(changePasswordBindingModel.getConfirmPassword())){
+            redirectAttributes.addFlashAttribute("passwordDoesNotMatch", true);}
+            if(!userService.isPasswordCorrect(username, changePasswordServiceModel)){
+                redirectAttributes.addFlashAttribute("incorrectPassword", true);
+            }
+            return String.format("redirect:/users/profile/%s/changePassword",username);
+        }
+
+        userService.changePassword(username, changePasswordServiceModel);
+        return "passwordchange-success";
 
     }
 }
