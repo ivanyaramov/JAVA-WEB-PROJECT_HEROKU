@@ -153,7 +153,7 @@ body {
 
 .townbgcolor{
     /*background-color: #EABC82;    */
-    background-color: #72CA96;
+    background-color: #84b3c9;
     height: 60px;
     text-align: center;
 }
@@ -195,7 +195,7 @@ text-align: center;
 
 .townbgcolorforexcursion{
     /*background-color: #EABC82;    */
-    background-color: #1A4F45;
+    background-color: #94ced9;
     height: 60px;
     text-align: center;
     border-color: red;
@@ -204,7 +204,7 @@ text-align: center;
 
 .booknowbgcolor{
     /*background-color: #EABC82;    */
-    background-color: orange;
+    background-color: #91b3a5;
     height: 60px;
     text-align: center;
     border-color: red;
@@ -217,7 +217,7 @@ text-align: center;
 
 .daybgcolor{
     /*background-color: #EABC82;    */
-    background-color: #56DDE4;
+    background-color: #a6d4c9;
     text-align: center;
     padding-top: 20px;
     display: flex;

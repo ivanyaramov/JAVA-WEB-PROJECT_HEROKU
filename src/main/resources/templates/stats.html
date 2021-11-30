@@ -8,8 +8,8 @@
 <header th:replace="fragments/commons::navigation">
 
 </header>
-<main class="centered h1 text-danger mt-5 mb-5">
-  <div class="container-fluid">
+<main class="centered h1 mt-5 mb-5">
+  <div class="container-fluid" style="color: blue">
     <h1 class="text-center  mt-5">Welcome to Stats!</h1>
     <h3 class="text-center  mt-5">Total requests <th:block th:text="${stats.getTotalRequests()}"></th:block></h3>
     <h3 class="text-center  mt-5">Anonymous requests <th:block th:text="${stats.getAnonRequests()}"></th:block></h3>
