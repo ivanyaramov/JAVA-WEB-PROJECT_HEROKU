@@ -2,10 +2,7 @@ package com.example.project.web;
 
 import com.example.project.model.entity.Hotel;
 import com.example.project.model.entity.UserEntity;
-import com.example.project.repository.DayRepository;
-import com.example.project.repository.HotelRepository;
-import com.example.project.repository.TownRepository;
-import com.example.project.repository.UserRepository;
+import com.example.project.repository.*;
 import com.example.project.service.BookingExcursionService;
 import com.example.project.service.ExcursionService;
 import com.example.project.service.HotelService;
@@ -58,6 +55,8 @@ public class RestConTest {
     HotelRepository mockHotelRepository;
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    ExcursionRepository excursionRepository;
 
     private HotelService hotelServiceToTest;
 
@@ -96,12 +95,13 @@ public class RestConTest {
     @Test
     void testGetPriceOfExcursion() throws Exception {
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+        Long firstId = excursionRepository.findAll().stream().findFirst().get().getId();
         requestParams.add("countOfAdults", "1");
         requestParams.add("countOfChildren", "1");
-        requestParams.add("id", "1");
+        requestParams.add("id", firstId.toString());
         mockMvc.perform(post("/rest/bookingexcursionprice").params(requestParams)).
                 andExpect(status().isOk()).
-                andExpect(jsonPath("$", is(excursionService.priceOfExcursion(BigDecimal.ONE,BigDecimal.ONE,1L).intValue())));
+                andExpect(jsonPath("$", is(excursionService.priceOfExcursion(BigDecimal.ONE,BigDecimal.ONE,firstId).intValue())));
 //                andExpect(jsonPath("$.[1].message", is(COMMENT_2)));
     }
 
