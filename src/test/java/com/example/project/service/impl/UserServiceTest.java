@@ -51,7 +51,8 @@ public class UserServiceTest {
     private UserService userServiceToTest2;
     @Autowired
     private ModelMapper modelMapper;
-
+    @Autowired
+    private UserService userService;
 
     @Mock
     private UserRepository mockUserRepository;
@@ -172,12 +173,18 @@ public class UserServiceTest {
     @Test
     void TestEditUser(){
 
-        UserProfileServiceModel userProfileServiceModel = modelMapper.map(testUser, UserProfileServiceModel.class);
+        UserProfileServiceModel userProfileServiceModel = new UserProfileServiceModel();
+        userProfileServiceModel.setFullName("bb bb");
+        userProfileServiceModel.setEmail("abv@as");
+        userProfileServiceModel.setTelephoneNum("08764646");
         userProfileServiceModel.setAge(55);
-        Mockito.when(mockUserRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(modelMapper.map(userProfileServiceModel, UserEntity.class)));
-        userServiceToTest.editUser(testUser.getUsername(),userProfileServiceModel);
-        var actual = userServiceToTest.findByUsername(testUser.getUsername());
+        Long firstId = userRepository.findAll().stream().findFirst().get().getId();
+//        Mockito.when(mockUserRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(modelMapper.map(userProfileServiceModel, UserEntity.class)));
+        userService.editUser(userRepository.findById(firstId).orElse(null).getUsername(),userProfileServiceModel);
+        var actual = userService.findByUsername(userRepository.findById(firstId).orElse(null).getUsername());
         Assertions.assertEquals(userProfileServiceModel.getAge(), actual.getAge());
+        Assertions.assertEquals(userProfileServiceModel.getTelephoneNum(), actual.getTelephoneNum());
+        Assertions.assertEquals(userProfileServiceModel.getFullName(), actual.getFullName());
 
     }
 

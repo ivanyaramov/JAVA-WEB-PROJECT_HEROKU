@@ -1,8 +1,8 @@
 package com.example.project.web;
 
 import com.example.project.model.entity.*;
-import com.example.project.repository.DayRepository;
-import com.example.project.repository.HotelRepository;
+import com.example.project.repository.*;
+import com.example.project.service.GuideService;
 import com.example.project.service.HotelService;
 import com.example.project.service.TownService;
 import com.example.project.service.impl.HotelServiceImpl;
@@ -23,11 +23,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @WithMockUser("admin2")
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -48,6 +52,17 @@ private HotelService hotelService;
     ModelMapper modelMapper;
     @Autowired
     HotelRepository hotelRepository;
+    Excursion excursionToTest;
+    @Autowired
+    GuideService guideService;
+    @Autowired
+    ExcursionRepository excursionRepository;
+    @Autowired
+    LandmarkRepository landmarkRepository;
+    @Autowired
+    TownRepository townRepository;
+    @Autowired
+    GuideRepository guideRepository;
 
     @Autowired
 MockMvc mockMvc;
@@ -62,6 +77,11 @@ MockMvc mockMvc;
     private final String PRICE_PER_NIGHT_ADULT = "10";
     private final String PRICE_PER_NIGHT_CHILD = "10";
     private final String IMAGE_URL = "image";
+    private final String startDate = "2006-05-15";
+    private final String endDate = "2006-08-23";
+    private final String guide = "Anton Biserov";
+    private final String DESCRIPTION = "aaa";
+
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -85,7 +105,11 @@ MockMvc mockMvc;
         userRole.setRole(UserRoleEnum.USER);
 
 
-
+        excursionToTest = new Excursion("excursiontotest", LocalDate.of(2009, 5 , 6), LocalDate.of(2015, 5 , 6), 50);
+        excursionToTest.setId(1L);
+        excursionToTest.setPictureUrl("aaa");
+        Long guideFirstId = guideRepository.findAll().stream().findFirst().get().getId();
+        excursionToTest.setGuide(modelMapper.map(guideService.findById(guideFirstId), Guide.class));
         testUser = new UserEntity();
         testUser.setUsername("admin2");
         testUser.setEmail("asaff!@gmal.com");
@@ -100,7 +124,8 @@ MockMvc mockMvc;
 //        mockUserRepository.save(testUser);
     }
     @AfterEach
-    void tearDown() { hotelRepository.deleteAll();
+    void tearDown() {
+        hotelRepository.deleteAll();
     }
     @Test
     void testAddHotel() throws Exception{
@@ -130,4 +155,158 @@ MockMvc mockMvc;
         Assertions.assertEquals(IMAGE_URL, hotel.getImageUrl());
 
     }
-}
+
+    @Test
+    void testEditExcursion() throws Exception {
+        Long initial = excursionRepository.count();
+        Long firstId = excursionRepository.findAll().stream().findFirst().get().getId();
+        mockMvc.perform(post("/edit/excursion/" + firstId).
+                param("name","Edited Excursion").
+                param("startDate",startDate).
+                param("endDate", endDate).
+                param("capacity","100").
+                param("pictureUrl",IMAGE_URL).
+                param("guide",guide).
+                with(csrf()).
+                contentType(MediaType.APPLICATION_FORM_URLENCODED));
+
+        Assertions.assertEquals(initial, excursionRepository.count());
+
+        Optional<Excursion> editedExcursion = excursionRepository.findById(firstId);
+
+        Assertions.assertTrue(editedExcursion.isPresent());
+        Excursion excursion = editedExcursion.get();
+
+        Assertions.assertEquals("Edited Excursion", excursion.getName());
+        Assertions.assertEquals(100, excursion.getCapacity());
+        Assertions.assertEquals(guide, excursion.getGuide().getFullName());
+        Assertions.assertEquals(IMAGE_URL, excursion.getPictureUrl());
+    }
+
+    @Test
+    void editExcursionFail() throws Exception {
+        Long firstId = excursionRepository.findAll().stream().findFirst().get().getId();
+        mockMvc.perform(post("/edit/excursion/"+ firstId).
+                param("name","").
+                param("startDate",startDate).
+                param("endDate", endDate).
+                param("capacity","100").
+                param("pictureUrl",IMAGE_URL).
+                param("guide",guide)).andExpect(redirectedUrl("/edit/excursion/"+ firstId));
+
+    }
+    @Test
+    void getEditExcursion() throws Exception {
+        Long firstId = excursionRepository.findAll().stream().findFirst().get().getId();
+        mockMvc.
+                perform(get("/edit/excursion/" + firstId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("excursion-edit"));
+    }
+
+    @Test
+    void testObjectNotFound() throws Exception {
+        mockMvc.
+                perform(get("/edit/excursion/100000"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("object-not-found"));
+    }
+
+
+    @Test
+    void getEditLandmark() throws Exception {
+        Long firstId = landmarkRepository.findAll().stream().findFirst().get().getId();
+        mockMvc.
+                perform(get("/edit/landmark/"+firstId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("landmark-edit"));
+    }
+
+    @Test
+    void getEditTown() throws Exception {
+        Long firstId = townRepository.findAll().stream().findFirst().get().getId();
+        mockMvc.
+                perform(get("/edit/town/"+firstId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("town-edit"));
+    }
+
+    @Test
+    void testEditLandmark() throws Exception {
+        Long firstId = landmarkRepository.findAll().stream().findFirst().get().getId();
+        Long initial = landmarkRepository.count();
+        mockMvc.perform(post("/edit/landmark/" + firstId).
+                param("name","editedLandmark").
+                param("description",DESCRIPTION).
+                param("town","Sofia").
+                param("pictureURL",IMAGE_URL).
+                with(csrf()).
+                contentType(MediaType.APPLICATION_FORM_URLENCODED));
+
+//        Assertions.assertEquals(initial, townRepository.count());
+
+        Optional<Landmark> editedLandmark = landmarkRepository.findById(firstId);
+
+        Assertions.assertTrue(editedLandmark.isPresent());
+        Landmark landmark = editedLandmark.get();
+
+        Assertions.assertEquals("editedLandmark", landmark.getName());
+        Assertions.assertEquals(DESCRIPTION, landmark.getDescription());
+        Assertions.assertEquals(IMAGE_URL, landmark.getPictureURL());
+    }
+
+    @Test
+    void testEditLandmarkFail() throws Exception {
+        Long firstId = landmarkRepository.findAll().stream().findFirst().get().getId();
+        Long initial = landmarkRepository.count();
+        mockMvc.perform(post("/edit/landmark/" + firstId).
+                param("name","editedLandmark").
+                param("description",DESCRIPTION).
+                param("town","Sofia")).andExpect(redirectedUrl("/edit/landmark/"+firstId));
+
+    }
+
+    @Test
+    void getEditGuide() throws Exception {
+        Long firstId = guideRepository.findAll().stream().findFirst().get().getId();
+        mockMvc.
+                perform(get("/edit/guide/"+firstId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("guide-edit"));
+    }
+
+    @Test
+    void userNotFoundExceptionTest () throws Exception {
+        mockMvc.
+                perform(get("/users/destinations/FALSE"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user-not-found"));
+    }
+
+    @Test
+    void getAddGuide () throws Exception {
+        mockMvc.
+                perform(get("/add/guide"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("guide-add"));
+    }
+
+
+
+//    @Test
+//    void getEditDay() throws Exception {
+//
+//        Long firstIdExcursion = excursionRepository.findAll().stream().findFirst().get().getId();
+//        Day day = new Day(1,null,excursionRepository.findById(firstIdExcursion).orElse(null),null);
+//        dayRepository.save(day);
+//        Long firstIdDay = dayRepository.findAll().stream().findFirst().get().getId();
+//
+//        mockMvc.
+//                perform(get("/edit/guide/"+firstIdDay+"/"+firstIdExcursion))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("day-edit"));
+//        dayRepository.deleteById(firstIdDay);
+//    }
+
+    }
+

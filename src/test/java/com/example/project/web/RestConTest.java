@@ -30,8 +30,7 @@ import java.util.Optional;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WithMockUser("admin")
 @SpringBootTest
@@ -77,8 +76,6 @@ public class RestConTest {
         testUser.setEmail("lucho@example.com");
         testUser.setFullName("Ivan Yaramov");
         testHotel = new Hotel("testhotel", 5, BigDecimal.valueOf(15), BigDecimal.valueOf(20), townService.findByName("Sofia"), "aaa");
-        hotelRepository.save(testHotel);
-        testUser = userRepository.save(testUser);
     }
 
     @AfterEach
@@ -110,16 +107,17 @@ public class RestConTest {
 
     @Test
     void testGetPriceOfHotelBooking() throws Exception {
-        Mockito.when(mockHotelRepository.findById(1L)).thenReturn(Optional.of(testHotel));
+        Long firstId = hotelRepository.findAll().stream().findFirst().get().getId();
+        hotelRepository.save(testHotel);
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("countOfAdults", "1");
         requestParams.add("countOfChildren", "1");
-        requestParams.add("id", "1");
+        requestParams.add("id", firstId.toString());
         requestParams.add("startDate", "2023-11-29");
         requestParams.add("nights", "5");
         mockMvc.perform(post("/rest/bookinghotelprice").params(requestParams)).
                 andExpect(status().isOk()).
-                andExpect(jsonPath("$", is(hotelServiceToTest.priceOfHotelBooking(1,BigDecimal.ONE,BigDecimal.ONE,1L).multiply(BigDecimal.valueOf(5)).doubleValue())));
+                andExpect(jsonPath("$", is(hotelService.priceOfHotelBooking(1,BigDecimal.ONE,BigDecimal.ONE,firstId).multiply(BigDecimal.valueOf(5)).doubleValue())));
 //                andExpect(jsonPath("$.[1].message", is(COMMENT_2)));
     }
 
