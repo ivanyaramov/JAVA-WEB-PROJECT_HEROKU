@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body>
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<div class="centered" style="min-height: 600px">
+  <p><h2>My Hotel Bookings</h2></p>
+  <div class="centered mt-5 mb-5">
+    <table class="centered">
+      <tr>
+        <th>Town</th>
+        <th>Hotel</th>
+        <th>Start date</th>
+        <th>Nights</th>
+        <th>Count of children</th>
+        <th>Count of adults</th>
+        <th>Price</th>
+      </tr>
+      <div th:each="d : ${destinations}" th:object="${d}">
+        <tr >
+          <td th:text="*{town}">Alfreds Futterkiste</td>
+          <td th:text="*{hotel}">Maria Anders</td>
+          <td th:text="*{startDate}">Germany</td>
+          <td th:text="*{nights}">Germany</td>
+          <td th:text="*{countOfChildren}">Germany</td>
+          <td th:text="*{countOfAdults}">Germany</td>
+          <td th:text="*{price}">Germany</td>
+
+
+        </tr>
+      </div>
+
+    </table>
+  </div>
+</div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

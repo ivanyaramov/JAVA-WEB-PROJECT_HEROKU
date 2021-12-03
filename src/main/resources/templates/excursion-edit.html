@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+  <div id="landmark">
+    <div class="container">
+      <div id="landmark-row" class="row justify-content-center align-items-center">
+        <div id="landmark-column" class="col-md-6">
+          <div id="landmark-box" class="col-md-12">
+            <form th:action="@{/edit/excursion/{id}(id=${id})}" method="post" th:object="${excursionBindingModel}" id="landmark-form" class="form" action="" >
+              <h3 class="text-center text-info">Edit excursion</h3>
+              <div class="form-group">
+                <label for="name" class="text-info">Name:</label><br>
+                <input  th:field="*{name}" th:errorclass="is-invalid" type="text" name="name" id="name" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="capacity" class="text-info">Capacity:</label><br>
+                <input  th:field="*{capacity}" th:errorclass="is-invalid"  type="number" name="capacity" id="capacity" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="stars" class="text-info">Guide:</label>
+                <select th:field="*{guide}" th:errorclass="is-invalid" name="stars" id="stars" class="custom-select">
+                  <option value="" selected>Select guide</option>
+                  <option th:each="g : ${guides}" th:value="${g}" th:text="${g}"></option>
+                </select>
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="pictureurl" class="text-info">PictureUrl:</label><br>
+                <input  th:field="*{pictureUrl}" th:errorclass="is-invalid"  type="text" name="pictureurl" id="pictureurl" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="startdate" class="text-info">Start date:</label><br>
+                <input  th:field="*{startDate}" th:errorclass="is-invalid"  type="date" name="startdate" id="startdate" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label for="enddate" class="text-info">End date:</label><br>
+                <input  th:field="*{endDate}" th:errorclass="is-invalid"  type="date" name="enddate" id="enddate" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+
+              <!--                            <div class="form-row m-5">-->
+              <!--                                <div class="col">-->
+              <!--                                    <label for="description">Description</label>-->
+              <!--                                    <textarea name="description" id="description" type="text" class="form-control" placeholder="Description"></textarea>-->
+              <!--                                </div>-->
+              <!--                            </div>-->
+              <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

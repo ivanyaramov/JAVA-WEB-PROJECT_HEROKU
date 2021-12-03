@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<script src="../../../js/confirmhotelbooking.js"></script>
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+    <div id="bookingdestination">
+        <div class="container">
+            <div id="bookingdestination-row" class="row justify-content-center align-items-center">
+                <div id="bookingdestination-column" class="col-md-6">
+                    <div id="bookingdestination-box" class="col-md-12" >
+                        <form method="post" th:object="${bookingHotelBindingModel}"
+                              th:action="@{/towns/hotels/booking/{id}(id=${id})}"  id="hotelBooking_form" class="form" >
+                            <h3 class="text-center text-info">Hotel booking</h3>
+                            <div class="form-group">
+                                <label for="countofadults" class="text-info">Count of adults:</label><br>
+                                <input th:field="*{countOfAdults}" th:errorclass="is-invalid" type="number" name="countofadults" id="countofadults" class="form-control">
+                                <p class="invalid-feedback">Field must contain a positive number or 0</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="countofchildren" class="text-info">Count of children:</label><br>
+                                <input th:field="*{countOfChildren}" th:errorclass="is-invalid"  type="number" name="countofchildren" id="countofchildren" class="form-control">
+                                <p class="invalid-feedback">Field must contain a positive number or 0</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="startdate" class="text-info">Start date:</label><br>
+                                <input th:field="*{startDate}" th:errorclass="is-invalid" type="date" name="startdate" id="startdate" class="form-control">
+                                <p class="invalid-feedback">Field must be in the future and can't be null</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="nights" class="text-info">Number of nights:</label><br>
+                                <input th:field="*{nights}" th:errorclass="is-invalid" type="number" name="nights" id="nights" class="form-control">
+                                <p class="invalid-feedback">Field can't be null and must be a positive number</p>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

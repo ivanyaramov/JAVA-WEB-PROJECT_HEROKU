@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body>
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main>
+  <div th:object="${user}" class="card cardguide mt-5 mb-5" style="width: 25rem;">
+    <ul class="list-group list-group-flush">
+      <li th:text="|Full name: *{fullName}|" class="list-group-item">Cras justo odio</li>
+      <li th:text="|Email: *{email}|" class="list-group-item">Dapibus ac facilisis in</li>
+      <li th:text="|Age: *{age}|" class="list-group-item">Vestibulum at eros</li>
+      <li th:text="|Telephone number: *{telephoneNum}|" class="list-group-item">Vestibulum at eros</li>
+    </ul>
+    <div id="edit-profile" class = "card-footer" >
+      <!--        <br/>-->
+      <a th:href="@{/users/profile/{username}/edit(username=${username})}" class="text-info h5 centered alignright" >Edit</a>
+      <a th:href="@{/users/profile/{username}/changePassword(username=${username})}" class="text-info h5 centered alignleft" >Change password</a>
+
+    </div>
+  </div>
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+  <div id="login">
+    <div class="container">
+      <div id="login-row" class="row justify-content-center align-items-center">
+        <div id="login-column" class="col-md-6">
+          <div id="login-box" class="col-md-12">
+            <form method="post"
+                  th:action="@{/users/login}"  id="login-form" class="form" action="" >
+              <h3 class="text-center text-info">Login</h3>
+              <p class="bg-danger alert-danger" th:if="${bad_credentials}">Invalid username or password!</p>
+              <div class="form-group">
+                <label for="username" class="text-info">Username:</label><br>
+                <input th:value="${username}" type="text" name="username" id="username" class="form-control"
+                       required
+                       minlength="4" maxlength="20">
+              </div>
+              <div class="form-group">
+                <label for="password" class="text-info">Password:</label><br>
+                <input type="password" name="password" id="password" class="form-control" required
+                       minlength="4" maxlength="20">
+              </div>
+
+              <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+              </div>
+              <div id="register-link" class="text-right">
+                <br/>
+                <a href="/users/register" class="text-info">Register here</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

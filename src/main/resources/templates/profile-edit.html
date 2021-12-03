@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main">
+  <div id="hotel">
+    <div class="container">
+      <div id="hotel-row" class="row justify-content-center align-items-center">
+        <div id="hotel-column" class="col-md-6">
+          <div id="hotel-box" class="col-md-12">
+            <form id="hotel-form" class="form" th:action="@{/users/profile/{username}/edit(username=${username})}" th:method="post" th:object="${userProfileBindingModel}">
+              <h3 class="text-center text-info">Edit profile:</h3>
+              <div class="form-group">
+                <label for="name" class="text-info">Full name:</label><br>
+                <input th:field="*{fullName}" th:errorclass="is-invalid" type="text" name="name" id="name" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+              <div class="form-group">
+                <label  for="email" class="text-info">Email:</label>
+                <input th:value="*{email}"  th:errorclass="is-invalid" type="email" name="email" id="email" class="form-control">
+                <p class="invalid-feedback">Field cant be null</p>
+              </div>
+
+              <div class="form-group">
+                <label  for="foradults" class="text-info">Age:</label><br>
+                <input th:field="*{age}"  th:errorclass="is-invalid" type="number" name="foradults" id="foradults" class="form-control">
+                <p class="invalid-feedback">Field cant be null and must be positive</p>
+              </div>
+              <div class="form-group" >
+                <label  for="forchildren" class="text-info" >Telephone number:</label><br>
+                <input th:field="*{telephoneNum}" th:errorclass="is-invalid" type="text" name="forchildren" id="forchildren" class="form-control">
+                <p class="invalid-feedback">Field cant be null and must contain only numbers and must be min 6 symbols</p>
+              </div>
+
+              <!--                            <div class="form-row m-5">-->
+              <!--                                <div class="col">-->
+              <!--                                    <label for="description">Description</label>-->
+              <!--                                    <textarea name="description" id="description" type="text" class="form-control" placeholder="Description"></textarea>-->
+              <!--                                </div>-->
+              <!--                            </div>-->
+              <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

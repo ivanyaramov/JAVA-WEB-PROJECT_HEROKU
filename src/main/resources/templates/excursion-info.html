@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyoflogin">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<div   th:object="${excursion}" class = "mb-4 centered">
+  <div class="townbgcolorforexcursion">
+
+    <h2 style="padding-top: 10px" th:text="|---*{name}---|"></h2>
+
+  </div>
+
+  <div th:if="*{placesLeft}" class="booknowbgcolor">
+    <a th:href="@{/excursions/booking/{id}(id=*{id})}" class=""><h1>Click here to book now!</h1></a>
+  </div>
+  <div sec:authorize="hasRole('ROLE_MODERATOR')">
+    <a th:href="@{/add/day/excursion/{excursionid}(excursionid=${excursion.id})}" class=" text-danger h2 centered">Click here to add new day</a>
+  </div>
+  <div class="wrapwholeelement" style="margin-top: 20px" th:each="d : ${days}" th:object="${d}">
+    <div class="daybgcolor">
+      <div sec:authorize="hasRole('ROLE_MODERATOR')">
+        <a th:href="@{/edit/day/{id}/{excursionid}(id=*{id}, excursionid=${excursion.id})}" class=" text-danger h2 centered">Edit</a>
+        <form th:action="@{/delete/day/{id}/{excursionid}(id=*{id}, excursionid=${excursion.id})}" th:method="delete">
+          <input type="submit" class="text-info  h5 centered" value="Delete"/>
+        </form>
+      </div>
+      <h2 style="padding-top: 10px" th:text="|---Day *{numberOfDay}---|"></h2>
+      <h4 style="padding-top: 10px" th:text="*{description}"></h4>
+    </div>
+  <div class="row col-md-12">
+    <div class="col-xs-12 col-sm-6" >
+      <div th:unless= "${d.towns.size()==0}" class="bg-primary centered">
+        <h2>Towns</h2>
+      </div>
+      <div class="row ">
+
+
+    <div th:each="t : ${d.towns}" th:object="${t}" class="card col-lg-6 " style="width: 18rem;">
+      <div class="pt-2"><b><h4 th:text="*{name}"></h4></b></div>
+      <img class="card-img-top img" th:src="*{pictureUrl}" alt="Card image cap">
+      <div class="card-body " th:text="*{description}" >
+        <p class="card-text"></p>
+      </div>
+      </div>
+    </div>
+      </div>
+    <div class="col-xs-12 col-sm-6" >
+      <div th:if= "${d.hotel}" class="bg-primary centered">
+        <h2>Hotel</h2>
+      </div>
+      <div th:each="h : ${d.hotel}" th:object="${h}"  class="card col-lg-6 alignright" style="width: 18rem;">
+        <div class="pt-2 centered"><b><h3 th:text="*{name}"></h3></b></div>
+        <img class="card-img-top" th:src="*{imageUrl}" alt="Card image cap">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" th:text="|Stars: *{stars}|">Cras justo odio</li>
+          <li class="list-group-item" th:text="|Price per night children: *{pricePerNightChild}|">Dapibus ac facilisis in</li>
+          <li class="list-group-item" th:text="|Price per night adults: *{pricePerNightAdult}|">Vestibulum at eros</li>
+        </ul>
+        </div>
+</div>
+  </div>
+
+
+
+</div>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>

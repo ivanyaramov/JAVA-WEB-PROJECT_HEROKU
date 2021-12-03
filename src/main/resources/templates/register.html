@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body class = "bodyofregister">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main class="p-5 align-content-center bg-blur my-main ">
+  <div id="register">
+    <div class="container">
+      <div id="register-row" class="row justify-content-center align-items-center">
+        <div id="register-column" class="col-md-6">
+          <div id="register-box" class="col-md-12">
+            <form  th:action="@{/users/register}"
+                   th:method="post"
+                   th:object="${userModel}"
+                    id="register-form" class="form" action="" method="post">
+              <h3 class="text-center text-info">Register</h3>
+              <p class="bg-danger alert-danger" th:if="${passwordsnotmatching}">Confirm password is not the same as password!</p>
+              <p class="bg-danger alert-danger" th:if="${usernameExists}">This username is already taken!</p>
+              <p class="bg-danger alert-danger" th:if="${emailExists}">This email is already taken!</p>
+              <div class="form-group ">
+                <label for="username" class="text-info">Username:</label><br>
+                <input maxlength="20" th:field="*{username}" th:errorclass="is-invalid" type="text" name="username" id="username" class="form-control">
+                <p class="invalid-feedback">
+                  Username is required and should be between minimum 4 symbols.
+                </p>
+              </div>
+              <div class="form-group " >
+                <label for="fullName" class="text-info">Full name:</label><br>
+                <input maxlength="20" th:field="*{fullName}" th:errorclass="is-invalid" type="text" name="fullName" id="fullName" class="form-control">
+                <p class="invalid-feedback">
+                  Full name is required and should be between minimum 4 symbols.
+                </p>
+              </div>
+              <div class="form-group">
+                <label for="email" class="text-info">Email:</label><br>
+                <input maxlength="40" th:field="*{email}" th:errorclass="is-invalid" type="email" name="email" id="email" class="form-control">
+                <p class="invalid-feedback">
+                  Email is required and and should contain '@'.
+                </p>
+              </div>
+              <div class="form-group">
+                <label for="telnum" class="text-info">Telephone number:</label><br>
+                <input maxlength="40" th:field="*{telephoneNum}" th:errorclass="is-invalid" type="tel" name="telnum" id="telnum" class="form-control">
+                <p class="invalid-feedback">
+                  Telephone number must be at least 6 and max 10 digits long and should contain only numbers.
+                </p>
+              </div>
+              <div class="form-group">
+                <label for="age" class="text-info">Age:</label><br>
+                <input  th:field="*{age}" th:errorclass="is-invalid" type="number" name="age" id="age" class="form-control">
+                <p class="invalid-feedback">
+                  Age must be a positive number.
+                </p>
+              </div>
+              <div class="form-group">
+                <label for="password" class="text-info">Password:</label><br>
+                <input maxlength="20" th:field="*{password}" th:errorclass="is-invalid" type="password" name="password" id="password" class="form-control">
+                <p class="invalid-feedback">
+                  Password is required and should be minimum 4 symbols.
+                </p>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword" class="text-info">Confirm password:</label><br>
+                <input maxlength="20" th:field="*{confirmPassword}" th:errorclass="is-invalid" type="password" name="password" id="confirmPassword" class="form-control">
+                <p class="invalid-feedback">
+                  Confirm Password is required and should be minimum 4 symbols.
+                </p>
+              </div>
+              <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-info btn-md" value="Submit">
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/commons::footer">
+
+</footer>
+</body>
+</html>
