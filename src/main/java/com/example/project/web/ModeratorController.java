@@ -245,7 +245,7 @@ return "redirect:/";
         }
         GuideServiceModel guideServiceModel = modelMapper.map(guideBindingModel, GuideServiceModel.class);
         guideService.editGuide(id, guideServiceModel);
-        return "redirect:/";
+        return "redirect:/excursions/guide/" + id;
     }
 
     @ModelAttribute

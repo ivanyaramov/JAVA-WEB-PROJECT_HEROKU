@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
 //        newUser.setUsername(userRegistrationServiceModel.getUsername());
 //        newUser.setFullName(userRegistrationServiceModel.getFullName());
-            newUser.setActive(true);
+            newUser.setActive(false);
                 newUser.setPassword(passwordEncoder.encode(userRegistrationServiceModel.getPassword()));
                newUser.setRoles(Set.of(userRole));
 

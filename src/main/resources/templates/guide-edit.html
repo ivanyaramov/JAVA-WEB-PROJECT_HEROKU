@@ -15,7 +15,7 @@
         <div id="hotel-column" class="col-md-6">
           <div id="hotel-box" class="col-md-12">
             <form id="hotel-form" class="form" th:action="@{/edit/guide/{id}(id=${id})}" method="post" th:object="${guideBindingModel}">
-              <h3 class="text-center text-info">Add guide:</h3>
+              <h3 class="text-center text-info">Edit guide:</h3>
               <div class="form-group">
                 <label for="name" class="text-info">Full name:</label><br>
                 <input th:field="*{fullName}" th:errorclass="is-invalid" type="text" name="name" id="name" class="form-control">

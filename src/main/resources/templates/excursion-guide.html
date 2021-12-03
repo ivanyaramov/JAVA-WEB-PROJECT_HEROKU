@@ -25,11 +25,9 @@
     </div>
   <div class="card-footer centered"  sec:authorize="hasRole('ROLE_MODERATOR')">
     <div >
-      <a th:href="@{/edit/landmark/{id}(id=*{id})}" class="text-info  h5 alignleft">Edit</a>
+      <a th:href="@{/edit/guide/{id}(id=*{id})}" class="text-info  h5 centered">Edit</a>
     </div>
-    <div>
-      <a th:href="@{/edit/hotel/{id}(id=*{id})}" class="text-info  h5 alignright">Delete</a>
-    </div>
+
   </div>
 </div>
 

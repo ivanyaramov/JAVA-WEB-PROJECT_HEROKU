@@ -19,7 +19,7 @@ public class StatsInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-//     statsService.onRequest();
+     statsService.onRequest();
         return true;
     }
 }
