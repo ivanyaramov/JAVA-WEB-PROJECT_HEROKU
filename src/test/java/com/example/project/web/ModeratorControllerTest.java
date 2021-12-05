@@ -5,6 +5,7 @@ import com.example.project.repository.*;
 import com.example.project.service.GuideService;
 import com.example.project.service.HotelService;
 import com.example.project.service.TownService;
+import com.example.project.service.UserService;
 import com.example.project.service.impl.HotelServiceImpl;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WithMockUser("admin2")
+@WithMockUser("admin")
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ModeratorControllerTest {
@@ -63,6 +64,8 @@ private HotelService hotelService;
     TownRepository townRepository;
     @Autowired
     GuideRepository guideRepository;
+    @Autowired
+    UserService userService;
 
     @Autowired
 MockMvc mockMvc;
@@ -92,6 +95,7 @@ MockMvc mockMvc;
     void init() {
         dayRepository.deleteAll();
         hotelRepository.deleteAll();
+        userService.initaliseUsers();
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         //ARRANGE
         hotelService = new HotelServiceImpl(townService, hotelRepository, modelMapper);

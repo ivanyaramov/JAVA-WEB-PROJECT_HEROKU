@@ -3,10 +3,7 @@ package com.example.project.web;
 import com.example.project.model.entity.Hotel;
 import com.example.project.model.entity.UserEntity;
 import com.example.project.repository.*;
-import com.example.project.service.BookingExcursionService;
-import com.example.project.service.ExcursionService;
-import com.example.project.service.HotelService;
-import com.example.project.service.TownService;
+import com.example.project.service.*;
 import com.example.project.service.impl.HotelServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +43,8 @@ public class RestConTest {
     @Autowired
     private HotelService hotelService;
     @Autowired
+    UserService userService;
+    @Autowired
     HotelRepository hotelRepository;
     @Autowired
     TownService townService;
@@ -79,7 +78,7 @@ public class RestConTest {
 
     @AfterEach
     void tearDown() {
-        userRepository.deleteAll();
+//        userRepository.deleteAll();
 //        hotelRepository.deleteAll();
     }
 
@@ -94,6 +93,7 @@ public class RestConTest {
 
     @Test
     void testGetPriceOfExcursion() throws Exception {
+//        userService.initaliseUsers();
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         Long firstId = excursionRepository.findAll().stream().findFirst().get().getId();
         requestParams.add("countOfAdults", "1");
@@ -107,6 +107,7 @@ public class RestConTest {
 
     @Test
     void testGetPriceOfHotelBooking() throws Exception {
+//        userService.initaliseUsers();
         Long firstId = hotelRepository.findAll().stream().findFirst().get().getId();
         hotelRepository.save(testHotel);
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
