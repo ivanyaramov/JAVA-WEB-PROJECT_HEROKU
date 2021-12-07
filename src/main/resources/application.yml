@@ -33,3 +33,5 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 server.port: ${PORT:8080}
+schedulers:
+  cron: "0 0 1 * * ?"
